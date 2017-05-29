@@ -1,0 +1,39 @@
+extends ../layout-home
+block content
+    .container
+        .row
+            .col-md-12
+                h3 peer Listing
+        .row
+            .col-md-12
+                if Peers
+                    table(class='table table-hover table-condensed')
+                        tr
+                            th Application
+                            th Name
+                            th Description
+                            th IP
+                            th
+                            th
+                            th
+                        each peer in Peers
+                            tr(data-id=peer.id data-model="peer")
+                                td #{peer.application}
+                                td #{peer.name}
+                                td #{peer.description}
+                                td #{peer.ip}
+                                td
+                                    a(href="/peers/show?id="+peer.id  class="btn btn-primary btn-sm" role="button") Show
+                                td
+                                    a(href="/peers/edit?id="+peer.id  class="btn btn-primary btn-sm" role="button") Edit
+                                td
+                                    form(action="/peers/destroy" method="POST")
+                                        //input(type="hidden" name="_method" value="delete")
+                                        input(type="hidden" name="id" value=peer.id)
+                                        input(type="submit" value="Delete"  class="btn btn-danger btn-sm" role="button")
+
+        .row
+            .col-md-12
+                a(href="/peers/new/" class="btn btn-success btn-sm" role="button") New
+
+        hr

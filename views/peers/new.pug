@@ -1,0 +1,24 @@
+extends ../layout-home
+block content
+    .container
+        .row
+            .col-md-12
+                form(action="/peers/create" method="POST" role="form" class="new")
+                    .form-group
+                        h2 Create a Peer
+                        .form-group(style="width: 400px;")
+                            label Application
+                            select(name="application" class="form-control")
+                                each application in Applications
+                                    option(value=application.id) #{application.name}
+                        .form-group(style="width: 400px;")
+                            label Name
+                            input(name="name" type="text" class="form-control")
+                        .form-group(style="width: 400px;")
+                            label Description
+                            input(name="description" type="text" class="form-control")
+                        .form-group(style="width: 400px;")
+                            label IP
+                            input(name="ip" type="text" class="form-control")
+                    input(type="submit" value="Submit" class="btn btn-default")
+                a(href="/peers" class="btn btn-danger") Back to list

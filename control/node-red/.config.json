@@ -1,0 +1,1089 @@
+{
+ "nodes": {
+  "node-red": {
+   "name": "node-red",
+   "version": "0.16.2-git",
+   "local": false,
+   "nodes": {
+    "sentiment": {
+     "name": "sentiment",
+     "types": [
+      "sentiment"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/nodes/core/analysis/72-sentiment.js"
+    },
+    "inject": {
+     "name": "inject",
+     "types": [
+      "inject"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/nodes/core/core/20-inject.js"
+    },
+    "catch": {
+     "name": "catch",
+     "types": [
+      "catch"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/nodes/core/core/25-catch.js"
+    },
+    "status": {
+     "name": "status",
+     "types": [
+      "status"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/nodes/core/core/25-status.js"
+    },
+    "debug": {
+     "name": "debug",
+     "types": [
+      "debug"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/nodes/core/core/58-debug.js"
+    },
+    "link": {
+     "name": "link",
+     "types": [
+      "link in",
+      "link out"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/nodes/core/core/60-link.js"
+    },
+    "exec": {
+     "name": "exec",
+     "types": [
+      "exec"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/nodes/core/core/75-exec.js"
+    },
+    "function": {
+     "name": "function",
+     "types": [
+      "function"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/nodes/core/core/80-function.js"
+    },
+    "template": {
+     "name": "template",
+     "types": [
+      "template"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/nodes/core/core/80-template.js"
+    },
+    "delay": {
+     "name": "delay",
+     "types": [
+      "delay"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/nodes/core/core/89-delay.js"
+    },
+    "trigger": {
+     "name": "trigger",
+     "types": [
+      "trigger"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/nodes/core/core/89-trigger.js"
+    },
+    "comment": {
+     "name": "comment",
+     "types": [
+      "comment"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/nodes/core/core/90-comment.js"
+    },
+    "unknown": {
+     "name": "unknown",
+     "types": [
+      "unknown"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/nodes/core/core/98-unknown.js"
+    },
+    "rpi-gpio": {
+     "name": "rpi-gpio",
+     "types": [
+      "rpi-gpio in",
+      "rpi-gpio out",
+      "rpi-mouse",
+      "rpi-keyboard"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/nodes/core/hardware/36-rpi-gpio.js"
+    },
+    "tls": {
+     "name": "tls",
+     "types": [
+      "tls-config"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/nodes/core/io/05-tls.js"
+    },
+    "mqtt": {
+     "name": "mqtt",
+     "types": [
+      "mqtt in",
+      "mqtt out",
+      "mqtt-broker"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/nodes/core/io/10-mqtt.js"
+    },
+    "httpin": {
+     "name": "httpin",
+     "types": [
+      "http in",
+      "http response"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/nodes/core/io/21-httpin.js"
+    },
+    "httprequest": {
+     "name": "httprequest",
+     "types": [
+      "http request"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/nodes/core/io/21-httprequest.js"
+    },
+    "websocket": {
+     "name": "websocket",
+     "types": [
+      "websocket in",
+      "websocket out",
+      "websocket-listener",
+      "websocket-client"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/nodes/core/io/22-websocket.js"
+    },
+    "watch": {
+     "name": "watch",
+     "types": [
+      "watch"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/nodes/core/io/23-watch.js"
+    },
+    "tcpin": {
+     "name": "tcpin",
+     "types": [
+      "tcp in",
+      "tcp out",
+      "tcp request"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/nodes/core/io/31-tcpin.js"
+    },
+    "udp": {
+     "name": "udp",
+     "types": [
+      "udp in",
+      "udp out"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/nodes/core/io/32-udp.js"
+    },
+    "switch": {
+     "name": "switch",
+     "types": [
+      "switch"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/nodes/core/logic/10-switch.js"
+    },
+    "change": {
+     "name": "change",
+     "types": [
+      "change"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/nodes/core/logic/15-change.js"
+    },
+    "range": {
+     "name": "range",
+     "types": [
+      "range"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/nodes/core/logic/16-range.js"
+    },
+    "split": {
+     "name": "split",
+     "types": [
+      "split",
+      "join"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/nodes/core/logic/17-split.js"
+    },
+    "CSV": {
+     "name": "CSV",
+     "types": [
+      "csv"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/nodes/core/parsers/70-CSV.js"
+    },
+    "HTML": {
+     "name": "HTML",
+     "types": [
+      "html"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/nodes/core/parsers/70-HTML.js"
+    },
+    "JSON": {
+     "name": "JSON",
+     "types": [
+      "json"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/nodes/core/parsers/70-JSON.js"
+    },
+    "XML": {
+     "name": "XML",
+     "types": [
+      "xml"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/nodes/core/parsers/70-XML.js"
+    },
+    "YAML": {
+     "name": "YAML",
+     "types": [
+      "yaml"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/nodes/core/parsers/70-YAML.js"
+    },
+    "tail": {
+     "name": "tail",
+     "types": [
+      "tail"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/nodes/core/storage/28-tail.js"
+    },
+    "file": {
+     "name": "file",
+     "types": [
+      "file",
+      "file in"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/nodes/core/storage/50-file.js"
+    }
+   }
+  },
+  "node-red-contrib-brain": {
+   "name": "node-red-contrib-brain",
+   "version": "0.1.4",
+   "local": false,
+   "nodes": {
+    "brain": {
+     "name": "brain",
+     "types": [
+      "brain"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-contrib-brain",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-contrib-brain/brain/brain.js"
+    }
+   }
+  },
+  "node-red-contrib-brain2": {
+   "name": "node-red-contrib-brain2",
+   "version": "0.1.8",
+   "local": false,
+   "nodes": {
+    "brain": {
+     "name": "brain",
+     "types": [
+      "brain2"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-contrib-brain2",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-contrib-brain2/brain/brain.js"
+    }
+   }
+  },
+  "node-red-contrib-mongodb2": {
+   "name": "node-red-contrib-mongodb2",
+   "version": "0.5.5",
+   "local": false,
+   "nodes": {
+    "mongodb2": {
+     "name": "mongodb2",
+     "types": [
+      "mongodb2",
+      "mongodb2 in"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-contrib-mongodb2",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-contrib-mongodb2/mongodb2/mongodb2.js"
+    }
+   }
+  },
+  "node-red-contrib-nools": {
+   "name": "node-red-contrib-nools",
+   "version": "0.0.6",
+   "local": false,
+   "nodes": {
+    "nools": {
+     "name": "nools",
+     "types": [
+      "nools-flow",
+      "nools-assert",
+      "nools-fire"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-contrib-nools",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-contrib-nools/nools.js"
+    }
+   }
+  },
+  "node-red-contrib-precAgriNodes": {
+   "name": "node-red-contrib-precAgriNodes",
+   "version": "0.0.1",
+   "local": false,
+   "nodes": {
+    "remote_server": {
+     "name": "remote_server",
+     "types": [
+      "remote-server"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-contrib-precAgriNodes",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-contrib-precAgriNodes/remote_server/remote_server.js"
+    },
+    "temperatura_ar": {
+     "name": "temperatura_ar",
+     "types": [
+      "temperatura_ar"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-contrib-precAgriNodes",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-contrib-precAgriNodes/temperatura_ar/temperatura_ar.js"
+    },
+    "temperatura_solo": {
+     "name": "temperatura_solo",
+     "types": [
+      "temperatura_solo"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-contrib-precAgriNodes",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-contrib-precAgriNodes/temperatura_solo/temperatura_solo.js"
+    },
+    "humidade_ar": {
+     "name": "humidade_ar",
+     "types": [
+      "humidade_ar"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-contrib-precAgriNodes",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-contrib-precAgriNodes/humidade_ar/humidade_ar.js"
+    },
+    "humidade_solo": {
+     "name": "humidade_solo",
+     "types": [
+      "humidade_solo"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-contrib-precAgriNodes",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-contrib-precAgriNodes/humidade_solo/humidade_solo.js"
+    },
+    "radiacaoSolar": {
+     "name": "radiacaoSolar",
+     "types": [
+      "radiacaoSolar"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-contrib-precAgriNodes",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-contrib-precAgriNodes/radiacaoSolar/radiacaoSolar.js"
+    },
+    "pluviosidade": {
+     "name": "pluviosidade",
+     "types": [
+      "pluviosidade"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-contrib-precAgriNodes",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-contrib-precAgriNodes/pluviosidade/pluviosidade.js"
+    },
+    "direccao_vento": {
+     "name": "direccao_vento",
+     "types": [
+      "direccao_vento"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-contrib-precAgriNodes",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-contrib-precAgriNodes/direccao_vento/direccao_vento.js"
+    },
+    "velocidade_vento": {
+     "name": "velocidade_vento",
+     "types": [
+      "velocidade_vento"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-contrib-precAgriNodes",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-contrib-precAgriNodes/velocidade_vento/velocidade_vento.js"
+    },
+    "led": {
+     "name": "led",
+     "types": [
+      "led"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-contrib-precAgriNodes",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-contrib-precAgriNodes/led/led.js"
+    },
+    "ledStrip": {
+     "name": "ledStrip",
+     "types": [
+      "ledStrip"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-contrib-precAgriNodes",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-contrib-precAgriNodes/ledStrip/ledStrip.js"
+    },
+    "motor": {
+     "name": "motor",
+     "types": [
+      "motor"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-contrib-precAgriNodes",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-contrib-precAgriNodes/motor/motor.js"
+    },
+    "relay": {
+     "name": "relay",
+     "types": [
+      "relay"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-contrib-precAgriNodes",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-contrib-precAgriNodes/relay/relay.js"
+    }
+   }
+  },
+  "node-red-contrib-smartCitiesNodes": {
+   "name": "node-red-contrib-smartCitiesNodes",
+   "version": "0.0.1",
+   "local": false,
+   "nodes": {
+    "S_remote_server": {
+     "name": "S_remote_server",
+     "types": [
+      "S_remote-server"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-contrib-smartCitiesNodes",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-contrib-smartCitiesNodes/S_remote_server/S_remote_server.js"
+    },
+    "S_humidade_ar": {
+     "name": "S_humidade_ar",
+     "types": [
+      "humidade_ar",
+      "humidade_ar",
+      "S_humidade_ar"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-contrib-smartCitiesNodes",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-contrib-smartCitiesNodes/S_humidade_ar/S_humidade_ar.js"
+    },
+    "S_humidade_solo": {
+     "name": "S_humidade_solo",
+     "types": [
+      "humidade_solo",
+      "S_humidade_solo"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-contrib-smartCitiesNodes",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-contrib-smartCitiesNodes/S_humidade_solo/S_humidade_solo.js"
+    },
+    "S_pluviosidade": {
+     "name": "S_pluviosidade",
+     "types": [
+      "pluviosidade",
+      "pluviosidade",
+      "S_pluviosidade"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-contrib-smartCitiesNodes",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-contrib-smartCitiesNodes/S_pluviosidade/S_pluviosidade.js"
+    },
+    "S_radiacaoSolar": {
+     "name": "S_radiacaoSolar",
+     "types": [
+      "radiacaoSolar",
+      "radiacaoSolar",
+      "S_radiacaoSolar"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-contrib-smartCitiesNodes",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-contrib-smartCitiesNodes/S_radiacaoSolar/S_radiacaoSolar.js"
+    },
+    "S_temperatura_ar": {
+     "name": "S_temperatura_ar",
+     "types": [
+      "temperatura_ar",
+      "temperatura_ar",
+      "S_temperatura_ar"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-contrib-smartCitiesNodes",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-contrib-smartCitiesNodes/S_temperatura_ar/S_temperatura_ar.js"
+    },
+    "S_temperatura_solo": {
+     "name": "S_temperatura_solo",
+     "types": [
+      "temperatura_solo",
+      "temperatura_solo",
+      "S_temperatura_solo"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-contrib-smartCitiesNodes",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-contrib-smartCitiesNodes/S_temperatura_solo/S_temperatura_solo.js"
+    },
+    "S_direccao_vento": {
+     "name": "S_direccao_vento",
+     "types": [
+      "direccao_vento",
+      "direccao_vento",
+      "S_direccao_vento"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-contrib-smartCitiesNodes",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-contrib-smartCitiesNodes/S_direccao_vento/S_direccao_vento.js"
+    },
+    "S_velocidade_vento": {
+     "name": "S_velocidade_vento",
+     "types": [
+      "velocidade_vento",
+      "velocidade_vento",
+      "S_velocidade_vento"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-contrib-smartCitiesNodes",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-contrib-smartCitiesNodes/S_velocidade_vento/S_velocidade_vento.js"
+    },
+    "S_ldr": {
+     "name": "S_ldr",
+     "types": [
+      "ldr",
+      "ldr",
+      "S_ldr"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-contrib-smartCitiesNodes",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-contrib-smartCitiesNodes/S_ldr/S_ldr.js"
+    },
+    "S_poeira": {
+     "name": "S_poeira",
+     "types": [
+      "poeira",
+      "poeira",
+      "S_poeira"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-contrib-smartCitiesNodes",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-contrib-smartCitiesNodes/S_poeira/S_poeira.js"
+    },
+    "S_ultrassom": {
+     "name": "S_ultrassom",
+     "types": [
+      "ultrassom",
+      "ultrassom",
+      "S_ultrassom"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-contrib-smartCitiesNodes",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-contrib-smartCitiesNodes/S_ultrassom/S_ultrassom.js"
+    },
+    "S_pressao": {
+     "name": "S_pressao",
+     "types": [
+      "pressao",
+      "pressao",
+      "S_pressao"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-contrib-smartCitiesNodes",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-contrib-smartCitiesNodes/S_pressao/S_pressao.js"
+    },
+    "S_no2": {
+     "name": "S_no2",
+     "types": [
+      "S_no2"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-contrib-smartCitiesNodes",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-contrib-smartCitiesNodes/S_no2/S_no2.js"
+    },
+    "S_co2": {
+     "name": "S_co2",
+     "types": [
+      "S_co2"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-contrib-smartCitiesNodes",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-contrib-smartCitiesNodes/S_co2/S_co2.js"
+    },
+    "S_co": {
+     "name": "S_co",
+     "types": [
+      "S_co"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-contrib-smartCitiesNodes",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-contrib-smartCitiesNodes/S_co/S_co.js"
+    }
+   }
+  },
+  "node-red-contrib-sportNodes": {
+   "name": "node-red-contrib-sportNodes",
+   "version": "0.0.1",
+   "local": false,
+   "nodes": {
+    "node1": {
+     "name": "node1",
+     "types": [
+      "node1"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-contrib-sportNodes",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-contrib-sportNodes/node1/node1.js"
+    },
+    "node2": {
+     "name": "node2",
+     "types": [
+      "node2"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-contrib-sportNodes",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-contrib-sportNodes/node2/node2.js"
+    },
+    "node3": {
+     "name": "node3",
+     "types": [
+      "node3"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-contrib-sportNodes",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-contrib-sportNodes/node3/node3.js"
+    }
+   }
+  },
+  "node-red-dashboard": {
+   "name": "node-red-dashboard",
+   "version": "2.3.7-beta",
+   "local": false,
+   "nodes": {
+    "ui_base": {
+     "name": "ui_base",
+     "types": [
+      "ui_base"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-dashboard",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-dashboard/nodes/ui_base.js"
+    },
+    "ui_button": {
+     "name": "ui_button",
+     "types": [
+      "ui_button"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-dashboard",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-dashboard/nodes/ui_button.js"
+    },
+    "ui_dropdown": {
+     "name": "ui_dropdown",
+     "types": [
+      "ui_dropdown"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-dashboard",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-dashboard/nodes/ui_dropdown.js"
+    },
+    "ui_switch": {
+     "name": "ui_switch",
+     "types": [
+      "ui_switch"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-dashboard",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-dashboard/nodes/ui_switch.js"
+    },
+    "ui_slider": {
+     "name": "ui_slider",
+     "types": [
+      "ui_slider"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-dashboard",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-dashboard/nodes/ui_slider.js"
+    },
+    "ui_numeric": {
+     "name": "ui_numeric",
+     "types": [
+      "ui_numeric"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-dashboard",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-dashboard/nodes/ui_numeric.js"
+    },
+    "ui_text_input": {
+     "name": "ui_text_input",
+     "types": [
+      "ui_text_input"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-dashboard",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-dashboard/nodes/ui_text_input.js"
+    },
+    "ui_date_picker": {
+     "name": "ui_date_picker",
+     "types": [
+      "ui_date_picker"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-dashboard",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-dashboard/nodes/ui_date_picker.js"
+    },
+    "ui_colour_picker": {
+     "name": "ui_colour_picker",
+     "types": [
+      "ui_colour_picker"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-dashboard",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-dashboard/nodes/ui_colour_picker.js"
+    },
+    "ui_form": {
+     "name": "ui_form",
+     "types": [
+      "ui_form"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-dashboard",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-dashboard/nodes/ui_form.js"
+    },
+    "ui_text": {
+     "name": "ui_text",
+     "types": [
+      "ui_text"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-dashboard",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-dashboard/nodes/ui_text.js"
+    },
+    "ui_gauge": {
+     "name": "ui_gauge",
+     "types": [
+      "ui_gauge"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-dashboard",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-dashboard/nodes/ui_gauge.js"
+    },
+    "ui_chart": {
+     "name": "ui_chart",
+     "types": [
+      "ui_chart"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-dashboard",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-dashboard/nodes/ui_chart.js"
+    },
+    "ui_audio": {
+     "name": "ui_audio",
+     "types": [
+      "ui_audio"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-dashboard",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-dashboard/nodes/ui_audio.js"
+    },
+    "ui_toast": {
+     "name": "ui_toast",
+     "types": [
+      "ui_toast"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-dashboard",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-dashboard/nodes/ui_toast.js"
+    },
+    "ui_ui_control": {
+     "name": "ui_ui_control",
+     "types": [
+      "ui_ui_control"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-dashboard",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-dashboard/nodes/ui_ui_control.js"
+    },
+    "ui_template": {
+     "name": "ui_template",
+     "types": [
+      "ui_template"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-dashboard",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-dashboard/nodes/ui_template.js"
+    },
+    "ui_link": {
+     "name": "ui_link",
+     "types": [
+      "ui_link"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-dashboard",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-dashboard/nodes/ui_link.js"
+    },
+    "ui_tab": {
+     "name": "ui_tab",
+     "types": [
+      "ui_tab"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-dashboard",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-dashboard/nodes/ui_tab.js"
+    },
+    "ui_group": {
+     "name": "ui_group",
+     "types": [
+      "ui_group"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-dashboard",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-dashboard/nodes/ui_group.js"
+    }
+   }
+  },
+  "node-red-node-email": {
+   "name": "node-red-node-email",
+   "version": "0.1.10",
+   "local": false,
+   "nodes": {
+    "email": {
+     "name": "email",
+     "types": [
+      "e-mail",
+      "e-mail in"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-node-email",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-node-email/61-email.js"
+    }
+   }
+  },
+  "node-red-node-feedparser": {
+   "name": "node-red-node-feedparser",
+   "version": "0.1.5",
+   "local": false,
+   "nodes": {
+    "feedparse": {
+     "name": "feedparse",
+     "types": [
+      "feedparse"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-node-feedparser",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-node-feedparser/32-feedparse.js"
+    }
+   }
+  },
+  "node-red-node-rbe": {
+   "name": "node-red-node-rbe",
+   "version": "0.1.5",
+   "local": false,
+   "nodes": {
+    "rbe": {
+     "name": "rbe",
+     "types": [
+      "rbe"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-node-rbe",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-node-rbe/rbe.js"
+    }
+   }
+  },
+  "node-red-node-serialport": {
+   "name": "node-red-node-serialport",
+   "version": "0.2.1",
+   "local": false,
+   "nodes": {
+    "serialport": {
+     "name": "serialport",
+     "types": [
+      "serial in",
+      "serial out",
+      "serial-port"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-node-serialport",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-node-serialport/25-serial.js"
+    }
+   }
+  },
+  "node-red-node-twitter": {
+   "name": "node-red-node-twitter",
+   "version": "0.1.6",
+   "local": false,
+   "nodes": {
+    "twitter": {
+     "name": "twitter",
+     "types": [
+      "twitter-credentials",
+      "twitter in",
+      "twitter out"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-node-twitter",
+     "file": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/node_modules/node-red-node-twitter/27-twitter.js"
+    }
+   }
+  }
+ },
+ "_credentialSecret": "747aa356091493e9549f4c4fb914bca7e93946c3ccbdf41e649fcc5f7ec86788"
+}

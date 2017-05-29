@@ -1,0 +1,31 @@
+extends ../layout-home
+block content
+    .container
+        .row
+            .col-md-12
+                form(action="/peers/update?id="+Peer.id method="POST" class="edit")
+                    .form-group
+                        h2 editing a Peer
+                        //.form-group(style="width: 400px;")
+                            label Application
+                            input(value=Peer.application name="application" type="text" class="form-control")
+                        .form-group(style="width: 400px;")
+                            label Application
+                            select(name="application" class="form-control")
+                                each application in Applications
+
+                                    if application == Peer.application
+                                        option(value=application.id selected) #{application.name}
+                                    else
+                                        option(value=application.id) #{application.name}
+                        .form-group(style="width: 400px;")
+                            label Name
+                            input(value=Peer.name name="name" type="text" class="form-control")
+                        .form-group(style="width: 400px;")
+                            label Description
+                            input(value=Peer.description name="description" type="text" class="form-control")
+                        .form-group(style="width: 400px;")
+                            label IP
+                            input(value=Peer.ip name="ip" type="text" class="form-control")
+                    input(type="submit" value="Update" class="btn btn-default")
+                a(href="/peers/show?id="+Peer.id class="btn btn-danger") Cancel

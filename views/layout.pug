@@ -1,0 +1,54 @@
+doctype html
+html
+    head
+        title= title
+        meta(charset="utf-8")
+        meta(http-equiv="X-UA-Compatible" content="IE=edge")
+        meta(name="viewport" content="width=device-width, initial-scale=1")
+        meta(name="description" content="")
+        meta(name="author" content="")
+        link(rel="icon" href="/img/favicon.ico")
+        link(href="/css/bootstrap.css" rel="stylesheet")
+        link(href="/css/ionicons.min.css" rel="stylesheet")
+        link(href="/css/style.css" rel="stylesheet")
+    body
+        #h
+            .logo
+                img(src='/red/images/node-red-256.png' style="width: 80px; height: 80px;")
+            block content
+        .container.mt
+            .row.mt.centered
+                .col-lg-12
+                    img.img-circle(src='/img/rm.png', width='140', alt='')
+                    h4 Ricardo Mendes
+                    //p
+                        | Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                    p
+                        a(href="mailto:ricardo.mendes@ua.pt")
+                            i.ion-email
+                        | &nbsp;&nbsp;&nbsp;
+                        a(href="https://www.facebook.com/ricardomendex")
+                            i.ion-social-facebook
+                        | &nbsp;&nbsp;&nbsp;
+                        a(href="https://www.linkedin.com/profile/view?id=241021409")
+                            i.ion-social-linkedin
+                        | &nbsp;&nbsp;&nbsp;
+                        a(href="https://github.com/rdrm2014")
+                            i.ion-social-github
+
+        #f
+            .container
+                .row.centered
+                    .col-md-12
+                        a(href='#').btn-white
+                            i.ion-social-facebook
+                        a(href='#').btn-white
+                            i.ion-social-twitter
+                        a(href='#').btn-white
+                            i.ion-social-googleplus
+                        a(href='http://www.ua.pt').btn-white
+                            i.ion-university
+
+
+        script(src='/js/jquery.min.js')
+        script(src='/js/bootstrap.min.js')
