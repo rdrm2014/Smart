@@ -1,0 +1,39 @@
+extends ../layout-home
+block content
+    .container
+        .row
+            .col-md-12
+                h3 install Listing
+        .row
+            .col-md-12
+                if installs
+                    table(class='table table-hover table-condensed')
+                        tr
+                            th Name
+                            th Type
+                            th Description
+                            th Position
+                            th
+                            th
+                            th
+                        each install in installs
+                            tr(data-id=install.id data-model="install")
+                                td #{install.name}
+                                td #{install.type}
+                                td #{install.description}
+                                td #{install.position}
+                                td
+                                    a(href="/installs/"+install.id  class="btn btn-primary btn-sm" role="button") Show
+                                td
+                                    a(href="/installs/"+install.id+"/edit"  class="btn btn-primary btn-sm" role="button") Edit
+                                td
+                                    form(action="/installs/"+install.id+"/destroy" method="POST")
+                                        //input(type="hidden" name="_method" value="delete")
+                                        input(type="hidden" name="id" value=install.id)
+                                        input(type="submit" value="Delete"  class="btn btn-danger btn-sm" role="button")
+
+        .row
+            .col-md-12
+                a(href="/installs/new/" class="btn btn-success btn-sm" role="button") New
+
+        hr

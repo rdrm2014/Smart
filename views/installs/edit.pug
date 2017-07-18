@@ -1,0 +1,35 @@
+extends ../layout-home
+block content
+    style(type="text/css").
+                #map-canvas {
+          width: auto;
+          height: 500px;
+        }
+
+    .container
+        .row
+            .col-md-12
+                form(action="/installs/"+install.id+"/update" method="POST" class="edit")
+                    .form-group
+                        h2 editing a Install
+
+                        .form-group(style="width: 400px;")
+                            label Name
+                            input(value=install.name name="name" type="text" class="form-control")
+                        .form-group(style="width: 400px;")
+                            label Type
+                            input(value=install.type name="type" type="text" class="form-control")
+                        .form-group(style="width: 400px;")
+                            label Description
+                            input(value=install.description name="description" type="text" class="form-control")
+
+                        .form-group(style="width: 400px;")
+                            #map-canvas
+                        input(name="areaPosition" type="hidden")
+                        input(name="position" type="hidden")
+                    input(type="submit" value="Update" class="btn btn-default")
+                a(href="/installs/"+install.id class="btn btn-danger") Cancel
+
+    script(src='/js/maps_point_polygon.js')
+    script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyD9eue-dVAWRDx3eL1rfm0ZxtSwdhuivVk')
+    script initialize(true)

@@ -1,0 +1,41 @@
+extends ../layout-home
+block content
+    .container
+        .row
+            .col-md-12
+                h3 equipment Listing
+        .row
+            .col-md-12
+                if equipments
+                    table(class='table table-hover table-condensed')
+                        tr
+                            th Application
+                            th Name
+                            th Description
+                            th Position
+                            th IP
+                            th
+                            th
+                            th
+                        each equipment in equipments
+                            tr(data-id=equipment.id data-model="equipment")
+                                td #{equipment.install}
+                                td #{equipment.name}
+                                td #{equipment.description}
+                                td #{equipment.position}
+                                td #{equipment.ip}
+                                td
+                                    a(href="equipments/"+equipment.id  class="btn btn-primary btn-sm" role="button") Show
+                                td
+                                    a(href="equipments/"+equipment.id+"/edit"  class="btn btn-primary btn-sm" role="button") Edit
+                                td
+                                    form(action="equipments/"+equipment.id+"/destroy" method="POST")
+                                        //input(type="hidden" name="_method" value="delete")
+                                        input(type="hidden" name="id" value=equipment.id)
+                                        input(type="submit" value="Delete"  class="btn btn-danger btn-sm" role="button")
+
+        .row
+            .col-md-12
+                a(href="equipments/new" class="btn btn-success btn-sm" role="button") New
+
+        hr

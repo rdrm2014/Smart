@@ -1,0 +1,22 @@
+extends ../layout-home
+block content
+    .container
+        .row
+            .col-md-12
+                form(action="update" method="POST" class="edit")
+                    .form-group
+                        h2 editing a Sensor
+                        .form-group(style="width: 400px;")
+                            label Name
+                            input(value=sensor.name name="name" type="text" class="form-control")
+                        .form-group(style="width: 400px;")
+                            label Description
+                            input(value=sensor.description name="description" type="text" class="form-control")
+                        .form-group(style="width: 400px;")
+                            label Data Type
+                            input(value=sensor.dataType name="dataType" type="text" class="form-control")
+                        .form-group(style="width: 400px;")
+                            label Chart Type
+                            input(value=sensor.chartType name="chartType" type="text" class="form-control")
+                    input(type="submit" value="Update" class="btn btn-default")
+                a(href="../../sensors" class="btn btn-danger") Cancel

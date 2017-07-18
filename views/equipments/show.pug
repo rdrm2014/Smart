@@ -1,0 +1,29 @@
+extends ../layout-home
+block content
+	.container
+		.row
+			.col-md-12
+				form(class="show")
+					.form-group
+						h2 a Equipment
+					.form-group(style="width: 400px;")
+						label Name
+						input(value=equipment.name name="name" type="text" class="form-control" disabled)
+					.form-group(style="width: 400px;")
+						label Description
+						input(value=equipment.description name="description" type="text" class="form-control" disabled)
+					.form-group(style="width: 400px;")
+						label Position
+						input(value=equipment.position name="position" type="text" class="form-control" disabled)
+					.form-group(style="width: 400px;")
+						label IP
+						input(value=equipment.ip name="ip" type="text" class="form-control" disabled)
+					//.form-group(style="width: 400px;")
+						#map-canvas
+
+				a(href=""+equipment.id+"/sensors" class="btn btn-default")  Sensors
+				| |
+				a(href=""+equipment.id+"/edit" class="btn btn-default")  Edit
+				| |
+				a(href="../equipments") Back to list
+

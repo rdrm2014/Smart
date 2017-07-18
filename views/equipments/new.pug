@@ -3,14 +3,9 @@ block content
     .container
         .row
             .col-md-12
-                form(action="/peers/create" method="POST" role="form" class="new")
+                form(action="create" method="POST" role="form" class="new")
                     .form-group
-                        h2 Create a Peer
-                        .form-group(style="width: 400px;")
-                            label Application
-                            select(name="application" class="form-control")
-                                each application in Applications
-                                    option(value=application.id) #{application.name}
+                        h2 Create a Equipment
                         .form-group(style="width: 400px;")
                             label Name
                             input(name="name" type="text" class="form-control")
@@ -18,7 +13,10 @@ block content
                             label Description
                             input(name="description" type="text" class="form-control")
                         .form-group(style="width: 400px;")
+                            label Position
+                            input(name="position" type="text" class="form-control" value="[ 40.63103471011476, -8.658493600549377 ]")
+                        .form-group(style="width: 400px;")
                             label IP
                             input(name="ip" type="text" class="form-control")
                     input(type="submit" value="Submit" class="btn btn-default")
-                a(href="/peers" class="btn btn-danger") Back to list
+                a(href="equipments" class="btn btn-danger") Back to list

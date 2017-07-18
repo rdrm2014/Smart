@@ -1,0 +1,26 @@
+extends ../layout-home
+block content
+	.container
+		.row
+			.col-md-12
+				form(class="show")
+					.form-group
+						h2 a Sensor
+
+					.form-group(style="width: 400px;")
+						label Name
+						input(value=sensor.name name="name" type="text" class="form-control" disabled)
+					.form-group(style="width: 400px;")
+						label Description
+						input(value=sensor.description name="description" type="text" class="form-control" disabled)
+					.form-group(style="width: 400px;")
+						label Data Type
+						input(value=sensor.dataType name="dataType" type="text" class="form-control" disabled)
+					.form-group(style="width: 400px;")
+						label Chart Type
+						input(value=sensor.chartType name="chartType" type="text" class="form-control" disabled)
+
+				a(href=""+sensor.id+"/edit" class="btn btn-default")  Edit
+				| |
+				a(href="../sensors") Back to list
+

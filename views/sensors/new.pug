@@ -3,15 +3,20 @@ block content
     .container
         .row
             .col-md-12
-                form(action="/applications/create" method="POST" role="form" class="new")
+                form(action="create" method="POST" role="form" class="new")
                     .form-group
-                        h2 Create a Application
-
+                        h2 Create a Sensor
                         .form-group(style="width: 400px;")
                             label Name
                             input(name="name" type="text" class="form-control")
                         .form-group(style="width: 400px;")
                             label Description
                             input(name="description" type="text" class="form-control")
+                        .form-group(style="width: 400px;")
+                            label Data Type
+                            input(name="dataType" type="text" class="form-control")
+                        .form-group(style="width: 400px;")
+                            label Chart Type
+                            input(name="chartType" type="text" class="form-control")
                     input(type="submit" value="Submit" class="btn btn-default")
-                a(href="/applications" class="btn btn-danger") Back to list
+                a(href="sensors" class="btn btn-danger") Back to list
