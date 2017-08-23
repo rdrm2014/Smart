@@ -23,7 +23,7 @@ var mongoose = require('mongoose');
 
 // define the schema for our install model
 var installSchema = mongoose.Schema({
-    owner: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+    owner: {type: mongoose.Schema.Types.ObjectId, ref: 'user'},
     name: String,
     type: {type: String, enum: ["Agricultura","Piscicultura", "Aquário"]},
     description: String,
@@ -32,8 +32,8 @@ var installSchema = mongoose.Schema({
         index: '2d'      // create the geospatial index
     },
     areaPosition: mongoose.Schema.Types.Polygon,
-    equipments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Equipment' }]
+    equipments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'equipment' }]
 });
 
 // create the model for installs and expose it to our app
-module.exports = mongoose.model('Install', installSchema);
+module.exports = mongoose.model('install', installSchema);

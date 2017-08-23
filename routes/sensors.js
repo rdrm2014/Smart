@@ -22,7 +22,7 @@ router.get('/:idInstall/equipments/:idEquipment/sensors', cors(corsOptions), fun
         install: req.params['idInstall'],
         equipment: req.params['idEquipment'],
         owner: req.user
-    }, function (err, sensors) {
+    }).exec(function (err, sensors) {
         if (err) return next(err);
         if (!sensors) return next();
         console.log(sensors);
@@ -37,7 +37,7 @@ router.get('/:idInstall/equipments/:idEquipment/sensors/new', isLoggedIn, functi
         _id: req.params['idEquipment'],
         install: req.params['idInstall'],
         owner: req.user
-    }, function (err, equipment) {
+    }).exec(function (err, equipment) {
         if (err) return next(err);
         if (!equipment) return next();
         res.render('sensors/new', {user: req.user});
@@ -57,7 +57,7 @@ router.post('/:idInstall/equipments/:idEquipment/sensors/create', isLoggedIn, fu
         _id: req.params['idEquipment'],
         install: req.params['idInstall'],
         owner: req.user
-    }, function (err, equipment) {
+    }).exec(function (err, equipment) {
         if (err)
             return next(err);
         if (!equipment)
@@ -83,6 +83,8 @@ router.get('/:idInstall/equipments/:idEquipment/sensors/:idSensor', isLoggedIn, 
             equipment: req.params['idEquipment'],
             owner: req.user
         })
+        .populate('install')
+        .populate('equipment')
         .exec(function (err, sensor) {
             if (err) return handleError(err);
 
@@ -98,7 +100,7 @@ router.get('/:idInstall/equipments/:idEquipment/sensors/:idSensor/edit', isLogge
         install: req.params['idInstall'],
         equipment: req.params['idEquipment'],
         owner: req.user
-    }, function (err, sensor) {
+    }).exec(function (err, sensor) {
         if (err) return next(err);
         if (!sensor) return next('SensorModel doesn\'t exist.');
 
@@ -136,17 +138,18 @@ router.post('/:idInstall/equipments/:idEquipment/sensors/:idSensor/destroy', isL
         install: req.params['idInstall'],
         equipment: req.params['idEquipment'],
         owner: req.user
-    }, function (err, sensor) {
-        if (err) return next(err);
-
-        if (!sensor) return next('SensorModel doesn\'t exist.');
-
-        SensorModel.remove({_id: req.params['idSensor'], owner: req.user}, function (err) {
-
+    })
+        .exec(function (err, sensor) {
             if (err) return next(err);
+
+            if (!sensor) return next('SensorModel doesn\'t exist.');
+
+            SensorModel.remove({_id: req.params['idSensor'], owner: req.user}, function (err) {
+
+                if (err) return next(err);
+            });
+            res.redirect('../../sensors');
         });
-        res.redirect('../../sensors');
-    });
 });
 
 module.exports = router;

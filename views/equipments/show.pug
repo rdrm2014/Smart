@@ -3,6 +3,12 @@ block content
 	.container
 		.row
 			.col-md-12
+				//MAPA
+
+				ol(class="breadcrumb")
+					li
+						a(href=equipment.install)=equipment.install.name
+					li(class="active")=equipment.name
 				form(class="show")
 					.form-group
 						h2 a Equipment

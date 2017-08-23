@@ -17,7 +17,7 @@ var InstallModel = require(src + 'models/install');
 
 // Equipments
 router.get('/:idInstall/equipments', cors(corsOptions), function (req, res) {
-    EquipmentModel.find({install: req.params['idInstall'], owner: req.user}, function (err, equipments) {
+    EquipmentModel.find({install: req.params['idInstall'], owner: req.user}).exec(function (err, equipments) {
         if (err) return next(err);
         if (!equipments) return next();
         console.log(equipments);
@@ -28,7 +28,7 @@ router.get('/:idInstall/equipments', cors(corsOptions), function (req, res) {
 });
 
 router.get('/:idInstall/equipments/new', isLoggedIn, function (req, res) {
-    InstallModel.findOne({_id: req.params['idInstall'], owner: req.user}, function (err, install) {
+    InstallModel.findOne({_id: req.params['idInstall'], owner: req.user}).exec(function (err, install) {
         if (err) return next(err);
         if (!install) return next();
         console.log(install);
@@ -45,7 +45,7 @@ router.post('/:idInstall/equipments/create', isLoggedIn, function (req, res) {
         ip: req.body['ip']
     };
 
-    InstallModel.findOne({_id: req.params['idInstall'], owner: req.user}, function (err, install) {
+    InstallModel.findOne({_id: req.params['idInstall'], owner: req.user}).exec(function (err, install) {
         if (err)
             return next(err);
         if (!install)
@@ -63,7 +63,7 @@ router.post('/:idInstall/equipments/create', isLoggedIn, function (req, res) {
 });
 
 router.get('/:idInstall/equipments/:idEquipment', isLoggedIn, function (req, res) {
-    InstallModel.findOne({_id: req.params['idInstall'], owner: req.user}, function (err, install) {
+    InstallModel.findOne({_id: req.params['idInstall'], owner: req.user}).exec(function (err, install) {
         EquipmentModel
             .findOne({_id: req.params['idEquipment'], owner: req.user})
             .exec(function (err, equipment) {
@@ -77,10 +77,14 @@ router.get('/:idInstall/equipments/:idEquipment', isLoggedIn, function (req, res
 });
 
 router.get('/:idInstall/equipments/:idEquipment/edit', isLoggedIn, function (req, res) {
-    EquipmentModel.findOne({_id: req.params['idEquipment'], install: req.params['idInstall'], owner: req.user}, function (err, equipment) {
+    EquipmentModel.findOne({
+        _id: req.params['idEquipment'],
+        install: req.params['idInstall'],
+        owner: req.user
+    }).exec(function (err, equipment) {
         if (err) return next(err);
         if (!equipment) return next('EquipmentModel doesn\'t exist.');
-        InstallModel.find({owner: req.user}, function (err, installs) {
+        InstallModel.find({owner: req.user}).exec(function (err, installs) {
             if (!err) {
                 res.render('equipments/edit', {user: req.user, installs: installs, equipment: equipment});
             }
@@ -97,17 +101,25 @@ router.post('/:idInstall/equipments/:idEquipment/update', isLoggedIn, function (
         ip: req.body['ip']
     };
 
-    EquipmentModel.update({_id: req.params['idEquipment'], install: req.params['idInstall'], owner: req.user}, paramObj, function (err) {
+    EquipmentModel.update({
+        _id: req.params['idEquipment'],
+        install: req.params['idInstall'],
+        owner: req.user
+    }, paramObj, function (err) {
         if (err) {
             console.log(err);
             return res.redirect('edit');
         }
-        res.redirect('../'+req.params['idEquipment']);
+        res.redirect('../' + req.params['idEquipment']);
     });
 });
 
 router.post('/:idInstall/equipments/:idEquipment/destroy', isLoggedIn, function (req, res) {
-    EquipmentModel.findOne({_id: req.params['idEquipment'], install: req.params['idInstall'], owner: req.user}, function (err, equipment) {
+    EquipmentModel.findOne({
+        _id: req.params['idEquipment'],
+        install: req.params['idInstall'],
+        owner: req.user
+    }).exec(function (err, equipment) {
         if (err) return next(err);
 
         if (!equipment) return next('EquipmentModel doesn\'t exist.');

@@ -31,7 +31,7 @@ var InstallFunctions = require(src + 'functions/installs');
  *        - text/html
  */
 router.get('/', function (req, res) {
-    res.json({"API":"v.1"});
+    res.json({"API": "v.1"});
 });
 
 /**
@@ -52,7 +52,7 @@ router.get('/', function (req, res) {
  *          dataType: string
  */
 router.get('/installs', isAuthenticated, function (req, res) {
-    InstallModel.find({owner: req.user}, function (err, installs) {
+    InstallModel.find({owner: req.user}).exec(function (err, installs) {
         if (!err) {
             res.json({installs: installs});
         } else {
@@ -83,7 +83,7 @@ router.get('/installs', isAuthenticated, function (req, res) {
  *          dataType: string
  */
 router.get('/installs/:idInstall', isAuthenticated, function (req, res) {
-    InstallModel.findOne({_id: req.params['idInstall'], owner: req.user}, function (err, install) {
+    InstallModel.findOne({_id: req.params['idInstall'], owner: req.user}).exec(function (err, install) {
         if (err) return next(err);
         if (!install) return next();
         res.json({
@@ -110,7 +110,7 @@ router.get('/installs/:idInstall', isAuthenticated, function (req, res) {
  *          dataType: string
  */
 router.get('/installs/:idInstall/equipments', isAuthenticated, function (req, res) {
-    EquipmentModel.find({install: req.params['idInstall'], owner: req.user}, function (err, equipments) {
+    EquipmentModel.find({install: req.params['idInstall'], owner: req.user}).exec(function (err, equipments) {
         if (err) return next(err);
         if (!equipments) return next();
         res.json({
@@ -137,10 +137,10 @@ router.get('/installs/:idInstall/equipments', isAuthenticated, function (req, re
  *          dataType: string
  */
 router.get('/installs/:idInstall/equipments/count', isAuthenticated, function (req, res) {
-    EquipmentModel.find({install: req.params['idInstall'], owner: req.user}, function (err, equipments) {
+    EquipmentModel.find({install: req.params['idInstall'], owner: req.user}).exec(function (err, equipments) {
         if (err) return next(err);
         if (!equipments) return next();
-        res.json({"count":equipments.length});
+        res.json({"count": equipments.length});
     });
 });
 
@@ -162,7 +162,7 @@ router.get('/installs/:idInstall/equipments/count', isAuthenticated, function (r
  *          dataType: string
  */
 router.get('/installs/:idInstall/equipments/:idEquipment', isAuthenticated, function (req, res) {
-    InstallModel.findOne({_id: req.params['idInstall'], owner: req.user}, function (err, install) {
+    InstallModel.findOne({_id: req.params['idInstall'], owner: req.user}).exec(function (err, install) {
         EquipmentModel
             .findOne({_id: req.params['idEquipment'], owner: req.user})
             .exec(function (err, equipment) {
@@ -190,7 +190,11 @@ router.get('/installs/:idInstall/equipments/:idEquipment', isAuthenticated, func
  *          dataType: string
  */
 router.get('/installs/:idInstall/equipments/:idEquipment/sensors', isAuthenticated, function (req, res) {
-    SensorModel.find({install: req.params['idInstall'], equipment: req.params['idEquipment'], owner: req.user}, function (err, sensors) {
+    SensorModel.find({
+        install: req.params['idInstall'],
+        equipment: req.params['idEquipment'],
+        owner: req.user
+    }).exec(function (err, sensors) {
         if (err) return next(err);
         if (!sensors) return next();
         res.json({
@@ -217,7 +221,11 @@ router.get('/installs/:idInstall/equipments/:idEquipment/sensors', isAuthenticat
  *          dataType: string
  */
 router.get('/installs/:idInstall/equipments/:idEquipment/sensors/count', isAuthenticated, function (req, res) {
-    SensorModel.find({install: req.params['idInstall'], equipment: req.params['idEquipment'], owner: req.user}, function (err, sensors) {
+    SensorModel.find({
+        install: req.params['idInstall'],
+        equipment: req.params['idEquipment'],
+        owner: req.user
+    }).exec(function (err, sensors) {
         if (err) return next(err);
         if (!sensors) return next();
         res.json({"count": sensors.length});
@@ -261,7 +269,7 @@ module.exports = router;
 // route middleware to ensure user is logged in
 function isAuthenticated(req, res, next) {
     //if (req.isAuthenticated())
-        return next();
+    return next();
 
     //res.redirect('/');
 }

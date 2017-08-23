@@ -21,8 +21,8 @@
 var mongoose = require('mongoose');
 // define the schema for our equipment model
 var equipmentSchema = mongoose.Schema({
-    owner: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
-    install: {type: mongoose.Schema.Types.ObjectId, ref: 'Install'},
+    owner: {type: mongoose.Schema.Types.ObjectId, ref: 'user'},
+    install: {type: mongoose.Schema.Types.ObjectId, ref: 'install'},
     name: String,
     description: String,
     position: {
@@ -33,4 +33,4 @@ var equipmentSchema = mongoose.Schema({
 });
 
 // create the model for equipments and expose it to our app
-module.exports = mongoose.model('Equipments', equipmentSchema);
+module.exports = mongoose.model('equipment', equipmentSchema);

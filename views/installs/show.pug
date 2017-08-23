@@ -8,10 +8,11 @@ block content
 	.container
 		.row
 			.col-md-12
+				ol(class="breadcrumb")
+					li(class="active")=install.name
 				form(class="show")
 					.form-group
 						h2 a Install
-					#{Install}
 					.form-group(style="width: 400px;")
 						label Name
 						input(value=install.name name="name" type="text" class="form-control" disabled)

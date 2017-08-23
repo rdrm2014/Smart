@@ -11,7 +11,7 @@ var InstallModel = require(src + 'models/install');
 
 // installs
 router.get('/', isLoggedIn, function (req, res) {
-    InstallModel.find({owner: req.user}, function (err, installs) {
+    InstallModel.find({owner: req.user}).exec(function (err, installs) {
         if (!err) {
             res.render('installs/index', {user: req.user, installs: installs});
         } else {
@@ -26,7 +26,7 @@ router.get('/', isLoggedIn, function (req, res) {
 
 // installs
 router.get('/map', isLoggedIn, function (req, res) {
-    InstallModel.find({owner: req.user}, function (err, installs) {
+    InstallModel.find({owner: req.user}).exec(function (err, installs) {
         if (!err) {
             res.render('installs/map', {user: req.user, installs: installs});
         } else {
@@ -70,7 +70,7 @@ router.post('/create', isLoggedIn, function (req, res) {
 });
 
 router.get('/:idInstall', isLoggedIn, function (req, res) {
-    InstallModel.findOne({_id: req.params['idInstall'], owner: req.user}, function (err, install) {
+    InstallModel.findOne({_id: req.params['idInstall'], owner: req.user}).exec(function (err, install) {
         if (err) return next(err);
         if (!install) return next();
         res.render('installs/show', {
@@ -80,7 +80,7 @@ router.get('/:idInstall', isLoggedIn, function (req, res) {
 });
 
 router.get('/:idInstall/edit', isLoggedIn, function (req, res) {
-    InstallModel.findOne({_id: req.params['idInstall'], owner: req.user}, function (err, install) {
+    InstallModel.findOne({_id: req.params['idInstall'], owner: req.user}).exec(function (err, install) {
         if (err) return next(err);
         if (!install) return next('InstallModel doesn\'t exist.');
 
@@ -113,7 +113,7 @@ router.post('/:idInstall/update', isLoggedIn, function (req, res) {
 });
 
 router.post('/:idInstall/destroy', isLoggedIn, function (req, res) {
-    InstallModel.findOne({_id: req.params['idInstall'], owner: req.user}, function (err, install) {
+    InstallModel.findOne({_id: req.params['idInstall'], owner: req.user}).exec(function (err, install) {
         if (err) return next(err);
 
         if (!install) return next('InstallModel doesn\'t exist.');
