@@ -62,14 +62,14 @@ router.post('/create', isLoggedIn, function (req, res) {
     InstallModel.create(paramObj, function installCreated(err, install) {
         if (err) {
             console.log(err);
-            return res.redirect('installs/new');
+            return res.redirect('/installs/new');
         }
         res.redirect(install.id);
 
     });
 });
 
-router.get('/:idInstall', isLoggedIn, function (req, res) {
+router.get('/:idInstall', isLoggedIn, function (req, res, next) {
     InstallModel.findOne({_id: req.params['idInstall'], owner: req.user}).exec(function (err, install) {
         if (err) return next(err);
         if (!install) return next();
@@ -79,7 +79,7 @@ router.get('/:idInstall', isLoggedIn, function (req, res) {
     });
 });
 
-router.get('/:idInstall/edit', isLoggedIn, function (req, res) {
+router.get('/:idInstall/edit', isLoggedIn, function (req, res, next) {
     InstallModel.findOne({_id: req.params['idInstall'], owner: req.user}).exec(function (err, install) {
         if (err) return next(err);
         if (!install) return next('InstallModel doesn\'t exist.');
@@ -106,13 +106,13 @@ router.post('/:idInstall/update', isLoggedIn, function (req, res) {
     InstallModel.update({_id: req.params['idInstall'], owner: req.user}, paramObj, function (err) {
         if (err) {
             console.log(err);
-            return res.redirect('/'+req.params['idInstall']+'/edit');
+            return res.redirect('/' + req.params['idInstall'] + '/edit');
         }
         res.redirect('/installs/' + req.params['idInstall']);
     });
 });
 
-router.post('/:idInstall/destroy', isLoggedIn, function (req, res) {
+router.post('/:idInstall/destroy', isLoggedIn, function (req, res, next) {
     InstallModel.findOne({_id: req.params['idInstall'], owner: req.user}).exec(function (err, install) {
         if (err) return next(err);
 

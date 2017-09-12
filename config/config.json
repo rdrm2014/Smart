@@ -4,8 +4,14 @@
   },
   "default": {
     "api": {
-      "version": "v1"
+      "version": "v1",
+      "port": "3000"
     }
+  },
+  "nodeRed": {
+    "path": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/",
+    "pathSettings": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/settings/",
+    "pathFlows": "/Users/ricardomendes/.node-red/flows/"
   },
   "configAuth": {
     "facebookAuth": {

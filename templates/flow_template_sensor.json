@@ -1,0 +1,58 @@
+[
+  {
+    "id": "{{sensorID}}_read",
+    "type": "{{sensorType}}",
+    "z": "{{sensorInstall}}",
+    "name": "{{sensorName}}",
+    "topic": "{{sensorInstall}}/{{sensorEquipment}}/{{sensorID}}/1/read",
+    "qos": "2",
+    "broker": "8bec196c.723a18",
+    "x": {{posX1}},
+    "y": {{posY}},
+    "wires": [
+      [
+        "{{sensorID}}_function"
+      ]
+    ]
+  },
+  {
+    "id": "{{sensorID}}_function",
+    "type": "function",
+    "z": "{{sensorInstall}}",
+    "name": "{{sensorName}}_function",
+    "func": "var json = JSON.parse(msg[\"payload\"]);\n\nvar result= json[\"{{sensorType}}\"];\n\nvar line1 = { color:\"#ff7f0e\",topic: '{{sensorType}}', payload: result};\n\nreturn [line1];",
+    "outputs": 1,
+    "noerr": 0,
+    "x": {{posX2}},
+    "y": {{posY}},
+    "wires": [
+      [
+        "{{sensorID}}_write"
+      ]
+    ]
+  },
+  {
+    "id": "{{sensorID}}_write",
+    "type": "ui_chart",
+    "z": "{{sensorInstall}}",
+    "name": "",
+    "group": "{{sensorEquipment}}_group",
+    "order": 1,
+    "width": "6",
+    "height": "4",
+    "label": "{{sensorName}}",
+    "chartType": "line",
+    "interpolate": "linear",
+    "nodata": "No Data",
+    "ymin": "",
+    "ymax": "",
+    "removeOlder": 1,
+    "removeOlderUnit": "60",
+    "x": {{posX3}},
+    "y": {{posY}},
+    "wires": [
+      [],
+      []
+    ]
+  }
+]

@@ -19,6 +19,10 @@ var SensorModel = require(src + 'models/sensor');
 var EquipmentFunctions = require(src + 'functions/equipments');
 var InstallFunctions = require(src + 'functions/installs');
 
+var filesCreator = require(src + 'functions/filesCreator');
+
+var config = require(src + "config/config");
+
 /**
  * @swagger
  * path: /
@@ -32,6 +36,24 @@ var InstallFunctions = require(src + 'functions/installs');
  */
 router.get('/', function (req, res) {
     res.json({"API": "v.1"});
+});
+
+router.get('/json', function (req, res) {
+    var locationSettingsFile = config.get('nodeRed:pathSettings') + "settings_" + req.user._id + ".js";
+    var locationFlowFile = config.get('nodeRed:pathFlows') + "flow_" + req.user._id + ".json";
+
+    filesCreator.settingsCreator(req.user, src + "templates/settings_template.js", {
+        uiPort: 1885,
+        idUser: req.user._id,
+        userDir: config.get('nodeRed:path')
+    }, locationSettingsFile);
+
+    filesCreator.jsonCreator(req.user, locationFlowFile, function (err, err1) {
+        console.log("ERRORR: " + err + "\n" + err1);
+    });
+    return res.json({
+        message: 'Success!'
+    });
 });
 
 /**

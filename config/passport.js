@@ -1,19 +1,15 @@
 /**
  * Created by ricardomendes on 10/01/17.
  */
-var location = process.cwd() + '/';
+var src = process.cwd() + '/';
 
-//var config = require(location + "config/config");
-//console.log(config);
 var LocalStrategy = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
 var TwitterStrategy = require('passport-twitter').Strategy;
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-var BearerStrategy = require('passport-http-bearer').Strategy;
-
 
 // load up the user model
-var User = require(location + 'models/user');
+var User = require(src + 'models/user');
 
 module.exports = function (config, passport) {
 
@@ -34,31 +30,6 @@ module.exports = function (config, passport) {
             done(err, user);
         });
     });
-
-    /*passport.use('bearer',new
-        BearerStrategy(
-        function(accessToken, done) {
-            AccessTokenModel.findOne({ token: accessToken }, function(err, token) {
-                if (err) { return done(err); }
-                if (!token) { return done(null, false); }
-
-                if( Math.round((Date.now()-token.created)/1000) > config.get('security:tokenLife') ) {
-                    AccessTokenModel.remove({ token: accessToken }, function (err) {
-                        if (err) return done(err);
-                    });
-                    return done(null, false, { message: 'Token expired' });
-                }
-
-                UserModel.findById(token.userId, function(err, user) {
-                    if (err) { return done(err); }
-                    if (!user) { return done(null, false, { message: 'Unknown user' }); }
-
-                    var info = { scope: '*' }
-                    done(null, user, info);
-                });
-            });
-        }
-    ));*/
 
     // =========================================================================
     // LOCAL LOGIN =============================================================
@@ -186,8 +157,6 @@ module.exports = function (config, passport) {
                             if (!user.facebook.token) {
                                 user.facebook.token = token;
                                 user.facebook.name = profile.displayName;
-                                //user.facebook.name = profile.name.givenName + ' ' + profile.name.familyName;
-                                //user.facebook.email = profile.emails[0].value;
 
                                 user.save(function (err) {
                                     if (err)
@@ -204,9 +173,6 @@ module.exports = function (config, passport) {
                             newUser.facebook.id = profile.id;
                             newUser.facebook.token = token;
                             newUser.facebook.name = profile.displayName;
-                            //newUser.facebook.name = profile.name.givenName + ' ' + profile.name.familyName;
-                            //newUser.facebook.email = profile.emails[0].value;
-                            console.log(profile);
                             newUser.save(function (err) {
                                 if (err)
                                     throw err;
@@ -216,15 +182,12 @@ module.exports = function (config, passport) {
                     });
 
                 } else {
-                    console.log(profile);
                     // user already exists and is logged in, we have to link accounts
                     var user = req.user; // pull the user out of the session
 
                     user.facebook.id = profile.id;
                     user.facebook.token = token;
-                    //user.facebook.name  = profile.name.givenName + ' ' + profile.name.familyName;
                     user.facebook.name = profile.displayName;
-                    //user.facebook.email = profile.emails[0].value;
 
                     user.save(function (err) {
                         if (err)

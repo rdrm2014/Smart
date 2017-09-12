@@ -1,0 +1,20 @@
+[
+  {
+    "id": "8bec196c.723a18",
+    "type": "mqtt-broker",
+    "z": "",
+    "broker": "{{ipBroker}}",
+    "port": "{{portBoker}}",
+    "clientid": "",
+    "usetls": false,
+    "compatmode": true,
+    "keepalive": "60",
+    "cleansession": true,
+    "willTopic": "",
+    "willQos": "0",
+    "willPayload": "",
+    "birthTopic": "",
+    "birthQos": "0",
+    "birthPayload": ""
+  }
+]

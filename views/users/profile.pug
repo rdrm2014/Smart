@@ -1,4 +1,4 @@
-extends layout-home
+extends ../layout-home
 block content
     .container
         .row
@@ -17,7 +17,7 @@ block content
                         br
                     a(href="/unlink/local") Unlink
                 else
-                    a(href="/connect/local") Connect Local
+                    a(href="/users/connect/local") Connect Local
                 hr
             .col-md-6
                 h3 Facebook
@@ -38,7 +38,7 @@ block content
                         br
                     a(href="/unlink/facebook") Unlink
                 else
-                    a(href="/connect/facebook") Connect Facebook
+                    a(href="/users/connect/facebook") Connect Facebook
 
                 hr
         .row
@@ -61,7 +61,7 @@ block content
                         br
                     a(href="/unlink/twitter") Unlink
                 else
-                    a(href="/connect/twitter") Connect Twitter
+                    a(href="/users/connect/twitter") Connect Twitter
 
                 hr
             .col-md-6
@@ -83,5 +83,17 @@ block content
                         br
                     a(href="/unlink/google") Unlink
                 else
-                    a(href="/connect/google") Connect Google
+                    a(href="/users/connect/google") Connect Google
+                hr
+            .col-md-6
+                h3 UI
+
+                if user.urlNodeRed
+                    p
+                        strong urlUI
+                        | : #{ user.urlNodeRed}
+                        br
+                        a(href="/users/unlink/nodered") Delete UI
+                else
+                    a(href="/users/urlnodered") Create UI
                 hr

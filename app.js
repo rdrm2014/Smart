@@ -1,25 +1,27 @@
-var location = process.cwd() + "/";
+var src = process.cwd() + "/";
 var passport = require('passport');
 var mongoose = require('mongoose');
 var express = require('express');
 var path = require('path');
 var swagger = require('swagger-express');
-var config = require(location + "config/config");
-require(location + 'config/passport')(config, passport); // pass passport for configuration
+var config = require(src + "config/config");
+require(src + 'config/passport')(config, passport); // pass passport for configuration
 // connect to the database
-mongoose.connect(config.get('mongoose:uri'));
+mongoose.connect(config.get('mongoose:uri'), {
+    useMongoClient: true
+});
 var session = require('express-session');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var api = require(location + 'routes/api');
-var index = require(location + 'routes/index');
-var users = require(location + 'routes/users');
-var equipments = require(location + 'routes/equipments');
-var installs = require(location + 'routes/installs');
-var sensors = require(location + 'routes/sensors');
+var api = require(src + 'routes/api');
+var index = require(src + 'routes/index');
+var users = require(src + 'routes/users');
+var equipments = require(src + 'routes/equipments');
+var installs = require(src + 'routes/installs');
+var sensors = require(src + 'routes/sensors');
 
 var cors = require('cors');
 
@@ -30,17 +32,16 @@ var corsOptions = {
 
 var app = express();
 
-app.all('*', function(req, res, next) {
+app.all('*', function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     next();
 });
 
 // view engine setup
-app.set('views', location + 'views');
+app.set('views', src + 'views');
 app.set('view engine', 'pug');
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -60,17 +61,12 @@ app.use(swagger.init(app, {
     swaggerURL: '/swagger',
     swaggerJSON: '/api-docs.json',
     swaggerUI: './public/swagger/',
-    apis: ['./routes/api.js'],
+    apis: ['./routes/api.js']
     //middleware: function(req, res){}
 }));
 
-//app.use(app.router);
-
-//console.log("app.use(passport.initialize());");
 app.use(passport.initialize());
 app.use(passport.session());
-
-//app.use(express.static(location + 'public'));
 
 app.use(cors(corsOptions));
 
@@ -94,19 +90,19 @@ app.use(function (err, req, res, next) {
 });
 
 // catch 404 and forward to error handler
-app.use(function(err, req, res, next){
+app.use(function (err, req, res, next) {
     res.status(404);
 
     // respond with html page
     if (req.accepts('html')) {
         res.status(err.status || 404);
-        res.render('error', { url: req.url });
+        res.render('error', {url: req.url});
         return;
     }
 
     // respond with json
     if (req.accepts('json')) {
-        res.send({ error: 'Not found' });
+        res.send({error: 'Not found'});
         return;
     }
 
@@ -114,5 +110,29 @@ app.use(function(err, req, res, next){
     res.type('txt').send('Not found');
 });
 
-//*/
+/**
+ * Run Multiple instances
+ **/
+// or more concisely
+var exec = require('child_process').exec;
+function execInstances(error, stdout, stderr) {
+    console.log(stdout);
+}
+
+var locationNode = config.get('nodeRed:path');
+var locationNodeSettings = config.get('nodeRed:pathSettings');
+
+var UserModel = require(src + 'models/user');
+
+// installs
+UserModel.find().exec(function (err, users) {
+    if (err) {
+        res.statusCode = 500;
+    } else {
+        users.forEach(function (user) {
+            exec("node " + locationNode + "red.js --settings " + locationNodeSettings + "settings_" + user._id + ".js", execInstances);
+        });
+    }
+});
+
 module.exports = app;

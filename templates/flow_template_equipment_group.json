@@ -1,0 +1,11 @@
+[
+  {
+    "id": "{{equipmentID}}_group",
+    "type": "ui_group",
+    "z": "{{installID}}",
+    "name": "{{equipmentName}}",
+    "tab": "{{equipmentInstall}}_tab",
+    "disp": true,
+    "width": "12"
+  }
+]

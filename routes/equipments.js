@@ -4,19 +4,12 @@
 var express = require('express');
 var router = express.Router();
 
-var cors = require('cors');
-
-var corsOptions = {
-    origin: '*',
-    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-};
-
 var src = process.cwd() + '/';
 var EquipmentModel = require(src + 'models/equipment');
 var InstallModel = require(src + 'models/install');
 
 // Equipments
-router.get('/:idInstall/equipments', cors(corsOptions), function (req, res) {
+router.get('/:idInstall/equipments', isLoggedIn, function (req, res) {
     EquipmentModel.find({install: req.params['idInstall'], owner: req.user}).exec(function (err, equipments) {
         if (err) return next(err);
         if (!equipments) return next();

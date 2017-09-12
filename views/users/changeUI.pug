@@ -1,0 +1,13 @@
+extends ../layout-home
+block content
+    .container
+        .row
+            .col-md-12
+                form(action="urlnodered/create" method="POST" role="form" class="new")
+                    .form-group
+                        h2 Create urlNodeRed
+                        .form-group(style="width: 400px;")
+                            label url
+                            input(name="urlnodered" type="text" class="form-control")
+                    input(type="submit" value="Submit" class="btn btn-default")
+                a(href="sensors" class="btn btn-danger") Back to list

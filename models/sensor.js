@@ -27,7 +27,7 @@ var sensorSchema = mongoose.Schema({
     name: String,
     description: String,
     dataType: String,
-    chartType: String
+    chartType: String //line, gauge
 });
 
 // create the model for equipments and expose it to our app

@@ -14,7 +14,6 @@ router.get('/', function (req, res, next) {
     res.render('index', {title: 'Smart-*'});
 });
 
-
 router.get('/home', isLoggedIn, function (req, res) {
     console.log(req.user);
     res.render('home', {
@@ -35,37 +34,37 @@ router.get('/home', isLoggedIn, function (req, res) {
 router.get('/nodered', isLoggedIn, function (req, res1) {
     res1.redirect(req.user.urlNodeRed);
 
-/*
-    var unirest = require('unirest');
+    /*
+     var unirest = require('unirest');
 
 
-    // POST a form with an attached file
-    unirest.post('http://localhost:1881/red/auth/token')
-    //unirest.post('http://localhost:1881/red/login')
-        .send({client_id:"node-red-admin", grant_type:"password",scope:"*", username:"admin", password:"password"})
-        //.attach('myfile', 'examples.js')
-        .end(function (res) {
-            if (res.error) {
-                console.log('POST error', res.error);
-            } else {
-                console.log('POST response', res.body);
-                // GET a resource
+     // POST a form with an attached file
+     unirest.post('http://localhost:1881/red/auth/token')
+     //unirest.post('http://localhost:1881/red/login')
+     .send({client_id:"node-red-admin", grant_type:"password",scope:"*", username:"admin", password:"password"})
+     //.attach('myfile', 'examples.js')
+     .end(function (res) {
+     if (res.error) {
+     console.log('POST error', res.error);
+     } else {
+     console.log('POST response', res.body);
+     // GET a resource
 
-                unirest.get('http://localhost:1881/red/settings')
-                    .headers({
-                        'Accept': 'application/json',
-                        'Authorization': res.body["token_type"]+" "+res.body["access_token"]
-                    })
-                 .end(function (res) {
-                 if (res.error) {
-                 console.log('GET error', res.error)
-                 } else {
-                 console.log('GET response', res.body);
-                     res1.redirect(req.user.urlNodeRed);
-                 }
-                 })
-            }
-        })*/
+     unirest.get('http://localhost:1881/red/settings')
+     .headers({
+     'Accept': 'application/json',
+     'Authorization': res.body["token_type"]+" "+res.body["access_token"]
+     })
+     .end(function (res) {
+     if (res.error) {
+     console.log('GET error', res.error)
+     } else {
+     console.log('GET response', res.body);
+     res1.redirect(req.user.urlNodeRed);
+     }
+     })
+     }
+     })*/
 });
 
 /**

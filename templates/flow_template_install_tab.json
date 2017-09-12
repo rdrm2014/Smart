@@ -1,0 +1,14 @@
+[
+  {
+    "id": "{{installID}}",
+    "type": "tab",
+    "label": "{{installName}}"
+  },
+  {
+    "id": "{{installID}}_tab",
+    "type": "ui_tab",
+    "z": "{{installID}}",
+    "name": "{{installName}}",
+    "icon": "dashboard"
+  }
+]

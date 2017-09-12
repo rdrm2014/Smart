@@ -9,7 +9,7 @@ block content
     .container
         .row
             .col-md-12
-                form(action="create" method="POST" role="form" class="new" id="addInstall")
+                form(action="/installs/create" method="POST" role="form" class="new" id="addInstall")
                     .form-group
                         h2 Create a Install
 
@@ -18,7 +18,11 @@ block content
                             input(name="name" type="text" class="form-control")
                         .form-group(style="width: 400px;")
                             label Type
-                            input(name="type" type="text" class="form-control")
+                            select(name="type" class="form-control")
+                              option Agricultura
+                              option Piscicultura
+                              option Aquário
+
                         .form-group(style="width: 400px;")
                             label Description
                             input(name="description" type="text" class="form-control")

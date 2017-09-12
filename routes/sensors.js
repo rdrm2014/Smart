@@ -4,20 +4,13 @@
 var express = require('express');
 var router = express.Router();
 
-var cors = require('cors');
-
-var corsOptions = {
-    origin: '*',
-    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-};
-
 var src = process.cwd() + '/';
 var EquipmentModel = require(src + 'models/equipment');
 var InstallModel = require(src + 'models/install');
 var SensorModel = require(src + 'models/sensor');
 
 // Sensors
-router.get('/:idInstall/equipments/:idEquipment/sensors', cors(corsOptions), function (req, res) {
+router.get('/:idInstall/equipments/:idEquipment/sensors', isLoggedIn, function (req, res) {
     SensorModel.find({
         install: req.params['idInstall'],
         equipment: req.params['idEquipment'],
@@ -156,7 +149,6 @@ module.exports = router;
 
 // route middleware to ensure user is logged in
 function isLoggedIn(req, res, next) {
-    //cors(corsOptions);
     if (req.isAuthenticated())
         return next();
 

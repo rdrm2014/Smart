@@ -3,15 +3,15 @@
  */
 var express = require('express');
 var router = express.Router();
-
 var passport = require('passport');
 
-var jwt = require('jsonwebtoken');
+var src = process.cwd() + '/';
+var UserModel = require(src + 'models/user');
 
 // normal routes ===============================================================
 // PROFILE SECTION =========================
 router.get('/profile', isLoggedIn, function (req, res) {
-    res.render('profile', {
+    res.render('users/profile', {
         user: req.user
     });
 });
@@ -38,38 +38,18 @@ router.get('/login', function (req, res) {
 
 // process the login form
 router.post('/login', passport.authenticate('local-login', {
- //successRedirect: '/home', // redirect to the secure profile section
- failureRedirect: '/users/login', // redirect back to the signup page if there is an error
- failureFlash: true // allow flash messages
- }
-), function(req,res){
-        if(req.body["callbackLink"]){
+            //successRedirect: '/home', // redirect to the secure profile section
+            failureRedirect: '/users/login', // redirect back to the signup page if there is an error
+            failureFlash: true // allow flash messages
+        }
+    ), function (req, res) {
+        if (req.body["callbackLink"]) {
             res.redirect(req.body["callbackLink"]);
-        } else{
+        } else {
             res.redirect("/home");
         }
-}
+    }
 );
-/*router.post('/login', /*function (req, res) {
-     //res.render('login', {message: req.flash('loginMessage')});
-     var name = req.body.username;
-     var password = req.body.password;
-     console.log(name + ": " + password);
-     });*/
-
-/*   passport.authenticate('jwt', {
-        successRedirect: '/home', // redirect to the secure profile section
-        failureRedirect: '/users/login', // redirect back to the signup page if there is an error
-        failureFlash: false,// allow flash messages
-        session: false
-    }));
-*/
-
-
-
-
-
-
 
 // SIGNUP =================================
 // show the signup form
@@ -97,7 +77,6 @@ router.get('/auth/facebook/callback',
     }));
 
 // twitter --------------------------------
-
 // send to twitter to do the authentication
 router.get('/auth/twitter', passport.authenticate('twitter', {scope: 'email'}));
 
@@ -108,9 +87,7 @@ router.get('/auth/twitter/callback',
         failureRedirect: '/'
     }));
 
-
 // google ---------------------------------
-
 // send to google to do the authentication
 router.get('/auth/google', passport.authenticate('google', {scope: ['profile', 'email']}));
 
@@ -156,7 +133,6 @@ router.get('/connect/twitter/callback',
         successRedirect: '/home',
         failureRedirect: '/'
     }));
-
 
 // google ---------------------------------
 // send to google to do the authentication
@@ -205,7 +181,7 @@ router.get('/unlink/twitter', function (req, res) {
     user.twitter.displayName = undefined;
     user.twitter.username = undefined;
     user.save(function (err) {
-        res.redirect('/users/home');
+        res.redirect('/home');
     });
 });
 
@@ -217,7 +193,37 @@ router.get('/unlink/google', function (req, res) {
     user.google.email = undefined;
     user.google.name = undefined;
     user.save(function (err) {
-        res.redirect('/users/home');
+        res.redirect('/home');
+    });
+});
+
+// urlNodeRede ---------------------------------
+router.get('/urlnodered', isLoggedIn, function (req, res) {
+    res.render('users/changeUI', {user: req.user});
+});
+
+router.post('/urlnodered/create', isLoggedIn, function (req, res) {
+    var paramObj = {
+        urlNodeRed: req.body['urlnodered']
+    };
+
+    /*
+     //Create settings node-red for user and run instance
+     */
+    UserModel.update(req.user, paramObj, function (err) {
+        if (err) {
+            console.log(err);
+            return res.redirect('/users/urlnodered');
+        }
+        res.redirect('/users/profile');
+    });
+});
+
+router.get('/unlink/nodered', function (req, res) {
+    var user = req.user;
+    user.urlNodeRed = undefined;
+    user.save(function (err) {
+        res.redirect('/home');
     });
 });
 
