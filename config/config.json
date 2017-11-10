@@ -11,7 +11,12 @@
   "nodeRed": {
     "path": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/",
     "pathSettings": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/settings/",
+    "pathNodeRed": "/Users/ricardomendes/.node-red/",
     "pathFlows": "/Users/ricardomendes/.node-red/flows/"
+  },
+  "broker": {
+    "ip": "192.168.1.8",
+    "port": 1883
   },
   "configAuth": {
     "facebookAuth": {

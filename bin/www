@@ -4,10 +4,11 @@
  * Module dependencies.
  */
 
+var src = process.cwd() + "/";
 var app = require('../app');
 var debug = require('debug')('smart:server');
 var http = require('http');
-var config = require(location + "config/config");
+var config = require(src + "config/config");
 
 /**
  * Get port from environment and store in Express.

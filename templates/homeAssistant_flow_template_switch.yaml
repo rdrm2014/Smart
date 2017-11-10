@@ -1,0 +1,7 @@
+- platform: mqtt
+  state_topic: '{{sensorInstall}}/{{sensorEquipment}}/{{sensorID}}/1/read'
+  command_topic: '{{sensorInstall}}/{{sensorEquipment}}/{{sensorID}}/1/write'
+  name: 'Switch 1'
+  value_template: '{{ value_json.{{sensorType}} }}'
+  payload_on: "1"
+  payload_off: "0"

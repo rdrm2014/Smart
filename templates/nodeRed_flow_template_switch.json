@@ -1,9 +1,9 @@
 [
   {
     "id": "{{sensorID}}_read",
-    "type": "{{sensorType}}",
+    "type": "mqtt in",
     "z": "{{sensorInstall}}",
-    "name": "{{sensorName}}",
+    "name": "{{sensorName}}_input",
     "topic": "{{sensorInstall}}/{{sensorEquipment}}/{{sensorID}}/1/read",
     "qos": "2",
     "broker": "8bec196c.723a18",
@@ -33,13 +33,24 @@
   },
   {
     "id": "{{sensorID}}_write",
-    "type": "ui_chart",
+    "type": "ui_switch",
     "z": "{{sensorInstall}}",
-    "name": "",
+    "name": "{{sensorName}}_write",
     "group": "{{sensorEquipment}}_group",
-    "order": 1,
-    "width": "6",
-    "height": "4",
+    "order": 0,
+    "width": 0,
+    "height": 0,
+    "passthru": true,
+    "decouple": "false",
+    "topic": "",
+    "style": "",
+    "onvalue": "1",
+    "onvalueType": "num",
+    "onicon": "", "oncolor": "",
+    "offvalue": "0",
+    "offvalueType": "num",
+    "officon": "",
+    "offcolor": "",
     "label": "{{sensorName}}",
     "chartType": "line",
     "interpolate": "linear",
@@ -51,8 +62,20 @@
     "x": {{posX3}},
     "y": {{posY}},
     "wires": [
-      [],
-      []
+      [
+        "{{sensorID}}_relay"
+      ]
     ]
+  },
+  {
+    "id": "{{sensorID}}_relay",
+    "type": "{{sensorType}}",
+    "z": "{{sensorInstall}}",
+    "name": "{{sensorName}}",
+    "topic": "{{sensorInstall}}/{{sensorEquipment}}/{{sensorID}}/1/write",
+    "broker": "8bec196c.723a18",
+    "x": {{posX4}},
+    "y": {{posY}},
+    "wires": []
   }
 ]

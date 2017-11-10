@@ -6,7 +6,11 @@ var router = express.Router();
 var passport = require('passport');
 
 var src = process.cwd() + '/';
+var config = require(src + "config/config");
+var filesCreator = require(src + 'functions/filesCreator');
+
 var UserModel = require(src + 'models/user');
+var spawn = require('child_process').spawn;
 
 // normal routes ===============================================================
 // PROFILE SECTION =========================
@@ -197,7 +201,7 @@ router.get('/unlink/google', function (req, res) {
     });
 });
 
-// urlNodeRede ---------------------------------
+// urlNodeRed ---------------------------------
 router.get('/urlnodered', isLoggedIn, function (req, res) {
     res.render('users/changeUI', {user: req.user});
 });
@@ -225,6 +229,54 @@ router.get('/unlink/nodered', function (req, res) {
     user.save(function (err) {
         res.redirect('/home');
     });
+});
+
+// updateFlow---------------------------------
+router.post('/updateFlow', isLoggedIn, function (req, res) {
+    // Update Flow
+    var locationSettingsFile = config.get('nodeRed:pathSettings') + "settings_" + req.user._id + ".js";
+    var locationFlowFile = config.get('nodeRed:pathFlows') + "flow_" + req.user._id + ".json";
+
+    console.log("locationSettingsFile: " + locationSettingsFile);
+    console.log("locationFlowFile: " + locationFlowFile);
+
+    filesCreator.settingsCreator(req.user, src + "templates/nodeRed_settings_template.js", {
+        uiPort: 1885,
+        idUser: req.user._id,
+        userDir: config.get('nodeRed:pathNodeRed')
+    }, locationSettingsFile);
+
+    filesCreator.jsonCreator(req.user, locationFlowFile, function (err, err1) {
+        if (err || err1) {
+            console.log("ERRORR: " + err + "\n" + err1);
+        }
+    });
+    // Restart process NodeRed
+    /**
+     * Run Multiple instances
+     **/
+    if (req.user.pid) {
+        // PID exist?
+        //var psCommand = spawn("sh", ["shellScripts/killAllProcessNodeRed.sh"]);
+        var psCommand = spawn("sh", ["shellScripts/killProcess.sh", req.user.pid]);
+        psCommand.stdout.on("data", function (data) {
+            console.log(data.toString());
+        });
+    }
+    var locationNode = config.get('nodeRed:path');
+    var locationNodeSettings = config.get('nodeRed:pathSettings');
+    var command = spawn("node", [locationNode + "red.js", "--settings ", locationNodeSettings + "settings_" + req.user._id + ".js"]);
+    var paramObj = {
+        pid: command.pid,
+        updateFlowDate: Date.now()
+    };
+    UserModel.update(req.user, paramObj, function (err) {
+        if (err) {
+            console.log(err);
+        }
+    });
+    console.log("TESTE5");
+    res.redirect('/users/profile');
 });
 
 module.exports = router;

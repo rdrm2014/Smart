@@ -1,5 +1,5 @@
 module.exports = {
-    uiPort: process.env.PORT || {{uiPort}},
+    uiPort: {{uiPort}},
     mqttReconnectTime: 15000,
     serialReconnectTime: 15000,
     debugMaxLength: 1000,

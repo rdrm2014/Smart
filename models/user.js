@@ -30,7 +30,9 @@ var userSchema = mongoose.Schema({
         name: String
     },
 
-    urlNodeRed: String
+    urlNodeRed: String,
+    updateFlowDate: Date,
+    pid: String
 
 });
 

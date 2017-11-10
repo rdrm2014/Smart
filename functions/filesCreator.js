@@ -11,6 +11,8 @@ var InstallModel = require(src + 'models/install');
 var EquipmentModel = require(src + 'models/equipment');
 var SensorModel = require(src + 'models/sensor');
 
+var config = require(src + "config/config");
+
 module.exports = {
     jsonCreator: function (user, finalFile, callback) {
         // View Installs list
@@ -22,11 +24,11 @@ module.exports = {
                 var jsonFull = [];
 
                 // Flow Template Broker
-                fs.readFile(src + "templates/flow_template_broker.json", 'utf8', function (err, template) {
+                fs.readFile(src + "templates/nodeRed_flow_template_broker.json", 'utf8', function (err, template) {
                     if (!err) {
                         var jsonBroker = Mustache.render(template, {
-                            ipBroker: "192.168.0.55",
-                            portBoker: 1883
+                            ipBroker: config.get('broker:ip'),
+                            portBoker: config.get('broker:port')
                         });
                         jsonFull = jsonFull.concat(JSON.parse(jsonBroker));
                     }
@@ -36,7 +38,7 @@ module.exports = {
                     var x = 100, y = 50;
 
                     // Flow Template Install Tab
-                    fs.readFile(src + "templates/flow_template_install_tab.json", 'utf8', function (err, template) {
+                    fs.readFile(src + "templates/nodeRed_flow_template_install_tab.json", 'utf8', function (err, template) {
                         if (!err) {
                             var jsonInstallTab = Mustache.render(template, {
                                 installID: install._id,
@@ -54,7 +56,7 @@ module.exports = {
                         } else {
                             equipments.forEach(function (equipment) {
                                 // Flow Equipment Group
-                                fs.readFile(src + "templates/flow_template_equipment_group.json", 'utf8', function (err, template) {
+                                fs.readFile(src + "templates/nodeRed_flow_template_equipment_group.json", 'utf8', function (err, template) {
                                     if (!err) {
                                         var jsonEquipmentGroup = Mustache.render(template, {
                                             equipmentID: equipment._id,
@@ -74,113 +76,133 @@ module.exports = {
                                                 callback(err3, null);
                                             } else {
 
-                                                sensors.forEach(function (sensor) {
+                                                    sensors.forEach(function (sensor) {
+                                                fs.readFile(src + "templates/nodeRed_flow_template_sensor.json", 'utf8', function (err, template) {
 
-                                                    fs.readFile(src + "templates/flow_template_sensor.json", 'utf8', function (err, template) {
                                                         if (!err) {
                                                             var jsonSensor = [];
 
                                                             y = y + 50;
 
-                                                            // Rever chartType e datatype
-                                                            if (sensor.chartType == "switch" || sensor.dataType == "switch") {
-                                                                /* // Switch
-                                                                 {"id":"f9487132.0f3088","type":"mqtt in","z":"35164973.dde6a6","name":"Log_Ventilação","topic":"1/ESP15976340/Relay/3/read","qos":"2","broker":"8bec196c.723a18","x":105.5,"y":247.5,"wires":[["e332128a.f39768"]]},
-                                                                 */
-
-                                                                /* // Function
-                                                                 {"id":"e332128a.f39768","type":"function","z":"35164973.dde6a6","name":"","func":"var json = JSON.parse(msg[\"payload\"]);\n\nmsg[\"payload\"]=json[\"relay\"];\nreturn msg;","outputs":1,"noerr":0,"x":276.5,"y":247,"wires":[["954282ad.b0468"]]
-                                                                 * */
-
-                                                                /* // Switch
-                                                                 * {"id":"954282ad.b0468","type":"ui_switch","z":"35164973.dde6a6","name":"","label":"Ventilação","group":"16ab523a.583de6","order":0,"width":0,"height":0,"passthru":true,"decouple":"false","topic":"","style":"","onvalue":"1","onvalueType":"num","onicon":"","oncolor":"","offvalue":"0","offvalueType":"num","officon":"","offcolor":"","x":419.54998779296875,"y":246.5500030517578,"wires":[["cfa94984.907238"]]},
-                                                                 * */
-
-
-                                                                jsonSensor = [
-                                                                    // Read
-                                                                    {
-                                                                        "id": sensor._id + "read",
-                                                                        "type": "mqtt in",
-                                                                        "z": sensor.install + "",
-                                                                        "name": sensor.name,
-                                                                        /*<idInstall>/<idEquipment>/<idSensor>/<#number>/<read/write>;*/
-                                                                        "topic": sensor.install + "/" + sensor.equipment + "/" + sensor._id + "/1/read",
-                                                                        "qos": "2",
-                                                                        "broker": "8bec196c.723a18",
-                                                                        "x": 0,
-                                                                        "y": 0,
-                                                                        "wires": [[sensor._id + "function"]]
-                                                                    },
-                                                                    // Function
-                                                                    {
-                                                                        "id": sensor._id + "function",
-                                                                        "type": "function",
-                                                                        "z": sensor.install + "",
-                                                                        "name": sensor.name + "function",
-                                                                        "func": "var json = JSON.parse(msg[\"payload\"]);\n\nmsg[\"payload\"]=json[\"relay\"];\nreturn msg;",
-                                                                        "outputs": 1,
-                                                                        "noerr": 0,
-                                                                        "x": 0,
-                                                                        "y": 0,
-                                                                        "wires": [[sensor._id + "write"]]
-                                                                    },
-                                                                    // Write
-                                                                    {
-                                                                        "id": sensor._id + "write",
-                                                                        "type": "ui_switch",
-                                                                        "z": install._id + "",
-                                                                        "name": sensor.name + "write",
-                                                                        "label": "sensor.name",
-                                                                        //"group": equipment._id + "group",
-                                                                        "group": sensor.equipment + "group",
-                                                                        "order": 0,
-                                                                        "width": 0,
-                                                                        "height": 0,
-                                                                        "passthru": true,
-                                                                        "decouple": "false",
-                                                                        "topic": "",
-                                                                        "style": "",
-                                                                        "onvalue": "1",
-                                                                        "onvalueType": "num",
-                                                                        "onicon": "", "oncolor": "",
-                                                                        "offvalue": "0",
-                                                                        "offvalueType": "num",
-                                                                        "officon": "",
-                                                                        "offcolor": "",
-                                                                        "x": 0,
-                                                                        "y": 0,
-                                                                        "wires": [[sensor._id + "relay"]]
-                                                                    },
-                                                                    // Relay
-                                                                    {
-                                                                        "id": sensor._id + "relay",
-                                                                        "type": "relay",
-                                                                        "z": install._id + "",
-                                                                        "name": sensor.name,
-                                                                        "topic": sensor.install + "/" + sensor.equipment + "/" + sensor._id + "/1/write",
-                                                                        "broker": "8bec196c.723a18",
-                                                                        "wires": []
-                                                                    }
-                                                                ];
-
-                                                            } else {//if (sensor.chartType == "switch" || sensor.dataType == "switch") {
-                                                                /* // Sensor Temp
-                                                                 //{"id":"12410836.7a6868","type":"ui_chart","z":"399c16fa.ee6f52","name":"","group":"4016e047.27a7f","order":1,"width":"6","height":"4","label":"Temperature","chartType":"line","interpolate":"linear","nodata":"No Data","ymin":"","ymax":"","removeOlder":1,"removeOlderUnit":"60","x":395.4499969482422,"y":521.6666259765625,"wires":[[],[]]},
-                                                                 */
-
-                                                                var jsonSensor = Mustache.render(template, {
+                                                            if (sensor.dataType == "DHT") {
+                                                                var jsonSensor1 = Mustache.render(template, {
                                                                     sensorID: sensor._id,
-                                                                    sensorType: "temperatura_ar",
+                                                                    sensorTypeInput: "humidade_ar",
+                                                                    sensorType: "humidade_ar",
                                                                     sensorInstall: sensor.install,
+                                                                    sensorParseValue: "hum",
+                                                                    sensorKey: sensor._id+"_hum",
+                                                                    sensorNumber: 1,
                                                                     sensorName: sensor.name,
                                                                     sensorEquipment: sensor.equipment,
                                                                     posX1: x,
                                                                     posX2: x + 200,
                                                                     posX3: x + 400,
-                                                                    posY: y
+                                                                    posX4: x + 600,
+                                                                    posY: y,
+
+                                                                    switch:false,
+                                                                    chartLine:true,
+                                                                    chartGauge:false
+                                                                });
+                                                                y = y + 50;
+                                                                var jsonSensor2 = Mustache.render(template, {
+                                                                    sensorID: sensor._id,
+                                                                    sensorTypeInput: "temperatura_ar",
+                                                                    sensorType: "temperatura_ar",
+                                                                    sensorInstall: sensor.install,
+                                                                    sensorParseValue: "temp",
+                                                                    sensorKey: sensor._id+"_temp",
+                                                                    sensorNumber: 1,
+                                                                    sensorName: sensor.name,
+                                                                    sensorEquipment: sensor.equipment,
+                                                                    posX1: x,
+                                                                    posX2: x + 200,
+                                                                    posX3: x + 400,
+                                                                    posX4: x + 600,
+                                                                    posY: y,
+
+                                                                    switch:false,
+                                                                    chartLine:true,
+                                                                    chartGauge:false
+                                                                });
+                                                                jsonSensor1 = JSON.parse(jsonSensor1);
+                                                                jsonSensor2 = JSON.parse(jsonSensor2);
+                                                                jsonSensor1 = jsonSensor1.concat(jsonSensor2);
+                                                                //jsonSensor1.concat(jsonSensor2);
+
+                                                                //jsonFull = jsonFull.concat(JSON.parse(jsonSensor1));
+                                                                jsonFull = jsonFull.concat(jsonSensor1);
+                                                                //jsonFull = jsonFull.concat(JSON.parse(jsonSensor2));
+                                                            } else if(sensor.dataType == "relay"){
+                                                                var jsonSensor1 = Mustache.render(template, {sensorID: sensor._id,sensorTypeInput: "mqtt in", sensorType: "relay", sensorInstall: sensor.install,sensorParseValue: "relay", sensorKey: sensor._id+"_"+1, sensorNumber: 1, sensorName: sensor.name,sensorEquipment: sensor.equipment,posX1: x, posX2: x + 200, posX3: x + 400, posX4: x + 600, posY: y, switch: true,chartLine: false, chartGauge: false});
+                                                                y = y + 50;
+                                                                var jsonSensor2 = Mustache.render(template, {sensorID: sensor._id,sensorTypeInput: "mqtt in", sensorType: "relay", sensorInstall: sensor.install,sensorParseValue: "relay", sensorKey: sensor._id+"_"+2, sensorNumber: 2, sensorName: sensor.name,sensorEquipment: sensor.equipment,posX1: x, posX2: x + 200, posX3: x + 400, posX4: x + 600, posY: y, switch: true,chartLine: false, chartGauge: false});
+                                                                y = y + 50;
+                                                                var jsonSensor3 = Mustache.render(template, {sensorID: sensor._id,sensorTypeInput: "mqtt in", sensorType: "relay", sensorInstall: sensor.install,sensorParseValue: "relay", sensorKey: sensor._id+"_"+3, sensorNumber: 3, sensorName: sensor.name,sensorEquipment: sensor.equipment,posX1: x, posX2: x + 200, posX3: x + 400, posX4: x + 600, posY: y, switch: true,chartLine: false, chartGauge: false});
+                                                                y = y + 50;
+                                                                var jsonSensor4 = Mustache.render(template, {sensorID: sensor._id,sensorTypeInput: "mqtt in", sensorType: "relay", sensorInstall: sensor.install,sensorParseValue: "relay", sensorKey: sensor._id+"_"+4, sensorNumber: 4, sensorName: sensor.name,sensorEquipment: sensor.equipment,posX1: x, posX2: x + 200, posX3: x + 400, posX4: x + 600, posY: y, switch: true,chartLine: false, chartGauge: false});
+
+
+                                                                jsonSensor1 = JSON.parse(jsonSensor1);
+                                                                jsonSensor2 = JSON.parse(jsonSensor2);
+                                                                jsonSensor3 = JSON.parse(jsonSensor3);
+                                                                jsonSensor4 = JSON.parse(jsonSensor4);
+
+                                                                jsonSensor1 = jsonSensor1.concat(jsonSensor2);
+                                                                jsonSensor1 = jsonSensor1.concat(jsonSensor3);
+                                                                jsonSensor1 = jsonSensor1.concat(jsonSensor4);
+                                                                //jsonSensor1.concat(jsonSensor2);
+
+                                                                //jsonFull = jsonFull.concat(JSON.parse(jsonSensor1));
+                                                                jsonFull = jsonFull.concat(jsonSensor1);
+                                                                //jsonFull = jsonFull.concat(JSON.parse(jsonSensor2));
+                                                                //}
+                                                            } else if(sensor.chartType == "line"){
+                                                                jsonSensor = Mustache.render(template, {
+                                                                    sensorID: sensor._id,
+                                                                    sensorTypeInput: "temperatura_ar",
+                                                                    sensorType: "temperatura_ar",
+                                                                    sensorInstall: sensor.install,
+                                                                    sensorParseValue: "analog",
+                                                                    sensorKey: sensor._id,
+                                                                    sensorNumber: 1,
+                                                                    sensorName: sensor.name,
+                                                                    sensorEquipment: sensor.equipment,
+                                                                    posX1: x,
+                                                                    posX2: x + 200,
+                                                                    posX3: x + 400,
+                                                                    posX4: x + 600,
+                                                                    posY: y,
+
+                                                                    switch:false,
+                                                                    chartLine:true,
+                                                                    chartGauge:false
                                                                 });
                                                                 jsonFull = jsonFull.concat(JSON.parse(jsonSensor));
+                                                            } else{
+                                                                jsonSensor = Mustache.render(template, {
+                                                                    sensorID: sensor._id,
+                                                                    sensorTypeInput: "temperatura_ar",
+                                                                    sensorType: "temperatura_ar",
+                                                                    sensorInstall: sensor.install,
+                                                                    sensorParseValue: "analog",
+                                                                    sensorKey: sensor._id,
+                                                                    sensorNumber: 1,
+                                                                    sensorName: sensor.name,
+                                                                    sensorEquipment: sensor.equipment,
+                                                                    posX1: x,
+                                                                    posX2: x + 200,
+                                                                    posX3: x + 400,
+                                                                    posX4: x + 600,
+                                                                    posY: y,
+
+                                                                    switch:false,
+                                                                    chartLine:false,
+                                                                    chartGauge:true
+                                                                });
+                                                                jsonFull = jsonFull.concat(JSON.parse(jsonSensor));
+
                                                             }
                                                             fs.writeFile(finalFile, JSON.stringify(jsonFull), function (errWriteFile) {
                                                                 if (errWriteFile) {
@@ -189,7 +211,6 @@ module.exports = {
                                                             });
                                                         }
                                                     });
-
                                                 });
                                             }
                                             if (!sensors) return next();

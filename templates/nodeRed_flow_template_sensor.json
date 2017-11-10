@@ -1,0 +1,125 @@
+[
+  {
+    "id": "{{sensorKey}}_read",
+    "type": "{{sensorTypeInput}}",
+    "z": "{{sensorInstall}}",
+    "name": "{{sensorName}}",
+    "topic": "{{sensorInstall}}/{{sensorEquipment}}/{{sensorID}}/{{sensorNumber}}/read",
+    "qos": "2",
+    "broker": "8bec196c.723a18",
+    "x": {{posX1}},
+    "y": {{posY}},
+    "wires": [
+      [
+        "{{sensorKey}}_function"
+      ]
+    ]
+  },
+  {
+    "id": "{{sensorKey}}_function",
+    "type": "function",
+    "z": "{{sensorInstall}}",
+    "name": "{{sensorName}}_function",
+    "func": "var json = JSON.parse(msg[\"payload\"]);\n\nvar result= json[\"{{sensorParseValue}}\"];\n\nvar line1 = { color:\"#ff7f0e\",topic: '{{sensorType}}', payload: result};\n\nreturn [line1];",
+    "outputs": 1,
+    "noerr": 0,
+    "x": {{posX2}},
+    "y": {{posY}},
+    "wires": [
+      [
+        "{{sensorKey}}_write"
+      ]
+    ]
+  },
+  {
+    "id": "{{sensorKey}}_write",
+  {{#chartGauge}}
+    "type":"ui_gauge",
+  {{/chartGauge}}
+  {{#chartLine}}
+    "type": "ui_chart",
+  {{/chartLine}}
+  {{#switch}}
+    "type": "ui_switch",
+  {{/switch}}
+    "z": "{{sensorInstall}}",
+  {{#switch}}
+    "name": "{{sensorName}}_write",
+  {{/switch}}
+  {{^switch}}
+    "name": "{{sensorName}}",
+  {{/switch}}
+    "group": "{{sensorEquipment}}_group",
+    "order":0,
+    "width":6,
+    "height":4,
+  {{#switch}}
+    "passthru": false,
+    "decouple": "true",
+    "topic": "",
+    "style": "",
+    "onvalue": "1",
+    "onvalueType": "num",
+    "onicon": "",
+    "oncolor": "",
+    "offvalue": "0",
+    "offvalueType": "num",
+    "officon": "",
+    "offcolor": "",
+  {{/switch}}
+  {{#chartGauge}}
+    "gtype":"gage",
+    "title":"{{sensorName}}",
+    "label":"units",
+    "format":"{{value}}",
+    "min":0,
+    "max":10,
+    "colors":["#00b500","#e6e600","#ca3838"],
+    "seg1":"",
+    "seg2":"",
+  {{/chartGauge}}
+  {{#chartLine}}
+    "label": "{{sensorName}}",
+    "chartType": "line",
+    "interpolate": "linear",
+    "nodata": "No Data",
+    "ymin": "",
+    "ymax": "",
+    "removeOlder": 1,
+    "removeOlderUnit": "60",
+  {{/chartLine}}
+  {{#switch}}
+    "label": "{{sensorName}}",
+    "chartType": "line",
+    "interpolate": "linear",
+    "nodata": "No Data",
+    "ymin": "",
+    "ymax": "",
+    "removeOlder": 1,
+    "removeOlderUnit": "60",
+  {{/switch}}
+    "x": {{posX3}},
+    "y": {{posY}},
+    "wires":[
+  {{#switch}}
+      ["{{sensorKey}}_relay"]
+  {{/switch}}
+    ]
+  {{#switch}}
+  },
+  {
+    "id": "{{sensorKey}}_relay",
+    "type": "{{sensorType}}",
+    "z": "{{sensorInstall}}",
+    "name": "{{sensorName}}",
+    "topic": "{{sensorInstall}}/{{sensorEquipment}}/{{sensorID}}/{{sensorNumber}}/write",
+    "broker": "8bec196c.723a18",
+    "x": {{posX4}},
+  "y": {{posY}},
+  "wires": []
+  }
+  {{/switch}}
+  {{^switch}}
+  }
+  {{/switch}}
+]

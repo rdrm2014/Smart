@@ -1,0 +1,8 @@
+{{installName}}:
+  view: yes
+  name: {{installName}}
+  icon: mdi:server-network
+  entities:
+  {{#equipmentName}}
+    - group.{{equipmentName}}
+  {{/equipmentName}}

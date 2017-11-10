@@ -97,3 +97,18 @@ block content
                 else
                     a(href="/users/urlnodered") Create UI
                 hr
+            .col-md-6
+                h3 FLows
+
+                if user.updateFlowDate
+                    p
+                        strong LastUpdate
+                        | : #{ user.updateFlowDate}
+                        br
+                else
+                    p
+                        | Update flow now
+                        br
+                form(action="updateFlow" method="POST" role="form" class="new")
+                    input(type="submit" value="Update Flows" class="btn btn-default")
+                hr

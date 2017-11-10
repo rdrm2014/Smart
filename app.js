@@ -114,10 +114,13 @@ app.use(function (err, req, res, next) {
  * Run Multiple instances
  **/
 // or more concisely
-var exec = require('child_process').exec;
-function execInstances(error, stdout, stderr) {
-    console.log(stdout);
-}
+var spawn = require('child_process').spawn;
+/*function execInstances(error, stdout, stderr) {
+ var pid = {};
+ pid = stdout;
+ console.log("Process ID: "+ JSON.stringify(pid  ));
+ //console.log(stdout);
+ }*/
 
 var locationNode = config.get('nodeRed:path');
 var locationNodeSettings = config.get('nodeRed:pathSettings');
@@ -129,8 +132,26 @@ UserModel.find().exec(function (err, users) {
     if (err) {
         res.statusCode = 500;
     } else {
+        // PID exist?
+        var psCommand = spawn("sh", ["shellScripts/killAllProcessNodeRed.sh"]);
+        psCommand.stdout.on("data", function (data) {
+            console.log(data.toString());
+        });
+
         users.forEach(function (user) {
-            exec("node " + locationNode + "red.js --settings " + locationNodeSettings + "settings_" + user._id + ".js", execInstances);
+            //exec("node " + locationNode + "red.js --settings " + locationNodeSettings + "settings_" + user._id + ".js", execInstances);
+            var command = spawn("node", [locationNode + "red.js", "--settings", locationNodeSettings + "settings_" + user._id + ".js"]);
+            var paramObj = {
+                pid: command.pid
+            };
+            command.stdout.on('data', function (data) {
+                console.log(data.toString());
+            });
+            UserModel.update(user, paramObj, function (err) {
+                if (err) {
+                    console.log(err);
+                }
+            });
         });
     }
 });

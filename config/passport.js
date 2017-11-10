@@ -106,6 +106,7 @@ module.exports = function (config, passport) {
                                 throw err;
                             return done(null, user);
                         });
+
                     }
                     //  We're not logged in, so we're creating a brand new user.
                     else {
