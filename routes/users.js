@@ -12,6 +12,8 @@ var filesCreator = require(src + 'functions/filesCreator');
 var UserModel = require(src + 'models/user');
 var spawn = require('child_process').spawn;
 
+var jwt = require('jsonwebtoken');
+
 // normal routes ===============================================================
 // PROFILE SECTION =========================
 router.get('/profile', isLoggedIn, function (req, res) {
@@ -34,15 +36,12 @@ router.get('/logout', function (req, res) {
 // LOGIN ===============================
 // show the login form
 router.get('/login', function (req, res) {
-    //res.render('login', {message: req.flash('loginMessage')});
     var callbackLink = req.query["callbackLink"];
-    res.render('login', {callbackLink: callbackLink});
-    //res.render('login', {callbackLink: req.param["callbackLink"]});
+    res.render('login', {callbackLink: callbackLink, message: req.flash('message')});
 });
 
 // process the login form
 router.post('/login', passport.authenticate('local-login', {
-            //successRedirect: '/home', // redirect to the secure profile section
             failureRedirect: '/users/login', // redirect back to the signup page if there is an error
             failureFlash: true // allow flash messages
         }
@@ -55,10 +54,19 @@ router.post('/login', passport.authenticate('local-login', {
     }
 );
 
+// Authenticate the user and get a JSON Web Token to include in the header of future requests.
+router.post('/authenticate', passport.authenticate('local-login', {}),
+    function (req, res) {
+        const token = jwt.sign(req.user, config.get('default:api:secretOrKey'), {
+            expiresIn: 10080 // in seconds
+        });
+        res.status(200).json({success: true, token: 'JWT ' + token});
+    });
+
+
 // SIGNUP =================================
 // show the signup form
 router.get('/signup', function (req, res) {
-    //res.render('signup', {message: req.flash('loginMessage')});
     res.render('signup');
 });
 

@@ -33,7 +33,7 @@ function initialize(flagEdit) {
             triangleCoords = [
                 new google.maps.LatLng(pos.lat + 0.017172, pos.lng - 0.0013732),
                 new google.maps.LatLng(pos.lat - 0.0085873, pos.lng - 0.0374221),
-                new google.maps.LatLng(pos.lat - 0.0186069, pos.lng + 0.0226593),
+                new google.maps.LatLng(pos.lat - 0.0186069, pos.lng + 0.0226593)
             ];
 
 
@@ -131,7 +131,7 @@ function getCenterPolygon() {
             var bounds = new google.maps.LatLngBounds()
             this.getPath().forEach(function (element, index) {
                 bounds.extend(element)
-            })
+            });
             return bounds;
         }
     }

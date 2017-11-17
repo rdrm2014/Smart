@@ -2,11 +2,13 @@
  * Created by ricardomendes on 10/01/17.
  */
 var src = process.cwd() + '/';
+var config = require(src + "config/config");
 
 var LocalStrategy = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
 var TwitterStrategy = require('passport-twitter').Strategy;
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+var JwtStrategy = require('passport-jwt').Strategy;
 
 // load up the user model
 var User = require(src + 'models/user');
@@ -41,7 +43,6 @@ module.exports = function (config, passport) {
             passReqToCallback: true // allows us to pass in the req from our route (lets us check if a user is logged in or not)
         },
         function (req, username, password, done) {
-
             /**
              * Add Instance of node-red
              */
@@ -66,8 +67,31 @@ module.exports = function (config, passport) {
                         return done(null, user);
                 });
             });
-
         }));
+
+
+    // =========================================================================
+    // JWT LOGIN =============================================================
+    // =========================================================================
+    var ExtractJwt = require('passport-jwt').ExtractJwt;
+
+    passport.use('jwt', new JwtStrategy({
+            jwtFromRequest: ExtractJwt.fromAuthHeader(),
+            secretOrKey: config.get('default:api:secretOrKey')
+        },
+        function(jwt_payload, done) {
+            User.findOne({id: jwt_payload.id}, function(err, user) {
+                if (err) {
+                    return done(err, false);
+                }
+                if (user) {
+                    done(null, user);
+                } else {
+                    done(null, false);
+                }
+            });
+        }));
+
 
     // =========================================================================
     // LOCAL SIGNUP ============================================================

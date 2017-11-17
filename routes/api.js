@@ -11,6 +11,7 @@ var express = require('express');
 var router = express.Router();
 var jwt = require('jsonwebtoken');
 var src = process.cwd() + '/';
+var passport = require('passport');
 
 var EquipmentModel = require(src + 'models/equipment');
 var InstallModel = require(src + 'models/install');
@@ -73,10 +74,11 @@ router.get('/json', function (req, res) {
  *          required: true
  *          dataType: string
  */
-router.get('/installs', isAuthenticated, function (req, res) {
+router.get('/installs', passport.authenticate('jwt', { session: false }), function (req, res) {
     InstallModel.find({owner: req.user}).exec(function (err, installs) {
         if (!err) {
-            res.json({installs: installs});
+            //res.json({installs: installs});
+            res.json(installs);
         } else {
             res.statusCode = 500;
 
@@ -104,13 +106,12 @@ router.get('/installs', isAuthenticated, function (req, res) {
  *          required: true
  *          dataType: string
  */
-router.get('/installs/:idInstall', isAuthenticated, function (req, res) {
+router.get('/installs/:idInstall', passport.authenticate('jwt', { session: false }), function (req, res) {
     InstallModel.findOne({_id: req.params['idInstall'], owner: req.user}).exec(function (err, install) {
         if (err) return next(err);
         if (!install) return next();
-        res.json({
-            install: install
-        });
+        //res.json({install: install});
+        res.json(install);
     });
 });
 
@@ -131,13 +132,12 @@ router.get('/installs/:idInstall', isAuthenticated, function (req, res) {
  *          required: true
  *          dataType: string
  */
-router.get('/installs/:idInstall/equipments', isAuthenticated, function (req, res) {
+router.get('/installs/:idInstall/equipments', passport.authenticate('jwt', { session: false }), function (req, res) {
     EquipmentModel.find({install: req.params['idInstall'], owner: req.user}).exec(function (err, equipments) {
         if (err) return next(err);
         if (!equipments) return next();
-        res.json({
-            equipments: equipments
-        });
+        //res.json({equipments: equipments});
+        res.json(equipments);
     });
 });
 
@@ -158,7 +158,7 @@ router.get('/installs/:idInstall/equipments', isAuthenticated, function (req, re
  *          required: true
  *          dataType: string
  */
-router.get('/installs/:idInstall/equipments/count', isAuthenticated, function (req, res) {
+router.get('/installs/:idInstall/equipments/count', passport.authenticate('jwt', { session: false }), function (req, res) {
     EquipmentModel.find({install: req.params['idInstall'], owner: req.user}).exec(function (err, equipments) {
         if (err) return next(err);
         if (!equipments) return next();
@@ -183,13 +183,14 @@ router.get('/installs/:idInstall/equipments/count', isAuthenticated, function (r
  *          required: true
  *          dataType: string
  */
-router.get('/installs/:idInstall/equipments/:idEquipment', isAuthenticated, function (req, res) {
+router.get('/installs/:idInstall/equipments/:idEquipment', passport.authenticate('jwt', { session: false }), function (req, res) {
     InstallModel.findOne({_id: req.params['idInstall'], owner: req.user}).exec(function (err, install) {
         EquipmentModel
             .findOne({_id: req.params['idEquipment'], owner: req.user})
             .exec(function (err, equipment) {
                 if (err) return handleError(err);
-                res.json({equipment: equipment});
+                //res.json({equipment: equipment});
+                res.json(equipment);
             });
     });
 });
@@ -211,7 +212,7 @@ router.get('/installs/:idInstall/equipments/:idEquipment', isAuthenticated, func
  *          required: true
  *          dataType: string
  */
-router.get('/installs/:idInstall/equipments/:idEquipment/sensors', isAuthenticated, function (req, res) {
+router.get('/installs/:idInstall/equipments/:idEquipment/sensors', passport.authenticate('jwt', { session: false }), function (req, res) {
     SensorModel.find({
         install: req.params['idInstall'],
         equipment: req.params['idEquipment'],
@@ -219,9 +220,8 @@ router.get('/installs/:idInstall/equipments/:idEquipment/sensors', isAuthenticat
     }).exec(function (err, sensors) {
         if (err) return next(err);
         if (!sensors) return next();
-        res.json({
-            sensors: sensors
-        });
+        //res.json({sensors: sensors});
+        res.json(sensors);
     });
 });
 
@@ -242,7 +242,7 @@ router.get('/installs/:idInstall/equipments/:idEquipment/sensors', isAuthenticat
  *          required: true
  *          dataType: string
  */
-router.get('/installs/:idInstall/equipments/:idEquipment/sensors/count', isAuthenticated, function (req, res) {
+router.get('/installs/:idInstall/equipments/:idEquipment/sensors/count', passport.authenticate('jwt', { session: false }), function (req, res) {
     SensorModel.find({
         install: req.params['idInstall'],
         equipment: req.params['idEquipment'],
@@ -272,7 +272,7 @@ router.get('/installs/:idInstall/equipments/:idEquipment/sensors/count', isAuthe
  *          required: true
  *          dataType: string
  */
-router.get('/installs/:idInstall/equipments/:idEquipment/sensors/:idSensor', isAuthenticated, function (req, res) {
+router.get('/installs/:idInstall/equipments/:idEquipment/sensors/:idSensor', passport.authenticate('jwt', { session: false }), function (req, res) {
     SensorModel
         .findOne({
             _id: req.params['idSensor'],
@@ -282,7 +282,8 @@ router.get('/installs/:idInstall/equipments/:idEquipment/sensors/:idSensor', isA
         })
         .exec(function (err, sensor) {
             if (err) return handleError(err);
-            res.json({sensor: sensor});
+            //res.json({sensor: sensor});
+            res.json(sensor);
         });
 });
 
@@ -290,7 +291,7 @@ module.exports = router;
 
 // route middleware to ensure user is logged in
 function isAuthenticated(req, res, next) {
-    //if (req.isAuthenticated())
+    //if (req.passport.authenticate('jwt', { session: false })())
     return next();
 
     //res.redirect('/');

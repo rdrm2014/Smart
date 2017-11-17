@@ -23,7 +23,9 @@ var equipments = require(src + 'routes/equipments');
 var installs = require(src + 'routes/installs');
 var sensors = require(src + 'routes/sensors');
 
-var cors = require('cors');
+var flash = require('connect-flash');
+
+//var cors = require('cors');
 
 var corsOptions = {
     origin: '*',
@@ -34,6 +36,9 @@ var app = express();
 
 app.all('*', function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
+    res.header('Access-Control-Allow-Credentials', true);
+    res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
     next();
 });
 
@@ -54,6 +59,8 @@ app.use(session({
     saveUninitialized: true
 }));
 
+app.use(flash());
+
 app.use(swagger.init(app, {
     apiVersion: '1.0',
     swaggerVersion: '1.0',
@@ -68,7 +75,7 @@ app.use(swagger.init(app, {
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(cors(corsOptions));
+//app.use(cors(corsOptions));
 
 app.use('/', index);
 app.use('/users', users);
