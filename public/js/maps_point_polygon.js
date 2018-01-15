@@ -68,6 +68,15 @@ function initialize(flagEdit) {
                 position: myLatLng
             });
             marker.addListener('click', toggleBounce);
+
+            var polygon = [];
+            var len = myPolygon.getPath().getLength();
+            for (var i = 0; i < len; i++) {
+                polygon.push([myPolygon.getPath().getAt(i).lat(), myPolygon.getPath().getAt(i).lng()]);
+            }
+            $('input[name=areaPosition]').val(JSON.stringify(polygon));
+            $('input[name=position]').val(JSON.stringify(getCenterPolygon()));
+
         }, function () {
             handleLocationError(true, infoWindow, map.getCenter());
         });

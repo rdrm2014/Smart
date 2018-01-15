@@ -1,39 +1,136 @@
 extends ../layout-home
 block content
-    .container
-        .row
-            .col-md-12
-                h3 install Listing
-        .row
-            .col-md-12
-                if installs
-                    table(class='table table-hover table-condensed')
-                        tr
-                            th Name
-                            th Type
-                            th Description
-                            th Position
-                            th
-                            th
-                            th
-                        each install in installs
-                            tr(data-id=install.id data-model="install")
-                                td #{install.name}
-                                td #{install.type}
-                                td #{install.description}
-                                td #{install.position}
-                                td
-                                    a(href="/installs/"+install.id  class="btn btn-primary btn-sm" role="button") Show
-                                td
-                                    a(href="/installs/"+install.id+"/edit"  class="btn btn-primary btn-sm" role="button") Edit
-                                td
-                                    form(action="/installs/"+install.id+"/destroy" method="POST")
-                                        //input(type="hidden" name="_method" value="delete")
-                                        input(type="hidden" name="id" value=install.id)
-                                        input(type="submit" value="Delete"  class="btn btn-danger btn-sm" role="button")
+    .row
+        .col-lg-12.col-md-12.col-sm-12.col-xs-12
+            .page-header.text-center
+                a(href="/installs", title='Home')
+                    img(src="/theme/images/logo.png", width='48')
+                h4
+                    ol(class="breadcrumb")
+                        li(class="active") Installs
+    // Pesquisa
+    .row.filter
+        .col-lg-4.col-md-6.col-sm-8.col-xs-10.col-lg-offset-4.col-md-offset-3.col-sm-offset-2.col-xs-offset-1
+            .input-group.input-group-sm
+                // Barra
+                input#search.form-control(type='text', placeholder='Search', oninput='search()')
+                // Botões
+                span.input-group-btn
+                    // Limpar
+                    button#erase.btn.btn-default(type='button', title='Limpar pesquisa', onclick='cleanSearch()', disabled='')
+                        i.fa.fa-times
+                    // Ordenar
+                    button#sort.btn.btn-default(type='button', title='Ordem cronológica', onclick='sortResults()')
+                        i.fa.fa-sort
+                    button#map.btn.btn-default(type='button', title='Map', onclick='location.href="installs/map"')
+                        i.fa.fa-map
 
-        .row
-            .col-md-12
-                a(href="/installs/new/" class="btn btn-success btn-sm" role="button") New
+    // Installs
+    .row.listInstalls
+        .col-xs-6.col-md-3.portfolio-item
+            a#newInstall(href="/installs/new/" class="btn btn-success btn-sm" role="button")
+                .elemListInstall
+                    img.img-responsive(src="/theme/images/add_install.png")
+                    h4.text-center Create Install
 
-        hr
+        each install in installs
+            .col-xs-6.col-md-3.install-thumbnail(id='install-' + install.id)
+                // Imagem
+                a(href="/installs/" + install.id title=install.name)
+                    .elemListInstall
+                        if install.image
+                            img.img-responsive(src="/theme/images/" + install.image)
+                        else
+                            img.img-responsive(src="/theme/images/add_install.png")
+                        h4.name.text-center #{install.name}
+                        if install.description.length > 90
+                            p=install.description.substr(0, 90) + " ..."
+                        else
+                            p=install.description
+                .elem_installs
+                    ul.navlist
+                        li.editar(title='Editar')
+                            a(href="/installs/" + install.id + "/edit")
+                        li.eliminar(title='Apagar')
+                            form(action="/installs/" + install.id + "/destroy" method="POST")
+                                input(type="hidden" name="id" value=install.id)
+                                a(href="javascript:;" onclick="deleteObject(function(){parentNode.submit()});")
+
+    script.
+        // sort status
+        // 1. chronological sort
+        // 2. sort asc
+        // 3. sort desc
+        var sortStatus = 1;
+        // search installs
+        function search() {
+            resetSearch();
+            var search = parseString($('#search').val());
+            var erase = $('#erase');
+            // enable/disable erase button
+            if (search.length > 0)
+                erase.prop('disabled', false);
+            else
+                erase.prop('disabled', true);
+            // for each install
+            $('div.install-thumbnail').each(function () {
+                var element = $(this);
+                var title = parseString(element.find('a .name').html());
+                if (title.indexOf(search) == -1)
+                    element.css('display', 'none');
+            });
+        }
+        // resets the search
+        function resetSearch() {
+            $('div.install-thumbnail').each(function () {
+                $(this).css('display', '');
+            });
+        }
+        // cleans the search bar and resets the search
+        function cleanSearch() {
+            $('#search').val(null);
+            $('#erase').prop('disabled', true);
+            sortStatus = 0;
+            resetSearch();
+            sortResults();
+        }
+        // sort results and change sorting options
+        function sortResults() {
+            // loop status
+            if (++sortStatus > 3)
+                sortStatus = 1;
+            // loop status icon
+            var sort = $('#sort');
+            var icone = sort.find('i');
+            switch (sortStatus) {
+                case 1:
+                    sort.attr('title', 'Ordem cronológica');
+                    icone.attr('class', 'fa fa-sort');
+                    break;
+                case 2:
+                    sort.attr('title', 'Ordem alfabética ascendente');
+                    icone.attr('class', 'fa fa-sort-alpha-asc');
+                    break;
+                case 3:
+                    sort.attr('title', 'Ordem alfabética descendente');
+                    icone.attr('class', 'fa fa-sort-alpha-desc');
+                    break;
+                default:
+                    break;
+            }
+            // sort by element id
+            if (sortStatus == 1) {
+                $('div.install-thumbnail').sort(function (a, b) {
+                    return ($(b).attr('id')) < ($(a).attr('id')) ? 1 : -1;
+                }).appendTo($('.listInstalls'));
+            }
+            // sort by title
+            else {
+                $('div.install-thumbnail').sort(function (a, b) {
+                    if (sortStatus == 2) // asc
+                        return ($(b).find('a .name').html()) < ($(a).find('a .name').html()) ? 1 : -1;
+                    else // desc
+                        return ($(b).find('a .name').html()) > ($(a).find('a .name').html()) ? 1 : -1;
+                }).appendTo($('.listInstalls'));
+            }
+        }

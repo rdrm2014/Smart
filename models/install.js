@@ -25,7 +25,8 @@ var mongoose = require('mongoose');
 var installSchema = mongoose.Schema({
     owner: {type: mongoose.Schema.Types.ObjectId, ref: 'user'},
     name: String,
-    type: {type: String, enum: ["Agricultura", "Piscicultura", "Aquário"]},
+    //type: {type: String, enum: ["Agricultura", "Piscicultura", "Aquário"]},
+    type: {type: mongoose.Schema.Types.ObjectId, ref: 'type'},
     description: String,
     position: {
         type: [Number],  // [<longitude>, <latitude>]

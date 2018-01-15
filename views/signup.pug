@@ -1,8 +1,13 @@
 extends layout
+
 block content
-    .container.centered
+ .container
         .row
-            .col-md-8.col-md-offset-2
+          .col-md-12.text-center
+            img(src='/img/logo.png', width='75')
+            h1 #{title}
+        .row
+            .col-md-12
                 form(action="/users/signup" method="post")
                     .form-group
                         label Username
@@ -17,3 +22,137 @@ block content
                 a(href="/users/login" class="btn btn-default btn-sm" role="button") Login
             //.col-md-6.centered
                 a(href="/" class="btn btn-default btn-sm" role="button") Home
+ .container.container-fluid
+   .row
+     .col-lg-12
+       .page-header.text-center
+         a(href="{{ path('obra') }}")
+           img(src="{{ asset('bundles/ieetaited/theme/images/logo.png') }}", width='48')
+         h1.text-center
+           | PROJETOS
+           br
+           a.onmap(title='Mapa', href="{{ path('obra_map') }}")
+   // Pesquisa
+   .row.filter
+     .col-lg-4.col-md-6.col-sm-8.col-xs-10.col-lg-offset-4.col-md-offset-3.col-sm-offset-2.col-xs-offset-1
+       .input-group.input-group-sm
+         // Barra
+         input#search.form-control(type='text', placeholder='Pesquisar', oninput='search()')
+         // Botões
+         span.input-group-btn
+           // Limpar
+           button#erase.btn.btn-default(type='button', title='Limpar pesquisa', onclick='cleanSearch()', disabled='')
+             span.glyphicon.glyphicon-remove
+           // Ordenar
+           button#sort.btn.btn-default(type='button', title='Ordem cronológica', onclick='sortResults()')
+             span.glyphicon.glyphicon-sort
+   // Projetos
+   .row.listObras
+     // Novo Projeto
+     .col-xs-6.col-md-3.portfolio-item
+       a#newPlanta(href="{{ path('obra_new') }}")
+         .elemListPlanta
+           img.img-responsive(src="{{ asset('bundles/ieetaited/theme/images/adicionar_obra.png') }}")
+           div Criar novo projeto
+     // Lista de Projetos
+     | {% for entity in entities %}
+     .col-xs-6.col-md-3.obra-thumbnail(id='obra-{{ entity.id }}')
+       // Imagem
+       a(href="{{ path('obra_show', { 'id': entity.id }) }}", title='{{ entity.nome }}')
+         | {% if entity.path %}
+         .elemListPlanta(style="background-image: url({{ asset('bundles/ieetaited/images/obras/' ~ entity.path) }});")
+           | {% else %}
+           .elemListPlanta(style="background-image: url({{ asset('bundles/ieetaited/theme/images/adicionar_obra.png') }}); background-size: contain;")
+             | {% endif %}
+             img.img-responsive(src="{{ asset('bundles/ieetaited/theme/images/homeobra.png') }}")
+             .name {{ entity.nome }}
+       .elem_obras
+         ul.navlist
+           li.editar(title='Editar')
+             a(href="{{ path('obra_edit', { 'id': entity.id }) }}")
+           li.eliminar(title='Apagar')
+             a(href='#', onclick="deleteObra('{{ path('obra_delete', { 'id': entity.id }) }}')")
+     |             {% endfor %}
+ | {% endblock %}
+ | {% block javascript %}
+ |     {{ parent() }}
+ script.
+   // sort status
+   // 1. chronological sort
+   // 2. sort asc
+   // 3. sort desc
+   var sortStatus = 1;
+   // search obras
+   function search() {
+   resetSearch();
+   var search = parseString($('#search').val());
+   var erase = $('#erase');
+   // enable/disable erase button
+   if (search.length > 0)
+   erase.prop('disabled', false);
+   else
+   erase.prop('disabled', true);
+   // for each obra
+   $('div.obra-thumbnail').each(function () {
+   var element = $(this);
+   var title = parseString(element.find('div.name').html());
+   if (title.indexOf(search) == -1)
+   element.css('display', 'none');
+   });
+   }
+   // resets the search
+   function resetSearch() {
+   $('div.obra-thumbnail').each(function () {
+   $(this).css('display', '');
+   });
+   }
+   // cleans the search bar and resets the search
+   function cleanSearch() {
+   $('#search').val(null);
+   $('#erase').prop('disabled', true);
+   sortStatus = 0;
+   resetSearch();
+   sortResults();
+   }
+   // sort results and change sorting options
+   function sortResults() {
+   // loop status
+   if (++sortStatus > 3)
+   sortStatus = 1;
+   // loop status icon
+   var sort = $('#sort');
+   var icone = sort.find('span');
+   switch (sortStatus) {
+   case 1:
+   sort.attr('title', 'Ordem cronológica');
+   icone.attr('class', 'glyphicon glyphicon-sort');
+   break;
+   case 2:
+   sort.attr('title', 'Ordem alfabética ascendente');
+   icone.attr('class', 'glyphicon glyphicon-sort-by-alphabet');
+   break;
+   case 3:
+   sort.attr('title', 'Ordem alfabética descendente');
+   icone.attr('class', 'glyphicon glyphicon-sort-by-alphabet-alt');
+   break;
+   default:
+   break;
+   }
+   // sort by element id
+   if (sortStatus == 1) {
+   $('div.obra-thumbnail').sort(function (a, b) {
+   return ($(b).attr('id')) < ($(a).attr('id')) ? 1 : -1;
+   }).appendTo($('.listObras'));
+   }
+   // sort by title
+   else {
+   $('div.obra-thumbnail').sort(function (a, b) {
+   if (sortStatus == 2) // asc
+   return ($(b).find('div.name').html()) < ($(a).find('div.name').html()) ? 1 : -1;
+   else // desc
+   return ($(b).find('div.name').html()) > ($(a).find('div.name').html()) ? 1 : -1;
+   }).appendTo($('.listObras'));
+   }
+   }
+
+

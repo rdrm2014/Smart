@@ -1,0 +1,46 @@
+/**
+ * dark: #006428
+ * normal: #A0AF0A
+ * light: #4bc13f
+ */
+
+.navbar-inverse {
+    border-color: #A0AF0A;
+}
+
+.pagination > li > span,
+.pagination > li > a ,
+.filter .btn {
+    color: #A0AF0A;
+}
+
+#slider h1,
+#slider .carousel-indicators li {
+    background-color: #A0AF0A;
+}
+
+.elemListPlanta div {
+    background: rgba(0, 158, 47, .85) /* darkgreen */
+}
+
+.top-nav > li > a:hover,
+.top-nav > li > a:focus,
+.top-nav > .open > a,
+.top-nav > .open > a:hover,
+.top-nav > .open > a:focus {
+    background-color: #006428;
+    color: #ffffff;
+}
+
+.color-1 {
+    fill: #006428;
+}
+
+.color-2 {
+    fill: #A0AF0A;
+}
+
+#map-canvas {
+    width: auto;
+    height: 500px;
+}

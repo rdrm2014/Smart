@@ -1,6 +1,81 @@
 extends ../layout-home
 block content
-    .container
+    .row
+        .col-lg-12.col-md-12.col-sm-12.col-xs-12
+            .page-header.text-center
+                a(href="/sensors/" + sensor._id, title=sensor.name)
+                    img(src="/theme/images/logo.png", width='48')
+                    h4
+                        ol(class="breadcrumb")
+                            li
+                                a(href="/installs/" + install._id)=install.name
+                            li(class="active")
+                                a(href="/sensors/" + install._id + "/sensors/" + sensor._id)=sensor.name
+    .row
+        // Left Column
+        form(action="update" method="POST" id="form_sensor_edit")
+            .col-lg-6.col-md-6.col-sm-12.col-xs-12
+                .row
+                    // Image
+                    .col-lg-12.col-md-12.col-sm-12.col-xs-12
+                        .img-upload(style='padding-top: 0;')
+                            .img-holder
+                                if sensor.image
+                                    img#image_sensor.img-responsive(src="/theme/images/" + sensor.image)
+                                else
+                                    img#image_sensor.img-responsive(src="/theme/images/add_sensor.png")
+                            .img-controls.pull-right
+                                span.btn.btn-sm.btn-default.btn-file
+                                    span.glyphicon.glyphicon-open
+                                    | Upload
+                .row
+                    .col-lg-12.col-md-12.col-sm-12.col-xs-12
+                        .testFields
+                            // Nome
+                            .input-group.input-group-sm
+                                span.input-group-addon
+                                    label Name
+                                input.form-control(value=sensor.name name="name" type="text")
+                        .testFields
+                            // Type
+                            .input-group.input-group-sm
+                                span.input-group-addon
+                                    label Description
+                                input.form-control(value=sensor.description name="description" type="text")
+                        .testFields
+                            // Data Type
+                            .input-group.input-group-sm
+                                span.input-group-addon
+                                    label Data Type
+                                select.form-control(value=sensor.dataType name="dataType" class="form-control")
+                                    option Agricultura
+                                    option Piscicultura
+                                    option Aquário
+                        .testFields
+                            // Chart Type
+                            .input-group.input-group-sm
+                                span.input-group-addon
+                                    label Chart Type
+                                select.form-control(value=sensor.chartType name="chartType" class="form-control")
+                                    option Agricultura
+                                    option Piscicultura
+                                    option Aquário
+
+                        input(name="areaPosition" type="hidden")
+                        input(name="position" type="hidden")
+
+                .row
+                    .col-lg-12.col-md-12.col-sm-12.col-xs-12
+                        .form-end
+                            button.btn.btn-sm.btn-default.pull-left(type='button', title='Back', onclick="navigate('../../sensors')")
+                                span.glyphicon.glyphicon-chevron-left
+                                |  Voltar
+                            button.btn.btn-sm.btn-danger.pull-right(type='button', title='Cancel', onclick="navigate('sensors/" + sensor.id + "')")
+                                | Cancel
+                            button.btn.btn-sm.btn-default.pull-right(type='submit', title='Update', form='form_sensor_edit', value='Update')
+                                | Update
+
+    //.container
         .row
             .col-md-12
                 form(action="update" method="POST" class="edit")

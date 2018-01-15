@@ -1,39 +1,70 @@
 extends ../layout-home
 block content
-    style(type="text/css").
-                #map-canvas {
-          width: auto;
-          height: 500px;
-        }
+    .row
+        .col-lg-12.col-md-12.col-sm-12.col-xs-12
+          .page-header.text-center
+            a(href="/installs", title='Installs')
+              img(src="/theme/images/logo.png", width='48')
+            //h1.text-center
+                | New Install
+            h4
+              ol(class="breadcrumb")
+                  li(class="active") Install
+    .row
+      // Left Column
+      form(action="/installs/create" method="POST" role="form" class="new" id="form_install_new")
+          .col-lg-6.col-md-6.col-sm-12.col-xs-12
+            .row
+              // Image
+              .col-lg-12.col-md-12.col-sm-12.col-xs-12
+                .img-upload(style='padding-top: 0;')
+                  .img-holder
+                    img#image_install.img-responsive(src="/theme/images/add_install.png")
+                  .img-controls.pull-right
+                    span.btn.btn-sm.btn-default.btn-file
+                      span.glyphicon.glyphicon-open
+                      | Upload
+                    //button.btn.btn-sm.btn-danger(type='button', title='Apagar imagem', onclick="deleteImage('{{ path('install_delete_image', { 'id': entity.id }) }}')")
+                      span.glyphicon.glyphicon-trash
+            .row
+                .col-lg-12.col-md-12.col-sm-12.col-xs-12
+                  .testFields
+                    // Nome
+                    .input-group.input-group-sm
+                      span.input-group-addon
+                        label Name
+                      input.form-control(name="name" type="text")
+                  .testFields
+                      // Nome
+                      .input-group.input-group-sm
+                        span.input-group-addon
+                          label Type
+                        select.form-control(name="type" class="form-control")
+                            each type in types
+                                option(value=type._id)=type.name
+                  .testFields
+                      // Description
+                      .input-group.input-group-sm
+                        span.input-group-addon
+                          label Description
+                        input.form-control(name="description" type="text")
+            .row
+              .col-lg-12.col-md-12.col-sm-12.col-xs-12
+                .form-end
+                  button.btn.btn-sm.btn-default.pull-left(type='button', title='Back', onclick="navigate('/installs')")
+                    span.glyphicon.glyphicon-chevron-left
+                    |  Back
+                  //button.btn.btn-sm.btn-default.pull-right(type='button', title='Submit', form='form_install_new', value='Submit')
+                  button.btn.btn-sm.btn-default.pull-right(type='submit', title='Submit', form='form_install_new', value='Submit')
+                    | Submit
+                  //input(type="submit" value="Submit" class="btn btn-default")
+                  //a(href="/installs" class="btn btn-danger") Back to list
 
-    .container
-        .row
-            .col-md-12
-                form(action="/installs/create" method="POST" role="form" class="new" id="addInstall")
-                    .form-group
-                        h2 Create a Install
-
-                        .form-group(style="width: 400px;")
-                            label Name
-                            input(name="name" type="text" class="form-control")
-                        .form-group(style="width: 400px;")
-                            label Type
-                            select(name="type" class="form-control")
-                              option Agricultura
-                              option Piscicultura
-                              option Aquário
-
-                        .form-group(style="width: 400px;")
-                            label Description
-                            input(name="description" type="text" class="form-control")
-
-                        .form-group(style="width: 400px;")
-                            #map-canvas
-                        input(name="areaPosition" type="hidden")
-                        input(name="position" type="hidden")
-
-                    input(type="submit" value="Submit" class="btn btn-default")
-                a(href="/installs" class="btn btn-danger") Back to list
+          // Right Column
+          .col-lg-6.col-md-6.col-sm-12.col-xs-12.install-thumbnail
+            #map-canvas
+            input(name="areaPosition" type="hidden")
+            input(name="position" type="hidden")
 
     script(src='/js/maps_point_polygon.js')
     script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyD9eue-dVAWRDx3eL1rfm0ZxtSwdhuivVk')

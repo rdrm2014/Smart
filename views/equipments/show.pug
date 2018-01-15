@@ -1,35 +1,112 @@
 extends ../layout-home
 block content
-	.container
-		.row
-			.col-md-12
-				//MAPA
+    .row
+        .col-lg-12.col-md-12.col-sm-12.col-xs-12
+            .page-header.text-center
+                a(href="/equipments", title='Equipments')
+                    img(src="/theme/images/logo.png", width='48')
+                h4
+                    ol(class="breadcrumb")
+                        li
+                            a(href="/installs/" + install._id)=install.name
+                        li(class="active")
+                            a(href="/installs/" + install._id + "/equipments/" + equipment._id)=equipment.name
+    .row
+        // Left Column
+        .col-lg-6.col-md-6.col-sm-12.col-xs-12
+            .row
+                // Image
+                .col-lg-12.col-md-12.col-sm-12.col-xs-12
+                    if equipment.image
+                        img#picture.img-responsive.center-block(src="/theme/images/" + equipment.image)
+                    else
+                        img#picture.img-responsive(src="/theme/images/add_equipment.png", style="margin: 0 auto;")
+            // Info Row
+            .row
+                .col-lg-12.col-md-12.col-sm-12.col-xs-12
+                    .testFields
+                        // Nome
+                        .input-group.input-group-sm
+                            span.input-group-addon
+                                label Name
+                            span.form-control= equipment.name
+                        // Description
+                        .input-group.input-group-sm
+                            span.input-group-addon
+                                label Description
+                            span.form-control=equipment.description
+                        // Position
+                        //.input-group.input-group-sm
+                            span.input-group-addon
+                                label Position
+                            span.form-control=equipment.position
+                        // Type
+                        //.input-group.input-group-sm
+                            span.input-group-addon
+                                label IP
+                            span.form-control=equipment.ip
+                        // Buttons
+                .row
+                    .col-lg-12.col-md-12.col-sm-12.col-xs-12
+                        .form-end
+                            button.btn.btn-sm.btn-default.pull-left(type='button', title='Voltar', onclick="navigate('../equipments')")
+                                span.glyphicon.glyphicon-chevron-left
+                                |  Voltar
 
-				ol(class="breadcrumb")
-					li
-						a(href=equipment.install)=equipment.install.name
-					li(class="active")=equipment.name
-				form(class="show")
-					.form-group
-						h2 a Equipment
-					.form-group(style="width: 400px;")
-						label Name
-						input(value=equipment.name name="name" type="text" class="form-control" disabled)
-					.form-group(style="width: 400px;")
-						label Description
-						input(value=equipment.description name="description" type="text" class="form-control" disabled)
-					.form-group(style="width: 400px;")
-						label Position
-						input(value=equipment.position name="position" type="text" class="form-control" disabled)
-					.form-group(style="width: 400px;")
-						label IP
-						input(value=equipment.ip name="ip" type="text" class="form-control" disabled)
-					//.form-group(style="width: 400px;")
-						#map-canvas
+                            button.btn.btn-sm.btn-default.pull-left(type='button', title='Sensors', onclick="navigate('" + equipment.id + "/sensors')")
+                                | Sensors
 
-				a(href=""+equipment.id+"/sensors" class="btn btn-default")  Sensors
-				| |
-				a(href=""+equipment.id+"/edit" class="btn btn-default")  Edit
-				| |
-				a(href="../equipments") Back to list
+                            button.btn.btn-sm.btn-default.pull-right(type='button', title='Edit', onclick="navigate('" + equipment.id + "/edit')", style='margin-left: 5px;')
+                                | Editar
+                            form(action=equipment.id + "/destroy" method="POST")
+                                input(type="hidden" name="id" value=equipment.id)
+                                button.btn.btn-sm.btn-danger.pull-right(type='button', title='Apagar', onclick="deleteObject(function(){parentNode.submit()});")
+                                    span.glyphicon.glyphicon-trash
+                                        //a(href="javascript:;" onclick="deleteEquipment(function(){parentNode.submit()});")
+        // Right Column
+        .col-lg-6.col-md-6.col-sm-12.col-xs-12.equipment-thumbnail
+            #map-canvas
+
+    style(type="text/css").
+        #map-canvas {
+            width: auto;
+            height: 500px;
+        }
+
+    script(src='/js/maps_point_polygon.js')
+    script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyD9eue-dVAWRDx3eL1rfm0ZxtSwdhuivVk')
+    script initialize(false)
+
+    //.container
+        .row
+            .col-md-12
+                //MAPA
+
+                ol(class="breadcrumb")
+                    li
+                        a(href=equipment.equipment)=equipment.equipment.name
+                    li(class="active")=equipment.name
+                form(class="show")
+                    .form-group
+                        h2 a Equipment
+                    .form-group(style="width: 400px;")
+                        label Name
+                        input(value=equipment.name name="name" type="text" class="form-control" disabled)
+                    .form-group(style="width: 400px;")
+                        label Description
+                        input(value=equipment.description name="description" type="text" class="form-control" disabled)
+                    .form-group(style="width: 400px;")
+                        label Position
+                        input(value=equipment.position name="position" type="text" class="form-control" disabled)
+                    .form-group(style="width: 400px;")
+                        label IP
+                        input(value=equipment.ip name="ip" type="text" class="form-control" disabled)
+                    //.form-group(style="width: 400px;")
+                        #map-canvas
+
+                a(href=""+equipment.id+"/sensors" class="btn btn-default")  Sensors
+                | |
+                a(href=""+equipment.id+"/edit" class="btn btn-default")  Edit
+                | |
+                a(href="../equipments") Back to list
 

@@ -1,0 +1,942 @@
+/* ---------------------------
+ * -----Z-Index Hierarchy-----
+ * ---------------------------
+ * loader:      1050
+ * fullscreen:  1050
+ * hold:        1050
+ * modal:       1050
+ * nav bar:     1030
+ * menu nodes:  1000
+ */
+
+/* ----------------
+ * -----Colors-----
+ * ----------------
+ * cc:      #be0712
+ * fo:      #1aae54
+ * pc:      #1689e7
+ */
+
+/* ----------------
+ * -----Global-----
+ * ----------------
+ */
+
+body {
+    color: #959595;
+    font-size: 11px;
+    padding-top: 50px;
+    overflow-y: hidden;
+    text-rendering: optimizeLegibility;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+label:hover {
+    cursor: pointer;
+}
+
+.row,
+.col-lg-12,
+.col-md-12,
+.col-sm-12,
+.col-xs-12 {
+    margin: 0;
+    padding: 0;
+}
+
+.no-padding {
+    padding: 0 !important;
+}
+
+.hidden {
+    display: none;
+}
+
+/* ----------------
+ * -----Navbar-----
+ * ----------------
+ */
+
+#form-login ul li span {
+    margin: 0 15px;
+}
+
+.navbar-inverse {
+    background: #000000;
+    border-bottom: 2px solid;
+    margin-bottom: 0;
+    font-size: 14px;
+}
+
+.navbar-inverse .navbar-toggle,
+.navbar-inverse .navbar-toggle:hover,
+.navbar-inverse .navbar-toggle:focus {
+    background: #000000;
+    border-color: #000000;
+}
+
+.navbar-brand {
+    font-size: 16px;
+    height: 50px;
+    line-height: 20px;
+    margin-left: 20px;
+    padding: 15px;
+}
+
+.navbar .navbar-text {
+    font-size: 12px;
+}
+
+.top-nav {
+    padding: 0 15px 0 0;
+}
+
+.top-nav > li {
+    display: inline-block;
+    float: left;
+}
+
+.top-nav > li > a {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    font-size: 14px;
+    line-height: 20px;
+    color: #999;
+}
+
+.top-nav > li:last-of-type > a {
+    margin-right: 30px
+}
+
+/* ---------------------
+ * -----Top Toolbar-----
+ * ---------------------
+ */
+
+#topToolbar {
+    background: #333333;
+    border-bottom: 1px solid #222;
+}
+
+#topToolbar button {
+    background: #333333;
+    border: none;
+    border-right: 1px solid #222222;
+    border-left: 1px solid #555555;
+    color: #ffffff;
+    padding: 5px;
+    float: left;
+}
+
+#topToolbar button:hover {
+    background: #222222;
+}
+
+#topToolbar button:active {
+    background: #111111;
+}
+
+#topToolbar button img {
+    width: 22px;
+    height: 22px;
+    padding: 2px;
+}
+
+/* -----------------------
+ * -----DropDown Menu-----
+ * -----------------------
+ */
+
+#topToolbar .dropdown {
+    float: right;
+}
+
+#topToolbar .dropdown button {
+    border-radius: 0;
+    line-height: 22px;
+    font-size: 11px;
+}
+
+#topToolbar .dropdown .dropdown-menu {
+    background: #dddddd;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    margin: 1px 0 0;
+}
+
+#topToolbar .dropdown .dropdown-menu li {
+    padding: 0 0 0 5%;
+    margin: 5px 0;
+}
+
+#topToolbar .dropdown .dropdown-menu li:hover {
+    background: #eeeeee;
+}
+
+#topToolbar .dropdown .dropdown-menu input {
+    margin: 0;
+    width: 10%;
+}
+
+#topToolbar .dropdown .dropdown-menu input:hover {
+    cursor: pointer;
+}
+
+#topToolbar .dropdown .dropdown-menu label {
+    color: #000;
+    font-size: 10px;
+    font-weight: 500;
+    padding: 10px 0 0 5px;
+    width: 85%;
+}
+
+/* -------------
+ * -----SVG-----
+ * -------------
+ */
+
+svg {
+    background: #ffffff;
+    cursor: default;
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+svg:not(.active):not(.ctrl) {
+    cursor: crosshair;
+}
+
+svg:not(.active):not(.ctrl) path.link {
+    cursor: pointer;
+}
+
+text {
+    pointer-events: none;
+}
+
+#studio {
+    overflow: hidden;
+}
+
+#map .node .icon:hover {
+    fill-opacity: .75;
+    cursor: pointer;
+}
+
+/* ----------------------
+ * -----Left Toolbox-----
+ * ----------------------
+ */
+
+#toolbox {
+    background: #333333;
+    border-top: 1px solid #555555;
+    float: left;
+    padding-top: 10px;
+    text-align: center;
+    width: 55px;
+}
+
+#toolbox ul {
+    list-style: none;
+    padding: 0;
+}
+
+#toolbox ul li {
+    cursor: pointer;
+    margin: 10px auto;
+    z-index: 1000;
+}
+
+#toolbox ul li img {
+    border-radius: 2px;
+    width: 40px;
+}
+
+#toolbox hr {
+    border-top: 1px solid #222222;
+    border-bottom: 1px solid #555555;
+    width: 75%;
+}
+
+#toolbox button {
+    background: #333;
+    border-radius: 0;
+    color: #999;
+    width: 100%;
+}
+
+#toolbox button:hover {
+    background: #222;
+}
+
+#toolbox button img {
+    width: 30px;
+}
+
+/* --------------
+ * -----Node-----
+ * --------------
+ */
+
+rect.node {
+    cursor: pointer;
+}
+
+rect.node.selected {
+    stroke: #000000;
+    stroke-width: 2;
+}
+
+/* ----------------
+ * -----Links------
+ * ----------------
+ */
+
+path.link {
+    cursor: default;
+}
+
+path.link:hover {
+    stroke: darkgrey;
+}
+
+path.link.selected {
+    stroke-dasharray: 3, 1;
+}
+
+/* -----------------------------
+ * ------Loader/Hold Image------
+ * -----------------------------
+ */
+
+#loader {
+    background: #000000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 1050;
+}
+
+#loader img {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    width: 40px;
+    height: 10px;
+    margin-left: -20px; /* (width / 2) */
+    margin-top: -5px; /* (height / 2) */
+}
+
+/* ----------------------
+ * -----Info Tooltip-----
+ * ----------------------
+ */
+
+.info {
+    background-color: #ffffff;
+    box-shadow: 1px 1px 1px;
+    font-size: 12px;
+    position: absolute;
+}
+
+.info table {
+    margin-bottom: 0;
+}
+
+.info table tr td {
+    border: 1px solid #e5e5e5;
+    padding: 5px;
+    vertical-align: middle;
+}
+
+.info img {
+    width: 20px;
+}
+
+/* --------------------
+ * -----Slider Bar-----
+ * --------------------
+ */
+
+#slider .carousel-indicators {
+    bottom: -2px;
+    cursor: default;
+}
+
+#slider .carousel-indicators li,
+#slider .carousel-indicators li.active {
+    border: 1px solid white;
+    cursor: default;
+    margin: 0 1px;
+    width: 12px;
+    height: 12px;
+}
+
+#slider .carousel-indicators .active {
+    background-color: white;
+}
+
+/* arrows */
+
+#slider .carousel a {
+    padding: 12px;
+    position: relative;
+    margin: 0 10px;
+    bottom: 2px;
+}
+
+#slider .carousel a:hover {
+    background: rgba(255, 255, 255, .15);
+}
+
+#slider .carousel span {
+    color: white;
+    font-size: 12px;
+}
+
+/* disabled */
+
+#slider .carousel a.disabled span {
+    color: rgba(255, 255, 255, .5);
+}
+
+#slider .carousel a.disabled:hover {
+    background: inherit;
+    cursor: default;
+}
+
+/* title */
+
+#slider h1 {
+    color: #ffffff;
+    font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 100;
+    letter-spacing: -0.05em;
+    line-height: 16px;
+    margin: 0;
+    padding: 10px;
+}
+
+/* -------------------------
+ * -----Recommendations-----
+ * -------------------------
+ */
+
+#shopping {
+    background: #f5f5f5;
+}
+
+#checkout h2,
+#shopping h2 {
+    font-size: 16px;
+    padding-bottom: 20px;
+}
+
+#shopping #right {
+    padding: 0;
+}
+
+/*
+#shopping #shopping-right{
+    height: 53px;
+}
+
+#btn-excel-download {
+    border-radius: 2px;
+    padding: 0;
+    height: 35px;
+    width: 35px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+#shopping-right .btn {
+    background: #333333;
+    border-color: #333333;
+}*/
+
+#node-list,
+#checkout-left {
+    background: #333333;
+    padding: 0;
+    margin: 0;
+}
+
+#node-list .list-group-item,
+#checkout-left .list-group-item {
+    background: #333333;
+    border-color: #222222;
+    border-radius: 0;
+    cursor: pointer;
+}
+
+#node-list .list-group-item:hover,
+#checkout-left .list-group-item:hover {
+    background: #222222;
+}
+
+#node-list .list-group-item.active,
+#checkout-left .list-group-item.active {
+    background: #222222;
+    border-color: #222222;
+    color: inherit;
+}
+
+#node-list .list-group-item.active:hover,
+#checkout-left .list-group-item.active:hover {
+    background: #222222;
+}
+
+#node-list .list-group-item,
+#node-list .list-group-item .badge {
+    font-size: 12px;
+    font-weight: 100;
+}
+
+#node-list .list-group-item .badge,
+#node-list .list-group-item.active .badge {
+    background: none;
+    color: #fff;
+}
+
+#equipment-list,
+#subequipment-list {
+    padding: 0;
+}
+
+#equipment-list {
+    background: #ffffff;
+    border-bottom: 1px solid #dddddd;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.03);
+}
+
+#equipment-list table {
+    margin-bottom: 0;
+    table-layout: fixed;
+}
+
+#equipment-list th {
+    background: #eeeeee;
+    border-top: none;
+}
+
+#equipment-list td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#equipment-list table th,
+#equipment-list table td,
+#modules .table-striped th,
+#modules .table-striped td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+#subequipment-list {
+    padding: 25px;
+}
+
+#subequipment-list table {
+    margin-bottom: 30px;
+    table-layout: fixed;
+}
+
+#subequipment-list img {
+    width: 100%;
+}
+
+#subequipment-list label {
+    margin: 0;
+}
+
+#subequipment-list .img-thumbnail {
+    border-radius: 0;
+}
+
+#selected-equipment-info {
+    margin-bottom: 20px;
+}
+
+#selected-equipment-info td {
+    background: #ffffff;
+    border-left: 5px solid #f5f5f5;
+}
+
+#selected-equipment-info tr:first-of-type td:first-of-type {
+    background: #f5f5f5;
+    border-left: none;
+    border-top: none;
+    padding-left: 0;
+    padding-top: 0;
+}
+
+#modules {
+    background: #eeeeee;
+    border: 1px solid #ddd;
+    box-shadow: inset 0 5px 5px rgba(0, 0, 0, 0.03),
+    inset 5px 0 5px rgba(0, 0, 0, 0.03),
+    inset -5px 0 5px rgba(0, 0, 0, 0.03);
+    padding: 20px 25px 30px;
+}
+
+#modules h2 {
+    padding: 0;
+}
+
+#modules table {
+    table-layout: auto;
+    margin-bottom: 0;
+}
+
+#modules table th.shrink,
+#modules table td.shrink {
+    width: 1px;
+}
+
+#modules table th,
+#modules table td {
+    border-color: #dddddd;
+}
+
+#modules table th {
+    border-top: none;
+    background: #eeeeee;
+}
+
+#checkout table td,
+#modules table td {
+    background: #ffffff;
+}
+
+#checkout table td.bg-danger,
+#modules table td.bg-danger {
+    background: inherit;
+}
+
+#checkout-right table th {
+    background: #eeeeee;
+}
+
+#checkout tr:first-child th:first-of-type {
+    background: #dddddd;
+    text-align: center;
+}
+
+#checkout table:last-of-type {
+    margin-bottom: 0;
+}
+
+/* ------------------
+ * -----Checkout-----
+ * ------------------
+ */
+
+#btn-svg-download,
+#btn-svg-fullscreen,
+#btn-svg-export{
+    border-radius: 2px;
+    padding: 0;
+    height: 35px;
+    width: 35px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+#btn-svg-download {
+    right: 50px;
+}
+
+#checkout-right,
+#checkout-left,
+#checkout-left .list-group {
+    margin: 0;
+    padding: 0;
+}
+
+#checkout-left .list-group-item:first-child,
+#checkout-left .list-group-item:last-child {
+    border-radius: 0;
+}
+
+#checkout {
+    background: #f5f5f5;
+}
+
+#checkout h2 {
+    margin: 0;
+    padding: 10px 0 20px 20px;
+}
+
+#checkout-right .btn {
+    background: #333333;
+    border-color: #333333;
+}
+
+#equipmentList div {
+    padding: 0 10px;
+}
+
+/* -------------------
+ * ----Modal Body-----
+ * -------------------
+ */
+
+.modal-body table td, table th {
+    vertical-align: middle !important;
+}
+
+.modal-body label {
+    margin: 0;
+    font-weight: 100;
+}
+
+.modal-body .glyphicon {
+    font-size: 10px;
+}
+
+.modal-body .input-group:not(:first-of-type) {
+    margin-top: 5px;
+}
+
+.modal-inspection p {
+    font-size: 13px;
+}
+
+.modal-inspection span {
+    margin-right: 10px;
+}
+
+/* -------------------
+ * -----Modal Box-----
+ * -------------------
+ */
+
+.modal-dialog table {
+    margin-bottom: 0;
+    padding: 10px;
+}
+
+.modal-dialog table tr th,
+.modal-dialog table tr td {
+    border-color: #e5e5e5;
+    vertical-align: middle;
+}
+
+.modal-dialog .cable {
+    background: #000000;
+    border-radius: 25px;
+    color: #ffffff;
+    font-size: 10px;
+    line-height: 25px;
+    text-align: center;
+    width: 25px;
+    height: 25px;
+}
+
+/* ---------------------------------
+ * -----Edit Cable Modal Window-----
+ * ---------------------------------
+ */
+
+.modal-cable .table th,
+.modal-cable .table td {
+    text-align: center;
+    border-color: #ddd;
+}
+
+.modal-cable .list-group {
+    margin: 0;
+}
+
+.modal-cable .list-group-item {
+    text-align: right;
+}
+
+.modal-cable .list-group-item:first-child {
+    border-top: none;
+}
+
+.modal-cable .list-group-item:last-child {
+    border-bottom: none;
+}
+
+.modal-cable .modal-body {
+    padding: 0;
+}
+
+.modal-cable .badge {
+    opacity: .75;
+}
+
+.modal-cable .align-right {
+    text-align: right;
+}
+
+.modal-cable .align-left {
+    text-align: left;
+}
+
+.modal-cable .float-left {
+    float: left;
+}
+
+.modal-cable button {
+    margin-left: 5px;
+}
+
+.modal-cable .borderless {
+    margin: 0;
+}
+
+.modal-cable .modal-body th {
+    background: #eee;
+    border-top-width: 0;
+}
+
+.modal-cable .modal-body .tube-edit {
+    background: #eee;
+    box-shadow: inset 0 5px 5px rgba(0, 0, 0, 0.03), inset 0 -5px 5px rgba(0, 0, 0, 0.03);
+    padding: 15px 30px 30px;
+}
+
+.modal-cable .modal-body .tube-edit .input-sm {
+    min-width: 75px;
+}
+
+/* ---------------------
+ * -----Scale Tool------
+ * ---------------------
+ */
+
+.scale {
+    cursor: move;
+}
+
+/* --------------------------
+ * -----Image Pre Loader-----
+ * --------------------------
+ */
+
+#preloader {
+    display: none;
+}
+
+/* ------------------------
+ * -----SVG Fullscreen-----
+ * ------------------------
+ */
+
+#fullscreen {
+    background: #fff;
+    position: fixed;
+    z-index: 1050;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+#fullscreen button {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+}
+
+/* ---------------
+ * -----Other-----
+ * ---------------
+ */
+
+.table .fit {
+    width: 1%;
+    white-space: nowrap;
+}
+
+.testFields div:not(:first-of-type) {
+    color: #959595;
+    margin-top: 20px;
+}
+
+.testFields .form-control {
+    overflow: auto;
+}
+
+.testFields .input-group-addon label {
+    color: #777;
+    font-weight: 400;
+    margin-bottom: 0;
+    text-align: left;
+}
+
+.testFields label,
+.testFields .form-control,
+.testFields .input-group-addon {
+    font-size: 10px;
+}
+
+/* --------------------------
+ * -----Responsive Sizes-----
+ * --------------------------
+ */
+
+/* --------------------------------
+ * -----Small Devices, Tablets-----
+ * --------------------------------
+ */
+@media only screen and (min-width: 768px) {
+}
+
+/* -----------------------------------
+ * -----Medium Devices, Desktops------
+ * -----------------------------------
+ */
+@media only screen and (min-width: 992px) {
+
+    #slider h1 {
+        font-size: 12px;
+    }
+
+    #toolbox {
+        width: 70px;
+    }
+
+    #toolbox button img {
+        width: 35px;
+    }
+
+    #modules {
+        padding: 20px 30px 30px;
+    }
+
+    #subequipment-list {
+        padding: 25px 50px;
+    }
+
+    .testFields label,
+    .testFields .form-control,
+    .testFields .input-group-addon {
+        font-size: 12px;
+    }
+}
+
+/* -------------------------------------
+ * -----Large Devices, Wide Screens-----
+ * -------------------------------------
+ */
+@media only screen and (min-width: 1200px) {
+}

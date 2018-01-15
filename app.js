@@ -25,20 +25,13 @@ var sensors = require(src + 'routes/sensors');
 
 var flash = require('connect-flash');
 
-//var cors = require('cors');
-
-var corsOptions = {
-    origin: '*',
-    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-};
-
 var app = express();
 
 app.all('*', function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header('Access-Control-Allow-Credentials', true);
     res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     next();
 });
 
@@ -74,8 +67,6 @@ app.use(swagger.init(app, {
 
 app.use(passport.initialize());
 app.use(passport.session());
-
-//app.use(cors(corsOptions));
 
 app.use('/', index);
 app.use('/users', users);

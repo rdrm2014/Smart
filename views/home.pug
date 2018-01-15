@@ -1,36 +1,31 @@
 extends layout-home
 block content
+    .row
+        .col-lg-12.col-md-12.col-sm-12.col-xs-12
+          .page-header.text-center
+            a(href="/installs", title='Página inicial')
+              img(src="/theme/images/logo.png", width='48')
+            h1=title
+    .row
+        .container
+            .jumbotron
+                .row
+                    .col-xs-6.col-md-6
+                        a.thumbnail.text-center(href='/ui')
+                            img.img-responsive(src="/theme/images/interface.png")
+                            h2 Interface
+                    .col-xs-6.col-md-6
+                        a.thumbnail.text-center(href='/installs')
+                            img.img-responsive(src="/theme/images/installs.png")
+                            h2 Installs
+
     .container
-        .jumbotron
-            .row
-                .col-xs-6.col-md-6
-                    a.thumbnail.text-center(href='/ui')
-                        img(src="..." alt="...")
-                        h2.text-left UI
-                .col-xs-6.col-md-6
-                    a.thumbnail.text-center(href='/installs')
-                        img(src="..." alt="...")
-                        h2.text-left Installs
-                //.col-xs-6.col-md-4
-                    a.thumbnail.text-center(href='/peers')
-                        img(src="..." alt="...")
-                        h2.text-left Peers
-    .container
-        //.row
+        .row
             h2.centered.mb
                 | Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
             .col-md-6
                 p
                     | Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
             .col-md-6
-                p
-                    | Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        //.row
-            .col-md-12
-                img.img-responsive(src='assets/img/items.png', alt='')
-        //#g.row.centered
-            h2
-                | Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            .col-md-8.col-md-offset-2
                 p
                     | Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.

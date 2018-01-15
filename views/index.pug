@@ -1,41 +1,50 @@
 extends layout
 
 block content
-    .container.centered
+  .row
+    .col-lg-12.col-md-12.col-sm-12.col-xs-12
+      .page-header.text-center
+        a(href="/installs", title='Página inicial')
+          img(src="/theme/images/logo.png", width='48')
+        h1=title
+  .row
+    .container
+      .jumbotron
         .row
-            .col-md-12
-                h1 #{title}
-        .row.mt
-            .col-sm-8.col-md-offset-2
-                .row
-                    .col-sm-4
-                        a(href='/users/login').btn-white
-                            i.ion-locked
-                            br
-                            | Local Login
-                    .col-sm-4
-                        a(href='/users/signup').btn-white
-                            i.ion-locked
-                            br
-                            | Local Signup
-                    .col-sm-4
-                        a(href='/users/auth/facebook').btn-white
-                            i.ion-social-facebook
-                            br
-                            | Facebook
-                .row
-                    .col-sm-4
-                        a(href='/users/auth/twitter').btn-white
-                            i.ion-social-twitter
-                            br
-                            | Twitter
-                    .col-sm-4
-                        a(href='/users/auth/google').btn-white
-                            i.ion-social-googleplus
-                            br
-                            | Google+
-                    .col-sm-4
-                        a(href='http://www.ua.pt').btn-white
-                            i.ion-university
-                            br
-                            | UA
+          .col-md-12
+            .row
+              .col-sm-4
+                a.btn.btn-lg.btn-block(href='/users/login')
+                  i.fa.fa-sign-in.visible-xs
+                  span.hidden-xs Local Login
+              .col-sm-4
+                a.btn.btn-lg.btn-block(href='/users/signup')
+                  i.fa.fa-lock.visible-xs
+                  span.hidden-xs Local Signup
+              .col-sm-4
+                a.btn.btn-lg.btn-block(href='/users/auth/facebook')
+                  i.fa.fa-facebook.visible-xs
+                  span.hidden-xs Facebook
+            .row
+              .col-sm-4
+                a.btn.btn-lg.btn-block(href='/users/auth/twitter')
+                  i.fa.fa-twitter
+                  span.hidden-xs Twitter
+              .col-sm-4
+                a.btn.btn-lg.btn-block(href='/users/auth/google')
+                  i.fa.fa-google-plus
+                  span.hidden-xs Google+
+              .col-sm-4
+                a.btn.btn-lg.btn-block(href='http://www.ua.pt')
+                  i.fa.fa-university
+                  span.hidden-xs UA
+  .container
+    .row
+      h2.centered.mb
+        | Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+      .col-md-6
+        p
+          | Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+      .col-md-6
+        p
+          | Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.

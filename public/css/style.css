@@ -81,7 +81,16 @@ a:focus {
     color: #2f2f2f;
 }
 
+.links {
+    margin: 0;
+    list-style: none;
+    padding-left: 0;
+}
 
+.links li {
+    display: inline;
+    padding: 0 10px
+}
 
 .dmbutton:hover,
 .dmbutton:focus{
@@ -124,13 +133,12 @@ a:focus {
 .portfolio-item .title:before {border-radius:0; display:none}
 
 
-#f {
+#footer {
     padding-top: 25px;
     padding-bottom: 25px;
-    background-color: #A0AF0A;
 }
 
-#f i {
-    margin-right: 30px;
-    font-size: 35px;
+
+.input-group-sm > .form-control, .input-group-sm > .input-group-addon, .input-group-sm > .input-group-btn > .btn{
+    height:unset;
 }

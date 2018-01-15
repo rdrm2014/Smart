@@ -8,12 +8,13 @@ var GeoJSON = require('mongoose-geojson-schema');
 
 var src = process.cwd() + '/';
 var InstallModel = require(src + 'models/install');
+var TypeModel = require(src + 'models/type');
 
 // installs
 router.get('/', isLoggedIn, function (req, res) {
     InstallModel.find({owner: req.user}).exec(function (err, installs) {
         if (!err) {
-            res.render('installs/index', {user: req.user, installs: installs});
+            res.render('installs/index', {title: 'Smart-*', user: req.user, installs: installs});
         } else {
             res.statusCode = 500;
 
@@ -40,13 +41,22 @@ router.get('/map', isLoggedIn, function (req, res) {
 });
 
 router.get('/new', isLoggedIn, function (req, res) {
-    res.render('installs/new', {
-        user: req.user
+    TypeModel.find().exec(function (err, types) {
+        if (!err) {
+            res.render('installs/new', {
+                user: req.user, types: types
+            });
+        } else {
+            res.statusCode = 500;
+
+            return res.json({
+                error: 'Server error'
+            });
+        }
     });
 });
 
 router.post('/create', isLoggedIn, function (req, res) {
-
     var paramObj = {
         owner: req.user,
         name: req.body['name'],
@@ -70,29 +80,52 @@ router.post('/create', isLoggedIn, function (req, res) {
 });
 
 router.get('/:idInstall', isLoggedIn, function (req, res, next) {
-    InstallModel.findOne({_id: req.params['idInstall'], owner: req.user}).exec(function (err, install) {
-        if (err) return next(err);
-        if (!install) return next();
-        res.render('installs/show', {
-            install: install
+    InstallModel.findOne({_id: req.params['idInstall'], owner: req.user})
+    //.populate({path: 'type', select: 'name'})
+        .populate('type')
+        .exec(function (err, install) {
+            if (err) return next(err);
+            if (!install) return next();
+            res.render('installs/show', {
+                install: install
+            });
         });
-    });
 });
 
 router.get('/:idInstall/edit', isLoggedIn, function (req, res, next) {
-    InstallModel.findOne({_id: req.params['idInstall'], owner: req.user}).exec(function (err, install) {
+    InstallModel.findOne({_id: req.params['idInstall'], owner: req.user})
+        .populate("type")
+        .exec(function (err, install) {
         if (err) return next(err);
         if (!install) return next('InstallModel doesn\'t exist.');
+        TypeModel.find().exec(function (err, types) {
+            if (!err) {
+                res.render('installs/edit', {
+                    install: install, types: types
+                });
+            } else {
+                res.statusCode = 500;
 
-        res.render('installs/edit', {
-            install: install
+                return res.json({
+                    error: 'Server error'
+                });
+            }
         });
     });
 });
 
 router.post('/:idInstall/update', isLoggedIn, function (req, res) {
 
+
+    console.log("####################################");
+    console.log(req.body['areaPosition']);
+    console.log("####################################");
+    console.log("####################################");
+    console.log(req.body['position']);
+    console.log("####################################");
+
     var paramObj = {
+        owner: req.user,
         name: req.body['name'],
         type: req.body['type'],
         description: req.body['description'],
@@ -102,6 +135,7 @@ router.post('/:idInstall/update', isLoggedIn, function (req, res) {
         },
         position: JSON.parse(req.body['position'])
     };
+
 
     InstallModel.update({_id: req.params['idInstall'], owner: req.user}, paramObj, function (err) {
         if (err) {

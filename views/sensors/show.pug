@@ -1,32 +1,67 @@
 extends ../layout-home
 block content
-	.container
-		.row
-			.col-md-12
-				ol(class="breadcrumb")
-					li
-						a(href=sensor.install)=sensor.install.name
-					li
-						a(href=sensor.equipment)=sensor.equipment.name
-					li(class="active")=sensor.name
-				form(class="show")
-					.form-group
-						h2 a Sensor
+    .row
+        .col-lg-12.col-md-12.col-sm-12.col-xs-12
+            .page-header.text-center
+                a(href="/sensors", title='Sensors')
+                    img(src="/theme/images/logo.png", width='48')
+                h4
+                    ol(class="breadcrumb")
+                        li
+                            a(href="/installs/" + install._id)=install.name
+                        li
+                            a(href="/installs/" + install._id + "/equipments/" + equipment._id)=equipment.name
+                        li(class="active")
+                            a(href="/installs/" + install._id + "/equipments/" + equipment._id + "/sensors/" + sensor._id)=sensor.name
+    .row
+        // Left Column
+        .col-lg-6.col-md-6.col-sm-12.col-xs-12
+            .row
+                // Image
+                .col-lg-12.col-md-12.col-sm-12.col-xs-12
+                    if sensor.image
+                        img#picture.img-responsive.center-block(src="/theme/images/" + sensor.image)
+                    else
+                        img#picture.img-responsive(src="/theme/images/add_sensor.png", style="margin: 0 auto;")
+            // Info Row
+            .row
+                .col-lg-12.col-md-12.col-sm-12.col-xs-12
+                    .testFields
+                        // Nome
+                        .input-group.input-group-sm
+                            span.input-group-addon
+                                label Name
+                            span.form-control= sensor.name
+                    .testFields
+                        // Description
+                        .input-group.input-group-sm
+                            span.input-group-addon
+                                label Description
+                            span.form-control= sensor.description
+                    .testFields
+                        // Data Type
+                        .input-group.input-group-sm
+                            span.input-group-addon
+                                label Data Type
+                            span.form-control= sensor.dataType
+                    .testFields
+                        // Chart Type
+                        .input-group.input-group-sm
+                            span.input-group-addon
+                                label Chart Type
+                            span.form-control= sensor.chartType
 
-					.form-group(style="width: 400px;")
-						label Name
-						input(value=sensor.name name="name" type="text" class="form-control" disabled)
-					.form-group(style="width: 400px;")
-						label Description
-						input(value=sensor.description name="description" type="text" class="form-control" disabled)
-					.form-group(style="width: 400px;")
-						label Data Type
-						input(value=sensor.dataType name="dataType" type="text" class="form-control" disabled)
-					.form-group(style="width: 400px;")
-						label Chart Type
-						input(value=sensor.chartType name="chartType" type="text" class="form-control" disabled)
+                // Buttons
+                .row
+                    .col-lg-12.col-md-12.col-sm-12.col-xs-12
+                        .form-end
+                            button.btn.btn-sm.btn-default.pull-left(type='button', title='Voltar', onclick="navigate('../sensors')")
+                                span.glyphicon.glyphicon-chevron-left
+                                |  Voltar
 
-				a(href=""+sensor.id+"/edit" class="btn btn-default")  Edit
-				| |
-				a(href="../sensors") Back to list
-
+                            button.btn.btn-sm.btn-default.pull-right(type='button', title='Edit', onclick="navigate('" + sensor.id + "/edit')", style='margin-left: 5px;')
+                                | Editar
+                            form(action=sensor.id + "/destroy" method="POST")
+                                input(type="hidden" name="id" value=sensor.id)
+                                button.btn.btn-sm.btn-danger.pull-right(type='button', title='Apagar', onclick="deleteObject(function(){parentNode.submit()});")
+                                    span.glyphicon.glyphicon-trash

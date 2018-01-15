@@ -10,12 +10,18 @@ var InstallModel = require(src + 'models/install');
 
 // Equipments
 router.get('/:idInstall/equipments', isLoggedIn, function (req, res) {
-    EquipmentModel.find({install: req.params['idInstall'], owner: req.user}).exec(function (err, equipments) {
+    InstallModel.findOne({
+        _id: req.params['idInstall'],
+        owner: req.user
+    }).exec(function (err, install) {
         if (err) return next(err);
-        if (!equipments) return next();
-        console.log(equipments);
-        res.render('equipments/index', {
-            equipments: equipments
+        if (!install) return next();
+        EquipmentModel.find({install: req.params['idInstall'], owner: req.user}).exec(function (err, equipments) {
+            if (err) return next(err);
+            if (!equipments) return next();
+            res.render('equipments/index', {
+                equipments: equipments, install: install
+            });
         });
     });
 });
@@ -24,8 +30,7 @@ router.get('/:idInstall/equipments/new', isLoggedIn, function (req, res) {
     InstallModel.findOne({_id: req.params['idInstall'], owner: req.user}).exec(function (err, install) {
         if (err) return next(err);
         if (!install) return next();
-        console.log(install);
-        res.render('equipments/new', {user: req.user});
+        res.render('equipments/new', {user: req.user, install: install});
     });
 });
 
@@ -43,7 +48,6 @@ router.post('/:idInstall/equipments/create', isLoggedIn, function (req, res) {
             return next(err);
         if (!install)
             return next();
-        console.log(install);
         paramObj["install"] = install;
         EquipmentModel.create(paramObj, function EquipmentCreated(err, equipment) {
             if (err) {
@@ -56,37 +60,44 @@ router.post('/:idInstall/equipments/create', isLoggedIn, function (req, res) {
 });
 
 router.get('/:idInstall/equipments/:idEquipment', isLoggedIn, function (req, res) {
-    InstallModel.findOne({_id: req.params['idInstall'], owner: req.user}).exec(function (err, install) {
+    InstallModel.findOne({
+        _id: req.params['idInstall'],
+        owner: req.user
+    }).exec(function (err, install) {
+        if (err) return next(err);
+        if (!install) return next();
         EquipmentModel
             .findOne({_id: req.params['idEquipment'], owner: req.user})
             .exec(function (err, equipment) {
                 if (err) return handleError(err);
 
                 res.render('equipments/show', {
-                    equipment: equipment
+                    equipment: equipment, install: install
                 });
             });
     });
 });
 
 router.get('/:idInstall/equipments/:idEquipment/edit', isLoggedIn, function (req, res) {
-    EquipmentModel.findOne({
-        _id: req.params['idEquipment'],
-        install: req.params['idInstall'],
+    InstallModel.findOne({
+        _id: req.params['idInstall'],
         owner: req.user
-    }).exec(function (err, equipment) {
+    }).exec(function (err, install) {
         if (err) return next(err);
-        if (!equipment) return next('EquipmentModel doesn\'t exist.');
-        InstallModel.find({owner: req.user}).exec(function (err, installs) {
-            if (!err) {
-                res.render('equipments/edit', {user: req.user, installs: installs, equipment: equipment});
-            }
+        if (!install) return next();
+        EquipmentModel.findOne({
+            _id: req.params['idEquipment'],
+            install: req.params['idInstall'],
+            owner: req.user
+        }).exec(function (err, equipment) {
+            if (err) return next(err);
+            if (!equipment) return next('EquipmentModel doesn\'t exist.');
+            res.render('equipments/edit', {user: req.user, install: install, equipment: equipment});
         });
     });
 });
 
 router.post('/:idInstall/equipments/:idEquipment/update', isLoggedIn, function (req, res) {
-
     var paramObj = {
         name: req.body['name'],
         description: req.body['description'],
@@ -129,7 +140,6 @@ module.exports = router;
 
 // route middleware to ensure user is logged in
 function isLoggedIn(req, res, next) {
-    //cors(corsOptions);
     if (req.isAuthenticated())
         return next();
 

@@ -1,22 +1,72 @@
 extends ../layout-home
 block content
-    .container
-        .row
-            .col-md-12
-                form(action="create" method="POST" role="form" class="new")
-                    .form-group
-                        h2 Create a Sensor
-                        .form-group(style="width: 400px;")
-                            label Name
-                            input(name="name" type="text" class="form-control")
-                        .form-group(style="width: 400px;")
-                            label Description
-                            input(name="description" type="text" class="form-control")
-                        .form-group(style="width: 400px;")
-                            label Data Type
-                            input(name="dataType" type="text" class="form-control")
-                        .form-group(style="width: 400px;")
-                            label Chart Type
-                            input(name="chartType" type="text" class="form-control")
-                    input(type="submit" value="Submit" class="btn btn-default")
-                a(href="sensors" class="btn btn-danger") Back to list
+    .row
+        .col-lg-12.col-md-12.col-sm-12.col-xs-12
+            .page-header.text-center
+                a(href="/sensors", title='Sensors')
+                    img(src="/theme/images/logo.png", width='48')
+                //h1.text-center
+                    | New Sensor
+                h4
+                    ol(class="breadcrumb")
+                        li
+                            a(href="/installs/" + install._id)=install.name
+                        li
+                            a(href="/installs/" + equipment._id + "/equipments/" + equipment._id)=equipment.name
+                        li(class="active") Sensors
+    .row
+        // Left Column
+        form(action="create" method="POST" role="form" class="new" id="form_sensor_new")
+            .col-lg-6.col-md-6.col-sm-12.col-xs-12
+                .row
+                    // Image
+                    .col-lg-12.col-md-12.col-sm-12.col-xs-12
+                        .img-upload(style='padding-top: 0;')
+                            .img-holder
+                                img#image_sensor.img-responsive(src="/theme/images/add_sensor.png")
+                            .img-controls.pull-right
+                                span.btn.btn-sm.btn-default.btn-file
+                                    span.glyphicon.glyphicon-open
+                                    | Upload
+                                //button.btn.btn-sm.btn-danger(type='button', title='Apagar imagem', onclick="deleteImage('{{ path('sensor_delete_image', { 'id': entity.id }) }}')")
+                                  span.glyphicon.glyphicon-trash
+                .row
+                    .col-lg-12.col-md-12.col-sm-12.col-xs-12
+                        .testFields
+                            // Nome
+                            .input-group.input-group-sm
+                                span.input-group-addon
+                                    label Name
+                                input.form-control(name="name" type="text")
+                        .testFields
+                            // Description
+                            .input-group.input-group-sm
+                                span.input-group-addon
+                                    label Description
+                                input.form-control(name="description" type="text")
+                        .testFields
+                            // Data Type
+                            .input-group.input-group-sm
+                                span.input-group-addon
+                                    label Data Type
+                                select.form-control(name="dataType" class="form-control")
+                                    option Agricultura
+                                    option Piscicultura
+                                    option Aquário
+                        .testFields
+                            // Chart Type
+                            .input-group.input-group-sm
+                                span.input-group-addon
+                                    label Chart Type
+                                select.form-control(name="chartType" class="form-control")
+                                    option Agricultura
+                                    option Piscicultura
+                                    option Aquário
+                .row
+                    .col-lg-12.col-md-12.col-sm-12.col-xs-12
+                        .form-end
+                            button.btn.btn-sm.btn-default.pull-left(type='button', title='Back', onclick="navigate('../sensors')")
+                                span.glyphicon.glyphicon-chevron-left
+                                |  Back
+                            button.btn.btn-sm.btn-default.pull-right(type='submit', title='Submit', form='form_sensor_new', value='Submit')
+                                | Submit

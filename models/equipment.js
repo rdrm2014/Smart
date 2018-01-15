@@ -28,8 +28,8 @@ var equipmentSchema = mongoose.Schema({
     position: {
         type: [Number],  // [<longitude>, <latitude>]
         index: '2d'      // create the geospatial index
-    },
-    ip: String
+    }//,
+    //ip: String
 });
 
 // create the model for equipments and expose it to our app

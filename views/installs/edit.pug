@@ -1,35 +1,78 @@
 extends ../layout-home
 block content
-    style(type="text/css").
-                #map-canvas {
-          width: auto;
-          height: 500px;
-        }
+    .row
+        .col-lg-12.col-md-12.col-sm-12.col-xs-12
+            .page-header.text-center
+                a(href="/installs/" + install._id, title=install.name)
+                    img(src="/theme/images/logo.png", width='48')
+                    h4
+                        ol(class="breadcrumb")
+                            li(class="active")
+                                a(href="/installs/" + install._id)=install.name
+    .row
+        // Left Column
+        form(action="/installs/" + install.id + "/update" method="POST" id="form_install_edit")
+            .col-lg-6.col-md-6.col-sm-12.col-xs-12
+                .row
+                    // Image
+                    .col-lg-12.col-md-12.col-sm-12.col-xs-12
+                        .img-upload(style='padding-top: 0;')
+                            .img-holder
+                                if install.image
+                                    img#image_install.img-responsive(src="/theme/images/" + install.image)
+                                else
+                                    img#image_install.img-responsive(src="/theme/images/add_install.png")
+                            .img-controls.pull-right
+                                button.btn.btn-sm.btn-default.btn-file
+                                    span.glyphicon.glyphicon-open
+                                    | Upload
+                                //button.btn.btn-sm.btn-danger(type='button', title='Apagar imagem', onclick="deleteImage('{{ path('install_delete_image', { 'id': entity.id }) }}')")
+                                  span.glyphicon.glyphicon-trash
+                .row
+                    .col-lg-12.col-md-12.col-sm-12.col-xs-12
+                        .testFields(style='margin-top: 20px;')
+                            // Nome
+                            .input-group.input-group-sm
+                                span.input-group-addon
+                                    label Name
+                                input.form-control(value=install.name name="name" type="text")
+                            // Type
+                            .input-group.input-group-sm
+                                span.input-group-addon
+                                    label Type
+                                select.form-control(name="type" class="form-control")
+                                    each type in types
+                                        if (JSON.stringify(type._id) == JSON.stringify(install.type._id))
+                                            option(value=type._id, selected)=type.name
+                                        else
+                                            option(value=type._id)=type.name
+                            // Position
+                            .input-group.input-group-sm
+                                span.input-group-addon
+                                    label Position
+                                input.form-control(value=install.position name="position" type="text")
+                            // Description
+                            .input-group.input-group-sm
+                                span.input-group-addon
+                                    label Description
+                                input.form-control(value=install.description name="description" type="text")
+                            input(name="areaPosition" type="hidden")
+                .row
+                    .col-lg-12.col-md-12.col-sm-12.col-xs-12
+                        .form-end
+                            button.btn.btn-sm.btn-default.pull-left(type='button', title='Voltar', onclick="navigate('/installs')")
+                                span.glyphicon.glyphicon-chevron-left
+                                |  Voltar
+                            button.btn.btn-sm.btn-danger.pull-right(type='button', title='Cancel', onclick="navigate('/installs/" + install.id + "')")
+                                | Cancel
+                            button.btn.btn-sm.btn-default.pull-right(type='submit', title='Update', form='form_install_edit', value='Update')
+                                | Update
 
-    .container
-        .row
-            .col-md-12
-                form(action="/installs/"+install.id+"/update" method="POST" class="edit")
-                    .form-group
-                        h2 editing a Install
+            // Right Column
+            .col-lg-6.col-md-6.col-sm-12.col-xs-12.install-thumbnail
+                #map-canvas
 
-                        .form-group(style="width: 400px;")
-                            label Name
-                            input(value=install.name name="name" type="text" class="form-control")
-                        .form-group(style="width: 400px;")
-                            label Type
-                            input(value=install.type name="type" type="text" class="form-control")
-                        .form-group(style="width: 400px;")
-                            label Description
-                            input(value=install.description name="description" type="text" class="form-control")
 
-                        .form-group(style="width: 400px;")
-                            #map-canvas
-                        input(name="areaPosition" type="hidden")
-                        input(name="position" type="hidden")
-                    input(type="submit" value="Update" class="btn btn-default")
-                a(href="/installs/"+install.id class="btn btn-danger") Cancel
-
-    script(src='/js/maps_point_polygon.js')
-    script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyD9eue-dVAWRDx3eL1rfm0ZxtSwdhuivVk')
-    script initialize(true)
+        script(src='/js/maps_point_polygon.js')
+        script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyD9eue-dVAWRDx3eL1rfm0ZxtSwdhuivVk')
+        script initialize(true)

@@ -17,6 +17,7 @@ router.get('/', function (req, res, next) {
 router.get('/home', isLoggedIn, function (req, res) {
     console.log(req.user);
     res.render('home', {
+        title: 'Smart-*',
         user: req.user
     });
 });

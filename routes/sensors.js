@@ -11,32 +11,55 @@ var SensorModel = require(src + 'models/sensor');
 
 // Sensors
 router.get('/:idInstall/equipments/:idEquipment/sensors', isLoggedIn, function (req, res) {
-    SensorModel.find({
-        install: req.params['idInstall'],
-        equipment: req.params['idEquipment'],
+
+    InstallModel.findOne({
+        _id: req.params['idInstall'],
         owner: req.user
-    }).exec(function (err, sensors) {
+    }).exec(function (err, install) {
         if (err) return next(err);
-        if (!sensors) return next();
-        console.log(sensors);
-        res.render('sensors/index', {
-            sensors: sensors
+        if (!install) return next();
+        console.log(install);
+        EquipmentModel.findOne({
+            _id: req.params['idEquipment'],
+            install: req.params['idInstall'],
+            owner: req.user
+        }).exec(function (err, equipment) {
+            if (err) return next(err);
+            if (!equipment) return next();
+            SensorModel.find({
+                install: req.params['idInstall'],
+                equipment: req.params['idEquipment'],
+                owner: req.user
+            }).exec(function (err, sensors) {
+                if (err) return next(err);
+                if (!sensors) return next();
+                res.render('sensors/index', {
+                    sensors: sensors, install: install, equipment: equipment
+                });
+            });
         });
     });
 });
 
 router.get('/:idInstall/equipments/:idEquipment/sensors/new', isLoggedIn, function (req, res) {
-    EquipmentModel.findOne({
-        _id: req.params['idEquipment'],
-        install: req.params['idInstall'],
+    InstallModel.findOne({
+        _id: req.params['idInstall'],
         owner: req.user
-    }).exec(function (err, equipment) {
+    }).exec(function (err, install) {
         if (err) return next(err);
-        if (!equipment) return next();
-        res.render('sensors/new', {user: req.user});
+        if (!install) return next();
+        console.log(install);
+        EquipmentModel.findOne({
+            _id: req.params['idEquipment'],
+            install: req.params['idInstall'],
+            owner: req.user
+        }).exec(function (err, equipment) {
+            if (err) return next(err);
+            if (!equipment) return next();
+            res.render('sensors/new', {user: req.user, install: install, equipment: equipment});
+        });
     });
 });
-
 router.post('/:idInstall/equipments/:idEquipment/sensors/create', isLoggedIn, function (req, res) {
     var paramObj = {
         owner: req.user,
@@ -55,7 +78,6 @@ router.post('/:idInstall/equipments/:idEquipment/sensors/create', isLoggedIn, fu
             return next(err);
         if (!equipment)
             return next();
-        console.log(equipment);
         paramObj["equipment"] = equipment;
         paramObj["install"] = req.params['idInstall'];
         SensorModel.create(paramObj, function SensorCreated(err, sensor) {
@@ -69,36 +91,65 @@ router.post('/:idInstall/equipments/:idEquipment/sensors/create', isLoggedIn, fu
 });
 
 router.get('/:idInstall/equipments/:idEquipment/sensors/:idSensor', isLoggedIn, function (req, res) {
-    SensorModel
-        .findOne({
-            _id: req.params['idSensor'],
+    InstallModel.findOne({
+        _id: req.params['idInstall'],
+        owner: req.user
+    }).exec(function (err, install) {
+        if (err) return next(err);
+        if (!install) return next();
+        console.log(install);
+        EquipmentModel.findOne({
+            _id: req.params['idEquipment'],
             install: req.params['idInstall'],
-            equipment: req.params['idEquipment'],
             owner: req.user
-        })
-        .populate('install')
-        .populate('equipment')
-        .exec(function (err, sensor) {
-            if (err) return handleError(err);
+        }).exec(function (err, equipment) {
+            if (err) return next(err);
+            if (!equipment) return next();
+            SensorModel.findOne({
+                _id: req.params['idSensor'],
+                install: req.params['idInstall'],
+                equipment: req.params['idEquipment'],
+                owner: req.user
+            })
+                .populate('install')
+                .populate('equipment')
+                .exec(function (err, sensor) {
+                    if (err) return handleError(err);
 
-            res.render('sensors/show', {
-                sensor: sensor
-            });
+                    res.render('sensors/show', {
+                        sensor: sensor, install: install, equipment: equipment
+                    });
+                });
         });
+    });
 });
 
 router.get('/:idInstall/equipments/:idEquipment/sensors/:idSensor/edit', isLoggedIn, function (req, res) {
-    SensorModel.findOne({
-        _id: req.params['idSensor'],
-        install: req.params['idInstall'],
-        equipment: req.params['idEquipment'],
+    InstallModel.findOne({
+        _id: req.params['idInstall'],
         owner: req.user
-    }).exec(function (err, sensor) {
+    }).exec(function (err, install) {
         if (err) return next(err);
-        if (!sensor) return next('SensorModel doesn\'t exist.');
-
-        res.render('sensors/edit', {user: req.user, sensor: sensor});
-
+        if (!install) return next();
+        console.log(install);
+        EquipmentModel.findOne({
+            _id: req.params['idEquipment'],
+            install: req.params['idInstall'],
+            owner: req.user
+        }).exec(function (err, equipment) {
+            if (err) return next(err);
+            if (!equipment) return next();
+            SensorModel.findOne({
+                _id: req.params['idSensor'],
+                install: req.params['idInstall'],
+                equipment: req.params['idEquipment'],
+                owner: req.user
+            }).exec(function (err, sensor) {
+                if (err) return next(err);
+                if (!sensor) return next('SensorModel doesn\'t exist.');
+                res.render('sensors/edit', {user: req.user, sensor: sensor, install: install, equipment: equipment});
+            });
+        });
     });
 });
 

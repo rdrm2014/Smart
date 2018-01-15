@@ -1,114 +1,185 @@
 extends ../layout-home
 block content
-    .container
-        .row
-            .col-md-6
-                h3 Local
+    .row
+        .col-lg-12.col-md-12.col-sm-12.col-xs-12
+            .page-header.text-center
+                a(href="/", title='Home')
+                    img(src="/theme/images/logo.png", width='48')
+                h1="Profile"
+    .row
+        .col-xs-12.col-md-6
+
+            .jumbotron
+                h3.text-center Local
                 if user.local.username
-                    p
-                        strong id
-                        | : #{ user._id}
-                        br
-                        strong username
-                        | : #{ user.local.username}
-                        br
-                        strong password
-                        | : #{ user.local.password}
-                        br
-                    a(href="/unlink/local") Unlink
-                else
-                    a(href="/users/connect/local") Connect Local
-                hr
-            .col-md-6
-                h3 Facebook
+                    .testFields
+                        // Id
+                        .input-group.input-group-sm
+                            span.input-group-addon
+                                label Id
+                            span.form-control= user._id
+                    .testFields
+                        // Nome
+                        .input-group.input-group-sm
+                            span.input-group-addon
+                                label Username
+                            span.form-control= user.local.username
+                    .testFields
+                        // Password
+                        .input-group.input-group-sm
+                            span.input-group-addon
+                                label Password
+                            span.form-control= user.local.password.substring(0,29) + " ..."
 
+                    .form-end
+                        button(class="btn btn-sm btn-danger pull-right" type="button" title="Voltar" onclick="navigate('/unlink/local')")
+                            span(class="glyphicon glyphicon-link")
+                            |  Unlink
+                else
+                    .form-end
+                        button(class="btn btn-sm btn-success pull-right" type="button" title="Voltar" onclick="navigate('/users/connect/local')")
+                            span(class="glyphicon glyphicon-link")
+                            |  Connect Local
+
+        .col-xs-12.col-md-6
+            .jumbotron
+                h3.text-center Facebook
                 if user.facebook.token
-                    p
-                        strong id
-                        | : #{ user.facebook.id}
-                        br
-                        strong token
-                        | : #{ user.facebook.token.substring(0,48)}
-                        //br
-                        //strong email
-                        //| : #{ user.facebook.email}
-                        br
-                        strong name
-                        | : #{ user.facebook.name}
-                        br
-                    a(href="/unlink/facebook") Unlink
+                    .testFields
+                        // Id
+                        .input-group.input-group-sm
+                            span.input-group-addon
+                                label Id
+                            span.form-control=user.facebook.id
+                    .testFields
+                        // Name
+                        .input-group.input-group-sm
+                            span.input-group-addon
+                                label Name
+                            span.form-control=user.facebook.name
+                    .testFields
+                        // Token
+                        .input-group.input-group-sm
+                            span.input-group-addon
+                                label Token
+                            span.form-control=user.facebook.token.substring(0, 29) + " ..."
+                    .form-end
+                        button(class="btn btn-sm btn-danger pull-right" type="button" title="Voltar" onclick="navigate('/unlink/facebook')")
+                            span(class="glyphicon glyphicon-link")
+                            |  Unlink
                 else
-                    a(href="/users/connect/facebook") Connect Facebook
-
-                hr
-        .row
-            .col-md-6
-                h3 Twitter
-
+                    .form-end
+                        button(class="btn btn-sm btn-success pull-right" type="button" title="Voltar" onclick="navigate('/users/connect/facebook')")
+                            span(class="glyphicon glyphicon-link")
+                            |  Connect Facebook
+    .row
+        .col-xs-12.col-md-6
+            .jumbotron
+                h3.text-center Twitter
                 if user.twitter.token
-                    p
-                        strong id
-                        | : #{ user.twitter.id}
-                        br
-                        strong    token
-                        | : #{ user.twitter.token}
-                        br
-                        strong display name
-                        | : #{ user.twitter.displayName}
-                        br
-                        strong username
-                        | : #{ user.twitter.username}
-                        br
-                    a(href="/unlink/twitter") Unlink
+                    .testFields
+                        // Id
+                        .input-group.input-group-sm
+                            span.input-group-addon
+                                label Id
+                            span.form-control=user.twitter.id
+                    .testFields
+                        // Name
+                        .input-group.input-group-sm
+                            span.input-group-addon
+                                label Name
+                            span.form-control=user.twitter.displayName
+                    .testFields
+                        // Token
+                        .input-group.input-group-sm
+                            span.input-group-addon
+                                label Token
+                            span.form-control=user.twitter.token.substring(0, 29) + " ..."
+                    .form-end
+                        button(class="btn btn-sm btn-danger pull-right" type="button" title="Voltar" onclick="navigate('/unlink/twitter')")
+                            span(class="glyphicon glyphicon-link")
+                            |  Unlink
                 else
-                    a(href="/users/connect/twitter") Connect Twitter
-
-                hr
-            .col-md-6
-                h3 Google+
-
-                if user.google.token
-                    p
-                        strong id
-                        | : #{ user.google.id}
-                        br
-                        strong token
-                        | : #{ user.google.token}
-                        br
-                        strong email
-                        | : #{ user.google.email}
-                        br
-                        strong name
-                        | : #{ user.google.name}
-                        br
-                    a(href="/unlink/google") Unlink
+                    .form-end
+                        button(class="btn btn-sm btn-success pull-right" type="button" title="Voltar" onclick="navigate('/users/connect/twitter')")
+                            span(class="glyphicon glyphicon-link")
+                            |  Connect Twitter
+        .col-xs-12.col-md-6
+            .jumbotron
+                h3.text-center Google+
+                if user.twitter.token
+                    .testFields
+                        // Id
+                        .input-group.input-group-sm
+                            span.input-group-addon
+                                label Id
+                            span.form-control=user.google.id
+                    .testFields
+                        // Name
+                        .input-group.input-group-sm
+                            span.input-group-addon
+                                label Name
+                            span.form-control=user.google.displayName
+                    .testFields
+                        // Token
+                        .input-group.input-group-sm
+                            span.input-group-addon
+                                label Token
+                            span.form-control=user.google.token.substring(0, 29) + " ..."
+                    .form-end
+                        button(class="btn btn-sm btn-danger pull-right" type="button" title="Voltar" onclick="navigate('/unlink/google')")
+                            span(class="glyphicon glyphicon-link")
+                            |  Unlink
                 else
-                    a(href="/users/connect/google") Connect Google
-                hr
-            .col-md-6
-                h3 UI
-
+                    .form-end
+                        button(class="btn btn-sm btn-success pull-right" type="button" title="Voltar" onclick="navigate('/users/connect/google')")
+                            span(class="glyphicon glyphicon-link")
+                            |  Connect Google+
+    .row
+        .col-lg-12.col-md-12.col-sm-12.col-xs-12
+            .page-header.text-center
+                h1="Configuration"
+    .row
+        .col-xs-12.col-md-6
+            .jumbotron
+                h3.text-center UI
                 if user.urlNodeRed
-                    p
-                        strong urlUI
-                        | : #{ user.urlNodeRed}
-                        br
-                        a(href="/users/unlink/nodered") Delete UI
+                    .testFields
+                        // Id
+                        .input-group.input-group-sm
+                            span.input-group-addon
+                                label urlUI
+                            span.form-control= user.urlNodeRed
+                    .form-end
+                        button(class="btn btn-sm btn-danger pull-right" type="button" title="Voltar" onclick="navigate('/unlink/nodered')")
+                            span(class="glyphicon glyphicon-link")
+                            |  Delete UI
                 else
-                    a(href="/users/urlnodered") Create UI
-                hr
-            .col-md-6
-                h3 FLows
+                    .form-end
+                        button(class="btn btn-sm btn-success pull-right" type="button" title="Voltar" onclick="navigate('/users/urlnodered')")
+                            span(class="glyphicon glyphicon-link")
+                            |  Create UI
 
+        .col-xs-12.col-md-6
+            .jumbotron
+                h3.text-center Flows
                 if user.updateFlowDate
-                    p
-                        strong LastUpdate
-                        | : #{ user.updateFlowDate}
-                        br
+                    .testFields
+                        // Id
+                        .input-group.input-group-sm
+                            span.input-group-addon
+                                label LastUpdate
+                            span.form-control=user.updateFlowDate.toString().substring(0, 33)
+                    .form-end
+                        button(class="btn btn-sm btn-success pull-right" type="button" title="Update Flows" onclick="navigate('/unlink/updateFlow')")
+                            span(class="glyphicon glyphicon-link")
+                            |  Update Flows
+                            //form(action="updateFlow" method="POST" role="form" class="new")
+                                input(type="submit" value="Update Flows" class="btn btn-default")
                 else
-                    p
-                        | Update flow now
-                        br
-                form(action="updateFlow" method="POST" role="form" class="new")
-                    input(type="submit" value="Update Flows" class="btn btn-default")
-                hr
+                    .form-end
+                        button(class="btn btn-sm btn-success pull-right" type="button" title="Update Flows now" onclick="navigate('/users/updateFlow')")
+                            span(class="glyphicon glyphicon-link")
+                            |  Update flows now
+                            //form(action="updateFlow" method="POST" role="form" class="new")
+                                input(type="submit" value="Update Flows" class="btn btn-default")

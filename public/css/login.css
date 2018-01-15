@@ -1,0 +1,31 @@
+/* --------------------
+ * -----Login Page-----
+ * --------------------
+ */
+
+body {
+    background: #f5f5f5;
+    padding: 75px 0 50px;
+}
+
+h1 {
+    font-size: 26px;
+    margin-bottom: 50px;
+}
+
+button {
+    margin-top: 20px;
+    width: 100%;
+}
+
+.input-group {
+    margin-top: 10px;
+}
+
+.input-group-addon {
+    background: #fcfcfc;
+}
+
+.input-group-addon label {
+    width: 60px;
+}

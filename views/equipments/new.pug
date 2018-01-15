@@ -1,6 +1,97 @@
 extends ../layout-home
 block content
-    .container
+    .row
+        .col-lg-12.col-md-12.col-sm-12.col-xs-12
+            .page-header.text-center
+                a(href="/equipments", title='Equipments')
+                    img(src="/theme/images/logo.png", width='48')
+                h4
+                    ol(class="breadcrumb")
+                        li
+                            a(href="/installs/" + install._id)=install.name
+                        li(class="active") Equipment
+    .row
+        // Left Column
+        form(action="create" method="POST" role="form" class="new" id="form_equipment_new")
+            .col-lg-6.col-md-6.col-sm-12.col-xs-12
+                .row
+                    // Image
+                    .col-lg-12.col-md-12.col-sm-12.col-xs-12
+                        .img-upload(style='padding-top: 0;')
+                            .img-holder
+                                img#image_equipment.img-responsive(src="/theme/images/add_equipment.png")
+                            .img-controls.pull-right
+                                span.btn.btn-sm.btn-default.btn-file
+                                    span.glyphicon.glyphicon-open
+                                    | Upload
+                                //button.btn.btn-sm.btn-danger(type='button', title='Apagar imagem', onclick="deleteImage('{{ path('equipment_delete_image', { 'id': entity.id }) }}')")
+                                  span.glyphicon.glyphicon-trash
+                .row
+                    //.form-group(style="width: 400px;")
+                    //    label Name
+                    //    input(name="name" type="text" class="form-control")
+                    //.form-group(style="width: 400px;")
+                    //    label Description
+                    //    input(name="description" type="text" class="form-control")
+                    //.form-group(style="width: 400px;")
+                    //    label Position
+                    //    input(name="position" type="text" class="form-control" value="[ 40.63103471011476, -8.658493600549377 ]")
+                    //.form-group(style="width: 400px;")
+                    //    label IP
+                    //    input(name="ip" type="text" class="form-control")
+
+
+
+                    .col-lg-12.col-md-12.col-sm-12.col-xs-12
+                        .testFields
+                            // Nome
+                            .input-group.input-group-sm
+                                span.input-group-addon
+                                    label Name
+                                input.form-control(name="name" type="text")
+                        .testFields
+                            // Description
+                            .input-group.input-group-sm
+                                span.input-group-addon
+                                    label Description
+                                input.form-control(name="description" type="text")
+                        .testFields
+                            // Position
+                            .input-group.input-group-sm
+                                span.input-group-addon
+                                    label Position
+                                input.form-control(name="position" type="text" value="[ 40.63103471011476, -8.658493600549377 ]")
+                        //.testFields
+                            // IP
+                            .input-group.input-group-sm
+                                span.input-group-addon
+                                    label IP
+                                input.form-control(name="ip" type="text")
+                .row
+                    .col-lg-12.col-md-12.col-sm-12.col-xs-12
+                        .form-end
+                            button.btn.btn-sm.btn-default.pull-left(type='button', title='Back', onclick="navigate('../equipments')")
+                                span.glyphicon.glyphicon-chevron-left
+                                |  Back
+                            button.btn.btn-sm.btn-default.pull-right(type='submit', title='Submit', form='form_equipment_new', value='Submit')
+                                | Submit
+                            //input(type="submit" value="Submit" class="btn btn-default")
+                            //a(href="/equipments" class="btn btn-danger") Back to list
+
+        // Right Column
+        .col-lg-6.col-md-6.col-sm-12.col-xs-12.equipment-thumbnail
+            #map-canvas
+
+    style(type="text/css").
+        #map-canvas {
+            width: auto;
+            height: 500px;
+        }
+
+    script(src='/js/maps_point_polygon.js')
+    script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyD9eue-dVAWRDx3eL1rfm0ZxtSwdhuivVk')
+    script initialize(true)
+    //.container
         .row
             .col-md-12
                 form(action="create" method="POST" role="form" class="new")

@@ -18,7 +18,7 @@ var jwt = require('jsonwebtoken');
 // PROFILE SECTION =========================
 router.get('/profile', isLoggedIn, function (req, res) {
     res.render('users/profile', {
-        user: req.user
+        user: req.user, title: 'Smart-*'
     });
 });
 
@@ -36,8 +36,8 @@ router.get('/logout', function (req, res) {
 // LOGIN ===============================
 // show the login form
 router.get('/login', function (req, res) {
-    var callbackLink = req.query["callbackLink"];
-    res.render('login', {callbackLink: callbackLink, message: req.flash('message')});
+    var callback = req.query["callback"];
+    res.render('login', {callback: callback, message: req.flash('message'), title: 'Smart-*'});
 });
 
 // process the login form
@@ -46,8 +46,8 @@ router.post('/login', passport.authenticate('local-login', {
             failureFlash: true // allow flash messages
         }
     ), function (req, res) {
-        if (req.body["callbackLink"]) {
-            res.redirect(req.body["callbackLink"]);
+        if (req.body["callback"]) {
+            res.status(200).json({success: true, token: 'JWT ' + token});
         } else {
             res.redirect("/home");
         }
@@ -67,7 +67,7 @@ router.post('/authenticate', passport.authenticate('local-login', {}),
 // SIGNUP =================================
 // show the signup form
 router.get('/signup', function (req, res) {
-    res.render('signup');
+    res.render('signup',{title: 'Smart-*'});
 });
 
 // process the signup form

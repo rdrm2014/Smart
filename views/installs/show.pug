@@ -1,39 +1,76 @@
 extends ../layout-home
 block content
-	style(type="text/css").
-		#map-canvas {
-			width: auto;
-			height: 500px;
-		}
-	.container
-		.row
-			.col-md-12
-				ol(class="breadcrumb")
-					li(class="active")=install.name
-				form(class="show")
-					.form-group
-						h2 a Install
-					.form-group(style="width: 400px;")
-						label Name
-						input(value=install.name name="name" type="text" class="form-control" disabled)
-					.form-group(style="width: 400px;")
-						label Type
-						input(value=install.type name="type" type="text" class="form-control" disabled)
-					.form-group(style="width: 400px;")
-						label Description
-						input(value=install.description name="description" type="text" class="form-control" disabled)
-					.form-group(style="width: 400px;")
-						label Position
-						input(value=install.position name="position" type="text" class="form-control" disabled)
-					.form-group(style="width: 400px;")
-						#map-canvas
+    .row
+        .col-lg-12.col-md-12.col-sm-12.col-xs-12
+          .page-header.text-center
+            a(href="/installs", title='Installs')
+              img(src="/theme/images/logo.png", width='48')
+            h4
+                ol(class="breadcrumb")
+                    li(class="active")
+                        a(href="/installs/" + install._id)=install.name
+    .row
+        // Left Column
+        .col-lg-6.col-md-6.col-sm-12.col-xs-12
+          .row
+            // Image
+            .col-lg-12.col-md-6.col-sm-12.col-xs-12
+                if install.image
+                    img#picture.img-responsive.center-block(src="/theme/images/"+install.image)
+                else
+                    img#picture.img-responsive(src="/theme/images/add_install.png", style="margin: 0 auto;")
+          // Info Row
+          .row
+            .col-lg-12.col-md-6.col-sm-12.col-xs-12
+              .testFields
+                // Nome
+                .input-group.input-group-sm
+                  span.input-group-addon
+                    label Name
+                  span.form-control= install.name
+                // Type
+                .input-group.input-group-sm
+                  span.input-group-addon
+                    label Type
+                  span.form-control=install.type.name
+                // Position
+                .input-group.input-group-sm
+                    span.input-group-addon
+                      label Position
+                    span.form-control=install.position
+                // Description
+                .input-group.input-group-sm
+                  span.input-group-addon
+                    label Description
+                  span.form-control=install.description
+                // Buttons
+            .row
+              .col-lg-12.col-md-12.col-sm-12.col-xs-12
+                .form-end
+                  button.btn.btn-sm.btn-default.pull-left(type='button', title='Back', onclick="navigate('/installs')")
+                    span.glyphicon.glyphicon-chevron-left
+                    |  Back
 
-				a(href="/installs/"+install.id+"/equipments" class="btn btn-default")  Equipments
-				| |
-				a(href="/installs/"+install.id+"/edit" class="btn btn-default")  Edit
-				| |
-				a(href="/installs") Back to list
+                  button.btn.btn-sm.btn-default.pull-left(type='button', title='Equipments', onclick="navigate('/installs/"+install.id+"/equipments')")
+                    | Equipments
 
-	script(src='/js/maps_point_polygon.js')
-	script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyD9eue-dVAWRDx3eL1rfm0ZxtSwdhuivVk')
-	script initialize(false)
+                  button.btn.btn-sm.btn-default.pull-right(type='button', title='Edit', onclick="navigate('/installs/"+install.id+"/edit')", style='margin-left: 5px;')
+                    | Edit
+                  form(action="/installs/"+install.id+"/destroy" method="POST")
+                    input(type="hidden" name="id" value=install.id)
+                    button.btn.btn-sm.btn-danger.pull-right(type='button', title='Remove', onclick="deleteObject(function(){parentNode.submit()});")
+                      span.glyphicon.glyphicon-trash
+                            //a(href="javascript:;" onclick="deleteInstall(function(){parentNode.submit()});")
+        // Right Column
+        .col-lg-6.col-md-6.col-sm-12.col-xs-12.install-thumbnail
+          #map-canvas
+
+    style(type="text/css").
+        #map-canvas {
+            width: auto;
+            height: 500px;
+        }
+
+    script(src='/js/maps_point_polygon.js')
+    script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyD9eue-dVAWRDx3eL1rfm0ZxtSwdhuivVk')
+    script initialize(false)

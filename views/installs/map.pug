@@ -1,99 +1,89 @@
 extends ../layout-home
 block content
-    .container.container-fluid
-      .row
-        .col-lg-12
-            each install in installs
-                tr(data-id=install.id data-model="install")
-                    td #{install.name}
-                    td #{install.type}
-                    td #{install.description}
-                    td #{install.position}
-                    td
-                        a(href="/installs/"+install.id  class="btn btn-primary btn-sm" role="button") Show
-                    td
-                        a(href="/installs/"+install.id+"/edit"  class="btn btn-primary btn-sm" role="button") Edit
-                    td
-                        form(action="/installs/destroy" method="POST")
-                            //input(type="hidden" name="_method" value="delete")
-                            input(type="hidden" name="id" value=install.id)
-                            input(type="submit" value="Delete"  class="btn btn-danger btn-sm" role="button")
-        .col-lg-12
-          .page-header.text-center
-            a(href="#")
-              img(src="#", width='48')
-            h1.text-center
-              | INSTALLS MAP
-              br
-              a.onmap(href='#', title='Voltar')
-      // Filters
-      .row.filter
-        // Search Box
-        .col-lg-4.col-md-6.col-sm-8.col-xs-10.col-lg-offset-4.col-md-offset-3.col-sm-offset-2.col-xs-offset-1
-          .input-group.input-group-sm
-            input#search.form-control(type='text', placeholder='Pesquisar', oninput='search()')
-            span.input-group-btn.input-group-sm
-              button#erase.btn.btn-default(type='button', title='Limpar pesquisa', onclick='cleanSearch()', disabled='')
-                span.glyphicon.glyphicon-remove
-      // Map
-      .row
-        .col-lg-12.col-md-12.col-sm-12.col-xs-12.portfolio-item
-          #map-canvas(style='height: 500px')
+  .row
+    .col-lg-12
+      .page-header.text-center
+        //a(href="#")
+        img(src='/theme/images/logo.png', width='48')
+        h4
+          ol(class="breadcrumb")
+            li(class="active") Installs Map
+          //br
+          //a.onmap(href='#', title='Back')
+  // Filters
+  .row.filter
+    // Search Box
+    .col-lg-4.col-md-6.col-sm-8.col-xs-10.col-lg-offset-4.col-md-offset-3.col-sm-offset-2.col-xs-offset-1
+      .input-group.input-group-sm
+        input#search.form-control(type='text', placeholder='Search', oninput='search()')
+        span.input-group-btn.input-group-sm
+          button#erase.btn.btn-default(type='button', title='Limpar pesquisa', onclick='cleanSearch()', disabled='')
+            i.fa.fa-times
+  // Map
+  .row
+    .col-lg-12.col-md-12.col-sm-12.col-xs-12.portfolio-item
+      #map-canvas(style='height: 500px')
 
-    script(src='http://maps.google.com/maps/api/js')
-    script.
-      // render map
-      var mapOptions = {
+  script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyD9eue-dVAWRDx3eL1rfm0ZxtSwdhuivVk')
+  script.
+    // render map
+    var mapOptions = {
+      zoom: 20,
       markerDrag: false,
       flagDraggable: false
-      };
-      var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-      // get obra markers
-      var bounds = new google.maps.LatLngBounds();
-      var markers = [];
-      {% for entity in entities %}
-      {% if entity.nome != '' and entity.latitude != '' and entity.longitude != '' %}
-      // new marker
-      var marker = new google.maps.Marker({
-      position: new google.maps.LatLng(parseFloat({{ entity.latitude }}), parseFloat({{ entity.longitude }})),
-      title: '{{ entity.nome }}',
-      map: map
-      });
-      // on click go to obra
-      marker.addListener('click', function () {
-      navigate('{{ path('obra_show', { 'id': entity.id }) }}');
-      });
-      markers.push(marker);
-      bounds.extend(new google.maps.LatLng(parseFloat({{ entity.latitude }}), parseFloat({{ entity.longitude }})));
-      {% endif %}
-      {% endfor %}
-      // adjust map to markers
-      map.fitBounds(bounds);
-      // filters the markers
-      function search() {
+    };
+    var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+    // get install markers
+    var bounds = new google.maps.LatLngBounds();
+    var markers = [];
+
+    var installs = !{JSON.stringify(installs)};
+
+    for (var id in installs){
+      var install = installs[id];
+      if(install.name && install.position[0] && install.position[1]){
+        // new marker
+        var marker = new google.maps.Marker({
+          position: new google.maps.LatLng(parseFloat(install.position[0]), parseFloat(install.position[1])),
+          title: install.name,
+          map: map
+        });
+        // on click go to install
+        marker.addListener('click', function () {
+          navigate('/installs/'+ install._id);
+        });
+        markers.push(marker);
+        bounds.extend(new google.maps.LatLng(parseFloat(install.position[0]), parseFloat(install.position[1])));
+      }
+    }
+    // adjust map to markers
+    map.fitBounds(bounds);
+
+    // filters the markers
+    function search() {
       resetSearch();
       var search = parseString($('#search').val());
       var erase = $('#erase');
       if (search.length > 0)
-      erase.prop('disabled', false);
+        erase.prop('disabled', false);
       else
-      erase.prop('disabled', true);
+        erase.prop('disabled', true);
       for (var i = 0, n = markers.length; i < n; i++) {
-      var marker = markers[i];
-      var processedTitle = parseString(marker.title);
-      if (processedTitle.indexOf(search) == -1)
-      marker.setVisible(false);
+        var marker = markers[i];
+        var processedTitle = parseString(marker.title);
+        if (processedTitle.indexOf(search) == -1)
+          marker.setVisible(false);
       }
-      }
-      // resets the search and shows all the markers
-      function resetSearch() {
+    }
+
+    // resets the search and shows all the markers
+    function resetSearch() {
       for (var i = 0, n = markers.length; i < n; i++)
-      markers[i].setVisible(true);
-      }
-      // cleans the search bar and resets the search
-      function cleanSearch() {
+        markers[i].setVisible(true);
+    }
+    // cleans the search bar and resets the search
+    function cleanSearch() {
       $('#search').val(null);
       $('#erase').prop('disabled', true);
       resetSearch();
-      }
-
+    }
