@@ -72,43 +72,69 @@ router.get('/signup', function (req, res) {
 
 // process the signup form
 router.post('/signup', passport.authenticate('local-signup', {
-    successRedirect: '/home', // redirect to the secure profile section
-    failureRedirect: '/users/signup', // redirect back to the signup page if there is an error
-    failureFlash: true // allow flash messages
-}));
+            //successRedirect: '/home', // redirect to the secure profile section
+            failureRedirect: '/users/signup', // redirect back to the signup page if there is an error
+            failureFlash: true // allow flash messages
+        }
+    ), function (req, res) {
+        if (req.body["callback"]) {
+            res.status(200).json({success: true, token: 'JWT ' + token});
+        } else {
+            res.redirect("/home");
+        }
+    }
+);
 
 // facebook -------------------------------
 // send to facebook to do the authentication
 router.get('/auth/facebook', passport.authenticate('facebook', {scope: 'email'}));
 
 // handle the callback after facebook has authenticated the user
-router.get('/auth/facebook/callback',
-    passport.authenticate('facebook', {
-        successRedirect: '/home',
+router.get('/auth/facebook/callback', passport.authenticate('facebook', {
+        //successRedirect: '/home',
         failureRedirect: '/'
-    }));
+    }
+), function (req, res) {
+    if (req.body["callback"]) {
+        res.status(200).json({success: true, token: 'JWT ' + token});
+    } else {
+        res.redirect("/home");
+    }
+});
 
 // twitter --------------------------------
 // send to twitter to do the authentication
 router.get('/auth/twitter', passport.authenticate('twitter', {scope: 'email'}));
 
 // handle the callback after twitter has authenticated the user
-router.get('/auth/twitter/callback',
-    passport.authenticate('twitter', {
-        successRedirect: '/home',
+router.get('/auth/twitter/callback', passport.authenticate('twitter', {
+        //successRedirect: '/home',
         failureRedirect: '/'
-    }));
+    }
+), function (req, res) {
+    if (req.body["callback"]) {
+        res.status(200).json({success: true, token: 'JWT ' + token});
+    } else {
+        res.redirect("/home");
+    }
+});
 
 // google ---------------------------------
 // send to google to do the authentication
 router.get('/auth/google', passport.authenticate('google', {scope: ['profile', 'email']}));
 
 // the callback after google has authenticated the user
-router.get('/auth/google/callback',
-    passport.authenticate('google', {
-        successRedirect: '/home',
+router.get('/auth/google/callback', passport.authenticate('google', {
+        //successRedirect: '/home',
         failureRedirect: '/'
-    }));
+    }
+), function (req, res) {
+    if (req.body["callback"]) {
+        res.status(200).json({success: true, token: 'JWT ' + token});
+    } else {
+        res.redirect("/home");
+    }
+});
 
 // =============================================================================
 // AUTHORIZE (ALREADY LOGGED IN / CONNECTING OTHER SOCIAL ACCOUNT) =============
@@ -118,6 +144,7 @@ router.get('/connect/local', function (req, res) {
     res.render('connect-local');
     //res.render('connect-local', {message: req.flash('loginMessage')});
 });
+
 router.post('/connect/local', passport.authenticate('local-signup', {
     successRedirect: '/home', // redirect to the secure profile section
     failureRedirect: '/users/connect/local', // redirect back to the signup page if there is an error

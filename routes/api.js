@@ -75,7 +75,8 @@ router.get('/json', function (req, res) {
  *          dataType: string
  */
 router.get('/installs', passport.authenticate('jwt', { session: false }), function (req, res) {
-    InstallModel.find({owner: req.user}).exec(function (err, installs) {
+
+    InstallModel.find({owner: req.user}).populate('type').exec(function (err, installs) {
         if (!err) {
             //res.json({installs: installs});
             res.json(installs);
@@ -86,6 +87,31 @@ router.get('/installs', passport.authenticate('jwt', { session: false }), functi
                 error: 'Server error'
             });
         }
+    });
+});
+
+/**
+ * @swagger
+ * path: /installs/count
+ * operations:
+ *   -  httpMethod: GET
+ *      summary: Get user install count
+ *      responseClass: Install
+ *      nickname: install
+ *      consumes:
+ *        - text/html
+ *      parameters:
+ *        - owner: user
+ *          description: user
+ *          paramType: query
+ *          required: true
+ *          dataType: string
+ */
+router.get('/installs/count', passport.authenticate('jwt', { session: false }), function (req, res) {
+    InstallModel.find({owner: req.user}).exec(function (err, installs) {
+        if (err) return next(err);
+        if (!installs) return next();
+        res.json({"count": installs.length});
     });
 });
 
@@ -107,7 +133,7 @@ router.get('/installs', passport.authenticate('jwt', { session: false }), functi
  *          dataType: string
  */
 router.get('/installs/:idInstall', passport.authenticate('jwt', { session: false }), function (req, res) {
-    InstallModel.findOne({_id: req.params['idInstall'], owner: req.user}).exec(function (err, install) {
+    InstallModel.findOne({_id: req.params['idInstall'], owner: req.user}).populate('type').exec(function (err, install) {
         if (err) return next(err);
         if (!install) return next();
         //res.json({install: install});
