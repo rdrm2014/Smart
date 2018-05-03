@@ -8,6 +8,8 @@ var src = process.cwd() + '/';
 var EquipmentModel = require(src + 'models/equipment');
 var InstallModel = require(src + 'models/install');
 var SensorModel = require(src + 'models/sensor');
+var DataTypeModel = require(src + 'models/datatype');
+var ChartTypeModel = require(src + 'models/charttype');
 
 // Sensors
 router.get('/:idInstall/equipments/:idEquipment/sensors', isLoggedIn, function (req, res) {

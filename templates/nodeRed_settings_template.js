@@ -10,11 +10,11 @@ module.exports = {
     adminAuth: require("../user-authentication"),
     editorTheme: {
         page: {
-            title: "Smart-*",
+            title: "Smart*",
             favicon: "editor/favicon.ico",
         },
         header: {
-            title: "Smart-*",
+            title: "Smart*",
         },
         menu: {
             "menu-item-import-library": false,

@@ -26,8 +26,10 @@ var sensorSchema = mongoose.Schema({
     equipment: {type: mongoose.Schema.Types.ObjectId, ref: 'equipment'},
     name: String,
     description: String,
-    dataType: String,
-    chartType: String //line, gauge
+    //dataType: String,
+    dataType: {type: mongoose.Schema.Types.ObjectId, ref: 'typeD'},
+    //chartType: String //line, gauge
+    chartType: {type: mongoose.Schema.Types.ObjectId, ref: 'typeC'}
 });
 
 // create the model for equipments and expose it to our app

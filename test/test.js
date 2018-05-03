@@ -6,6 +6,7 @@ const expect = chai.expect;
 chai.use(require('chai-http'));
 
 //const app = require('../app.js'); // Our app
+//const app = "http://127.0.0.1:3000"; // Our app
 const app = "http://192.168.160.11:3000"; // Our app
 
 describe('API endpoint /api', function () {

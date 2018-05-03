@@ -1,11 +1,9 @@
 /**
  * @swagger
  * models:
- *   Type:
- *     id: Type
+ *   ChartType:
+ *     id: ChartType
  *     properties:
- *       owner:
- *         type: User
  *       name:
  *         type: String
  *       description:
@@ -16,11 +14,11 @@
  */
 var mongoose = require('mongoose');
 
-// define the schema for our type model
-var typeSchema = mongoose.Schema({
+// define the schema for our chartType model
+var charttypeSchema = mongoose.Schema({
     name: String,
     description: String
 });
 
-// create the model for types and expose it to our app
-module.exports = mongoose.model('type', typeSchema);
+// create the model for chartTypes and expose it to our app
+module.exports = mongoose.model('typeC', charttypeSchema,'typeC');

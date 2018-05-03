@@ -18,7 +18,7 @@ var jwt = require('jsonwebtoken');
 // PROFILE SECTION =========================
 router.get('/profile', isLoggedIn, function (req, res) {
     res.render('users/profile', {
-        user: req.user, title: 'Smart-*'
+        user: req.user, title: 'Smart*'
     });
 });
 
@@ -37,7 +37,7 @@ router.get('/logout', function (req, res) {
 // show the login form
 router.get('/login', function (req, res) {
     var callback = req.query["callback"];
-    res.render('login', {callback: callback, message: req.flash('message'), title: 'Smart-*'});
+    res.render('login', {callback: callback, message: req.flash('message'), title: 'Smart*'});
 });
 
 // process the login form
@@ -67,7 +67,7 @@ router.post('/authenticate', passport.authenticate('local-login', {}),
 // SIGNUP =================================
 // show the signup form
 router.get('/signup', function (req, res) {
-    res.render('signup',{title: 'Smart-*'});
+    res.render('signup',{title: 'Smart*'});
 });
 
 // process the signup form

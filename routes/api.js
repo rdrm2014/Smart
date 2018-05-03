@@ -17,9 +17,6 @@ var EquipmentModel = require(src + 'models/equipment');
 var InstallModel = require(src + 'models/install');
 var SensorModel = require(src + 'models/sensor');
 
-var EquipmentFunctions = require(src + 'functions/equipments');
-var InstallFunctions = require(src + 'functions/installs');
-
 var filesCreator = require(src + 'functions/filesCreator');
 
 var config = require(src + "config/config");
@@ -74,11 +71,17 @@ router.get('/json', function (req, res) {
  *          required: true
  *          dataType: string
  */
-router.get('/installs', passport.authenticate('jwt', { session: false }), function (req, res) {
+router.get('/installs', passport.authenticate('jwt', {session: false}), function (req, res) {
+    var limit = req.param('limit') > 0 ? req.param('limit') : 2,
+        offset = req.param('offset') > 0 ? req.param('offset') : 0,
+        sort = req.param('sort') !='' ? req.param('sort') : '';
 
-    InstallModel.find({owner: req.user}).populate('type').exec(function (err, installs) {
+    InstallModel.find({owner: req.user})
+        .limit(limit)
+        .skip(limit * offset)
+        .sort(sort)
+        .populate('type').exec(function (err, installs) {
         if (!err) {
-            //res.json({installs: installs});
             res.json(installs);
         } else {
             res.statusCode = 500;
@@ -107,7 +110,7 @@ router.get('/installs', passport.authenticate('jwt', { session: false }), functi
  *          required: true
  *          dataType: string
  */
-router.get('/installs/count', passport.authenticate('jwt', { session: false }), function (req, res) {
+router.get('/installs/count', passport.authenticate('jwt', {session: false}), function (req, res) {
     InstallModel.find({owner: req.user}).exec(function (err, installs) {
         if (err) return next(err);
         if (!installs) return next();
@@ -132,11 +135,13 @@ router.get('/installs/count', passport.authenticate('jwt', { session: false }), 
  *          required: true
  *          dataType: string
  */
-router.get('/installs/:idInstall', passport.authenticate('jwt', { session: false }), function (req, res) {
-    InstallModel.findOne({_id: req.params['idInstall'], owner: req.user}).populate('type').exec(function (err, install) {
+router.get('/installs/:idInstall', passport.authenticate('jwt', {session: false}), function (req, res) {
+    InstallModel.findOne({
+        _id: req.params['idInstall'],
+        owner: req.user
+    }).populate('type').exec(function (err, install) {
         if (err) return next(err);
         if (!install) return next();
-        //res.json({install: install});
         res.json(install);
     });
 });
@@ -158,8 +163,16 @@ router.get('/installs/:idInstall', passport.authenticate('jwt', { session: false
  *          required: true
  *          dataType: string
  */
-router.get('/installs/:idInstall/equipments', passport.authenticate('jwt', { session: false }), function (req, res) {
-    EquipmentModel.find({install: req.params['idInstall'], owner: req.user}).exec(function (err, equipments) {
+router.get('/installs/:idInstall/equipments', passport.authenticate('jwt', {session: false}), function (req, res) {
+    var limit = req.param('limit') > 0 ? req.param('limit') : 2,
+        offset = req.param('offset') > 0 ? req.param('offset') : 0,
+        sort = req.param('sort') !='' ? req.param('sort') : '';
+
+    EquipmentModel.find({install: req.params['idInstall'], owner: req.user})
+        .limit(limit)
+        .skip(limit * offset)
+        .sort(sort)
+        .exec(function (err, equipments) {
         if (err) return next(err);
         if (!equipments) return next();
         //res.json({equipments: equipments});
@@ -184,7 +197,7 @@ router.get('/installs/:idInstall/equipments', passport.authenticate('jwt', { ses
  *          required: true
  *          dataType: string
  */
-router.get('/installs/:idInstall/equipments/count', passport.authenticate('jwt', { session: false }), function (req, res) {
+router.get('/installs/:idInstall/equipments/count', passport.authenticate('jwt', {session: false}), function (req, res) {
     EquipmentModel.find({install: req.params['idInstall'], owner: req.user}).exec(function (err, equipments) {
         if (err) return next(err);
         if (!equipments) return next();
@@ -209,7 +222,7 @@ router.get('/installs/:idInstall/equipments/count', passport.authenticate('jwt',
  *          required: true
  *          dataType: string
  */
-router.get('/installs/:idInstall/equipments/:idEquipment', passport.authenticate('jwt', { session: false }), function (req, res) {
+router.get('/installs/:idInstall/equipments/:idEquipment', passport.authenticate('jwt', {session: false}), function (req, res) {
     InstallModel.findOne({_id: req.params['idInstall'], owner: req.user}).exec(function (err, install) {
         EquipmentModel
             .findOne({_id: req.params['idEquipment'], owner: req.user})
@@ -238,17 +251,36 @@ router.get('/installs/:idInstall/equipments/:idEquipment', passport.authenticate
  *          required: true
  *          dataType: string
  */
-router.get('/installs/:idInstall/equipments/:idEquipment/sensors', passport.authenticate('jwt', { session: false }), function (req, res) {
+router.get('/installs/:idInstall/equipments/:idEquipment/sensors', passport.authenticate('jwt', {session: false}), function (req, res) {
+    var limit = req.param('limit') > 0 ? req.param('limit') : 2,
+        offset = req.param('offset') > 0 ? req.param('offset') : 0,
+        sort = req.param('sort') !='' ? req.param('sort') : '';
+
     SensorModel.find({
         install: req.params['idInstall'],
         equipment: req.params['idEquipment'],
         owner: req.user
-    }).exec(function (err, sensors) {
-        if (err) return next(err);
-        if (!sensors) return next();
-        //res.json({sensors: sensors});
-        res.json(sensors);
-    });
+    })
+        .limit(limit)
+        .skip(limit * offset)
+        .sort(sort)
+        .populate('dataType')
+        .populate('chartType')
+        .exec(function (err, sensors) {
+            console.log("err: ");
+            console.log(err);
+            console.log("sensors: ");
+            console.log(sensors[0].dataType.name);
+            if (!err) {
+                res.json(sensors);
+            } else {
+                res.statusCode = 500;
+
+                return res.json({
+                    error: 'Server error'
+                });
+            }
+        });
 });
 
 /**
@@ -268,7 +300,7 @@ router.get('/installs/:idInstall/equipments/:idEquipment/sensors', passport.auth
  *          required: true
  *          dataType: string
  */
-router.get('/installs/:idInstall/equipments/:idEquipment/sensors/count', passport.authenticate('jwt', { session: false }), function (req, res) {
+router.get('/installs/:idInstall/equipments/:idEquipment/sensors/count', passport.authenticate('jwt', {session: false}), function (req, res) {
     SensorModel.find({
         install: req.params['idInstall'],
         equipment: req.params['idEquipment'],
@@ -298,7 +330,7 @@ router.get('/installs/:idInstall/equipments/:idEquipment/sensors/count', passpor
  *          required: true
  *          dataType: string
  */
-router.get('/installs/:idInstall/equipments/:idEquipment/sensors/:idSensor', passport.authenticate('jwt', { session: false }), function (req, res) {
+router.get('/installs/:idInstall/equipments/:idEquipment/sensors/:idSensor', passport.authenticate('jwt', {session: false}), function (req, res) {
     SensorModel
         .findOne({
             _id: req.params['idSensor'],
@@ -306,10 +338,20 @@ router.get('/installs/:idInstall/equipments/:idEquipment/sensors/:idSensor', pas
             equipment: req.params['idEquipment'],
             owner: req.user
         })
+        .populate('dataType')
+        .populate('chartType')
         .exec(function (err, sensor) {
-            if (err) return handleError(err);
-            //res.json({sensor: sensor});
-            res.json(sensor);
+            console.log("err");
+            console.log(err);
+            if (!err) {
+                res.json(sensor);
+            } else {
+                res.statusCode = 500;
+
+                return res.json({
+                    error: 'Server error'
+                });
+            }
         });
 });
 

@@ -16,7 +16,7 @@
     "pathFlows": "/Users/ricardomendes/.node-red/flows/"
   },
   "broker": {
-    "ip": "192.168.1.8",
+    "ip": "192.168.160.11",
     "port": 1883
   },
   "configAuth": {
