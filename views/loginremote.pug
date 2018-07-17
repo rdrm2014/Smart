@@ -1,0 +1,34 @@
+extends layout
+
+block content
+    .container
+        .row
+
+            .col-md-12.text-center
+                img(src='/img/logo.png', width='75')
+                h1 #{title}
+        .row
+            .col-md-12
+                p Será redireccionado em ...
+
+
+    script.
+        setTimeout(function () {
+
+            $.ajax({
+                type: "POST",
+                url: '#{callbackLink}',
+                data: {token:'#{token}',
+                        success:'#{success}'},
+                dataType: "json",
+                success: function (data, textStatus) {
+                    console.log(data);
+                    console.log(data.redirect);
+                    if (data.redirect) {
+                        // data.redirect contains the string URL to redirect to
+                        console.log("TESTE");
+                        window.location = data.redirect;
+                    }
+                }
+            });
+        }, 3000);

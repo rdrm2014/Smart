@@ -58,8 +58,37 @@ router.get('/:idInstall/equipments/:idEquipment/sensors/new', isLoggedIn, functi
         }).exec(function (err, equipment) {
             if (err) return next(err);
             if (!equipment) return next();
-            res.render('sensors/new', {user: req.user, install: install, equipment: equipment});
-        });
+
+            DataTypeModel.find().exec(function (err, dataTypes) {
+                if (!err) {
+                    ChartTypeModel.find().exec(function (err, chartTypes) {
+                        if (!err) {
+                            res.render('sensors/new', {
+                                user: req.user,
+                                install: install,
+                                equipment: equipment,
+                                dataTypes: dataTypes,
+                                chartTypes: chartTypes
+                            });
+                        } else {
+                            res.statusCode = 500;
+
+                            return res.json({
+                                error: 'Server error'
+                            });
+                        }
+                    })
+                } else {
+                    res.statusCode = 500;
+
+                    return res.json({
+                        error: 'Server error'
+                    });
+                }
+            });
+
+        })
+        ;
     });
 });
 router.post('/:idInstall/equipments/:idEquipment/sensors/create', isLoggedIn, function (req, res) {
@@ -149,7 +178,38 @@ router.get('/:idInstall/equipments/:idEquipment/sensors/:idSensor/edit', isLogge
             }).exec(function (err, sensor) {
                 if (err) return next(err);
                 if (!sensor) return next('SensorModel doesn\'t exist.');
-                res.render('sensors/edit', {user: req.user, sensor: sensor, install: install, equipment: equipment});
+
+                DataTypeModel.find().exec(function (err, dataTypes) {
+                    if (!err) {
+
+                        ChartTypeModel.find().exec(function (err, chartTypes) {
+                            if (!err) {
+
+                                res.render('sensors/edit', {
+                                    user: req.user,
+                                    sensor: sensor,
+                                    install: install,
+                                    equipment: equipment,
+                                    dataTypes: dataTypes,
+                                    chartTypes: chartTypes
+                                });
+
+                            } else {
+                                res.statusCode = 500;
+
+                                return res.json({
+                                    error: 'Server error'
+                                });
+                            }
+                        });
+                    } else {
+                        res.statusCode = 500;
+
+                        return res.json({
+                            error: 'Server error'
+                        });
+                    }
+                });
             });
         });
     });

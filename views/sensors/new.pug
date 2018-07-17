@@ -50,18 +50,16 @@ block content
                                 span.input-group-addon
                                     label Data Type
                                 select.form-control(name="dataType" class="form-control")
-                                    option Agricultura
-                                    option Piscicultura
-                                    option Aquário
+                                    each dataType in dataTypes
+                                        option(value=dataType._id)=dataType.name
                         .testFields
                             // Chart Type
                             .input-group.input-group-sm
                                 span.input-group-addon
                                     label Chart Type
                                 select.form-control(name="chartType" class="form-control")
-                                    option Agricultura
-                                    option Piscicultura
-                                    option Aquário
+                                    each chartType in chartTypes
+                                        option(value=chartType._id)=chartType.name
                 .row
                     .col-lg-12.col-md-12.col-sm-12.col-xs-12
                         .form-end

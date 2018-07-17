@@ -47,19 +47,25 @@ block content
                             .input-group.input-group-sm
                                 span.input-group-addon
                                     label Data Type
-                                select.form-control(value=sensor.dataType name="dataType" class="form-control")
-                                    option Agricultura
-                                    option Piscicultura
-                                    option Aquário
+
+                                select.form-control(name="dataType" class="form-control")
+                                    each dataType in dataTypes
+                                        if (JSON.stringify(dataType._id) == JSON.stringify(sensor.dataType._id))
+                                            option(value=dataType._id, selected)=dataType.name
+                                        else
+                                            option(value=dataType._id)=dataType.name
                         .testFields
                             // Chart Type
                             .input-group.input-group-sm
                                 span.input-group-addon
                                     label Chart Type
-                                select.form-control(value=sensor.chartType name="chartType" class="form-control")
-                                    option Agricultura
-                                    option Piscicultura
-                                    option Aquário
+
+                                select.form-control(name="dataType" class="form-control")
+                                    each chartType in chartTypes
+                                        if (JSON.stringify(chartType._id) == JSON.stringify(sensor.chartType._id))
+                                            option(value=chartType._id, selected)=chartType.name
+                                        else
+                                            option(value=chartType._id)=chartType.name
 
                         input(name="areaPosition" type="hidden")
                         input(name="position" type="hidden")

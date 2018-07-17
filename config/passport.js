@@ -9,6 +9,7 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 var TwitterStrategy = require('passport-twitter').Strategy;
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var JwtStrategy = require('passport-jwt').Strategy;
+var ExtractJwt = require('passport-jwt').ExtractJwt;
 
 // load up the user model
 var User = require(src + 'models/user');
@@ -40,6 +41,7 @@ module.exports = function (config, passport) {
             // by default, local strategy uses username and password, we will override with username
             usernameField: 'username',
             passwordField: 'password',
+            session: false,
             passReqToCallback: true // allows us to pass in the req from our route (lets us check if a user is logged in or not)
         },
         function (req, username, password, done) {
@@ -73,10 +75,10 @@ module.exports = function (config, passport) {
     // =========================================================================
     // JWT LOGIN =============================================================
     // =========================================================================
-    var ExtractJwt = require('passport-jwt').ExtractJwt;
 
     passport.use('jwt', new JwtStrategy({
             jwtFromRequest: ExtractJwt.fromAuthHeader(),
+            session: false,
             secretOrKey: config.get('default:api:secretOrKey')
         },
         function(jwt_payload, done) {

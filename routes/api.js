@@ -72,9 +72,9 @@ router.get('/json', function (req, res) {
  *          dataType: string
  */
 router.get('/installs', passport.authenticate('jwt', {session: false}), function (req, res) {
-    var limit = req.param('limit') > 0 ? req.param('limit') : 2,
-        offset = req.param('offset') > 0 ? req.param('offset') : 0,
-        sort = req.param('sort') !='' ? req.param('sort') : '';
+    var limit = req.params['limit'] > 0 ? req.params['limit'] : 2,
+        offset = req.params['offset'] > 0 ? req.params['offset'] : 0,
+        sort = req.params['sort'] !='' ? req.params['sort'] : '';
 
     InstallModel.find({owner: req.user})
         .limit(limit)
@@ -164,9 +164,9 @@ router.get('/installs/:idInstall', passport.authenticate('jwt', {session: false}
  *          dataType: string
  */
 router.get('/installs/:idInstall/equipments', passport.authenticate('jwt', {session: false}), function (req, res) {
-    var limit = req.param('limit') > 0 ? req.param('limit') : 2,
-        offset = req.param('offset') > 0 ? req.param('offset') : 0,
-        sort = req.param('sort') !='' ? req.param('sort') : '';
+    var limit = req.params['limit'] > 0 ? req.params['limit'] : 2,
+        offset = req.params['offset'] > 0 ? req.params['offset'] : 0,
+        sort = req.params['sort'] !='' ? req.params['sort'] : '';
 
     EquipmentModel.find({install: req.params['idInstall'], owner: req.user})
         .limit(limit)
@@ -252,9 +252,9 @@ router.get('/installs/:idInstall/equipments/:idEquipment', passport.authenticate
  *          dataType: string
  */
 router.get('/installs/:idInstall/equipments/:idEquipment/sensors', passport.authenticate('jwt', {session: false}), function (req, res) {
-    var limit = req.param('limit') > 0 ? req.param('limit') : 2,
-        offset = req.param('offset') > 0 ? req.param('offset') : 0,
-        sort = req.param('sort') !='' ? req.param('sort') : '';
+    var limit = req.params['limit'] > 0 ? req.params['limit'] : 2,
+        offset = req.params['offset'] > 0 ? req.params['offset'] : 0,
+        sort = req.params['sort'] !='' ? req.params['sort'] : '';
 
     SensorModel.find({
         install: req.params['idInstall'],
@@ -267,10 +267,6 @@ router.get('/installs/:idInstall/equipments/:idEquipment/sensors', passport.auth
         .populate('dataType')
         .populate('chartType')
         .exec(function (err, sensors) {
-            console.log("err: ");
-            console.log(err);
-            console.log("sensors: ");
-            console.log(sensors[0].dataType.name);
             if (!err) {
                 res.json(sensors);
             } else {
@@ -341,8 +337,6 @@ router.get('/installs/:idInstall/equipments/:idEquipment/sensors/:idSensor', pas
         .populate('dataType')
         .populate('chartType')
         .exec(function (err, sensor) {
-            console.log("err");
-            console.log(err);
             if (!err) {
                 res.json(sensor);
             } else {

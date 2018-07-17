@@ -12,7 +12,8 @@ var filesCreator = require(src + 'functions/filesCreator');
 var UserModel = require(src + 'models/user');
 var spawn = require('child_process').spawn;
 
-var jwt = require('jsonwebtoken');
+var jwt_ = require('jsonwebtoken');
+const jwt = require("jwt-blacklist")(jwt_);
 
 // normal routes ===============================================================
 // PROFILE SECTION =========================
@@ -36,8 +37,9 @@ router.get('/logout', function (req, res) {
 // LOGIN ===============================
 // show the login form
 router.get('/login', function (req, res) {
-    var callback = req.query["callback"];
-    res.render('login', {callback: callback, message: req.flash('message'), title: 'Smart*'});
+    var callbackLink = req.query["callbackLink"];
+    console.log(callbackLink);
+    res.render('login', {callbackLink: callbackLink, message: req.flash('message'), title: 'Smart*'});
 });
 
 // process the login form
@@ -46,8 +48,17 @@ router.post('/login', passport.authenticate('local-login', {
             failureFlash: true // allow flash messages
         }
     ), function (req, res) {
-        if (req.body["callback"]) {
-            res.status(200).json({success: true, token: 'JWT ' + token});
+        if (req.body["callbackLink"]) {
+            var callbackLink = req.body["callbackLink"];
+            const token = jwt.sign(req.user, config.get('default:api:secretOrKey'), {
+                expiresIn: 10080 // in seconds
+            });
+            /**/
+            //res.render('loginremote', {callbackLink: callbackLink, token: 'JWT  '+ token, success:true});
+            /**/
+            /*****/
+            res.redirect(callbackLink+'?token=JWT '+ token);
+            /*****/
         } else {
             res.redirect("/home");
         }
@@ -64,6 +75,39 @@ router.post('/authenticate', passport.authenticate('local-login', {}),
     });
 
 
+router.get('/test_jwt', passport.authenticate('jwt'), function (req, res) {
+
+    var jwtToken = req.headers.authorization;
+    var token = jwtToken.slice(4);
+
+    jwt.verify(token, config.get('default:api:secretOrKey'), function(err, decoded) {
+        if (err) {
+            res.json({success: false});
+        }
+        res.json({success: true});
+    });
+
+
+});
+
+router.get('/revoke', passport.authenticate('jwt'), function (req, res) {
+    var jwtToken = req.headers.authorization;
+    var token = jwtToken.slice(4);
+
+    if(jwt.blacklist(token)){
+        res.status(200).json({success: true});
+    } else{
+        res.status(200).json({success: false});
+    }
+
+
+    /*jwt.sign(req.user, config.get('default:api:secretOrKey'), {
+        expiresIn: 0 // in seconds
+    });
+    res.status(200).json({success: true});*/
+});
+
+
 // SIGNUP =================================
 // show the signup form
 router.get('/signup', function (req, res) {
@@ -78,6 +122,9 @@ router.post('/signup', passport.authenticate('local-signup', {
         }
     ), function (req, res) {
         if (req.body["callback"]) {
+            const token = jwt.sign(req.user, config.get('default:api:secretOrKey'), {
+                expiresIn: 10080 // in seconds
+            });
             res.status(200).json({success: true, token: 'JWT ' + token});
         } else {
             res.redirect("/home");
@@ -96,6 +143,9 @@ router.get('/auth/facebook/callback', passport.authenticate('facebook', {
     }
 ), function (req, res) {
     if (req.body["callback"]) {
+        const token = jwt.sign(req.user, config.get('default:api:secretOrKey'), {
+            expiresIn: 10080 // in seconds
+        });
         res.status(200).json({success: true, token: 'JWT ' + token});
     } else {
         res.redirect("/home");
@@ -113,6 +163,9 @@ router.get('/auth/twitter/callback', passport.authenticate('twitter', {
     }
 ), function (req, res) {
     if (req.body["callback"]) {
+        const token = jwt.sign(req.user, config.get('default:api:secretOrKey'), {
+            expiresIn: 10080 // in seconds
+        });
         res.status(200).json({success: true, token: 'JWT ' + token});
     } else {
         res.redirect("/home");
@@ -130,6 +183,9 @@ router.get('/auth/google/callback', passport.authenticate('google', {
     }
 ), function (req, res) {
     if (req.body["callback"]) {
+        const token = jwt.sign(req.user, config.get('default:api:secretOrKey'), {
+            expiresIn: 10080 // in seconds
+        });
         res.status(200).json({success: true, token: 'JWT ' + token});
     } else {
         res.redirect("/home");
@@ -272,9 +328,6 @@ router.post('/updateFlow', isLoggedIn, function (req, res) {
     var locationSettingsFile = config.get('nodeRed:pathSettings') + "settings_" + req.user._id + ".js";
     var locationFlowFile = config.get('nodeRed:pathFlows') + "flow_" + req.user._id + ".json";
 
-    console.log("locationSettingsFile: " + locationSettingsFile);
-    console.log("locationFlowFile: " + locationFlowFile);
-
     filesCreator.settingsCreator(req.user, src + "templates/nodeRed_settings_template.js", {
         uiPort: 1885,
         idUser: req.user._id,
@@ -310,7 +363,6 @@ router.post('/updateFlow', isLoggedIn, function (req, res) {
             console.log(err);
         }
     });
-    console.log("TESTE5");
     res.redirect('/users/profile');
 });
 
