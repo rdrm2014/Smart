@@ -50,7 +50,7 @@ router.post('/login', passport.authenticate('local-login', {
     ), function (req, res) {
         if (req.body["callbackLink"]) {
             var callbackLink = req.body["callbackLink"];
-            const token = jwt.sign(req.user, config.get('default:api:secretOrKey'), {
+            const token = jwt.sign(req.user.toJSON(), config.get('default:api:secretOrKey'), {
                 expiresIn: 10080 // in seconds
             });
             /**/
@@ -68,7 +68,7 @@ router.post('/login', passport.authenticate('local-login', {
 // Authenticate the user and get a JSON Web Token to include in the header of future requests.
 router.post('/authenticate', passport.authenticate('local-login', {}),
     function (req, res) {
-        const token = jwt.sign(req.user, config.get('default:api:secretOrKey'), {
+        const token = jwt.sign(req.user.toJSON(), config.get('default:api:secretOrKey'), {
             expiresIn: 10080 // in seconds
         });
         res.status(200).json({success: true, token: 'JWT ' + token});
@@ -101,7 +101,7 @@ router.get('/revoke', passport.authenticate('jwt'), function (req, res) {
     }
 
 
-    /*jwt.sign(req.user, config.get('default:api:secretOrKey'), {
+    /*jwt.sign(req.user.toJSON(), config.get('default:api:secretOrKey'), {
         expiresIn: 0 // in seconds
     });
     res.status(200).json({success: true});*/
@@ -122,7 +122,7 @@ router.post('/signup', passport.authenticate('local-signup', {
         }
     ), function (req, res) {
         if (req.body["callback"]) {
-            const token = jwt.sign(req.user, config.get('default:api:secretOrKey'), {
+            const token = jwt.sign(req.user.toJSON(), config.get('default:api:secretOrKey'), {
                 expiresIn: 10080 // in seconds
             });
             res.status(200).json({success: true, token: 'JWT ' + token});
@@ -143,7 +143,7 @@ router.get('/auth/facebook/callback', passport.authenticate('facebook', {
     }
 ), function (req, res) {
     if (req.body["callback"]) {
-        const token = jwt.sign(req.user, config.get('default:api:secretOrKey'), {
+        const token = jwt.sign(req.user.toJSON(), config.get('default:api:secretOrKey'), {
             expiresIn: 10080 // in seconds
         });
         res.status(200).json({success: true, token: 'JWT ' + token});
@@ -163,7 +163,7 @@ router.get('/auth/twitter/callback', passport.authenticate('twitter', {
     }
 ), function (req, res) {
     if (req.body["callback"]) {
-        const token = jwt.sign(req.user, config.get('default:api:secretOrKey'), {
+        const token = jwt.sign(req.user.toJSON(), config.get('default:api:secretOrKey'), {
             expiresIn: 10080 // in seconds
         });
         res.status(200).json({success: true, token: 'JWT ' + token});
@@ -183,7 +183,7 @@ router.get('/auth/google/callback', passport.authenticate('google', {
     }
 ), function (req, res) {
     if (req.body["callback"]) {
-        const token = jwt.sign(req.user, config.get('default:api:secretOrKey'), {
+        const token = jwt.sign(req.user.toJSON(), config.get('default:api:secretOrKey'), {
             expiresIn: 10080 // in seconds
         });
         res.status(200).json({success: true, token: 'JWT ' + token});

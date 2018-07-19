@@ -1,15 +1,15 @@
 var src = process.cwd() + "/";
 var passport = require('passport');
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 var express = require('express');
 var path = require('path');
 var swagger = require('swagger-express');
 var config = require(src + "config/config");
 require(src + 'config/passport')(config, passport); // pass passport for configuration
 // connect to the database
-mongoose.connect(config.get('mongoose:uri'), {
-    useMongoClient: true
-});
+//mongoose.connect(config.get('mongoose:uri'), {useMongoClient: true});
+mongoose.connect(config.get('mongoose:uri'),{ useNewUrlParser: true });
+
 var session = require('express-session');
 var favicon = require('serve-favicon');
 var logger = require('morgan');

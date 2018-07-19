@@ -77,7 +77,8 @@ module.exports = function (config, passport) {
     // =========================================================================
 
     passport.use('jwt', new JwtStrategy({
-            jwtFromRequest: ExtractJwt.fromAuthHeader(),
+            //jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+            jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme("jwt"),
             session: false,
             secretOrKey: config.get('default:api:secretOrKey')
         },

@@ -1,6 +1,10 @@
 {
   "mongoose": {
-    "uri": "mongodb://127.0.0.1:27017/smart"
+    "uri": "mongodb://127.0.0.1:27017/smart",
+    "url": "127.0.0.1",
+    "port": 27017,
+    "db": "smart"
+
   },
   "default": {
     "api": {
