@@ -29,3 +29,14 @@ button {
 .input-group-addon label {
     width: 60px;
 }
+
+.links {
+    margin: 0;
+    list-style: none;
+    padding-left: 0;
+}
+
+.links li {
+    display: inline;
+    padding: 0 10px
+}

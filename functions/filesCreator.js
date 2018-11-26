@@ -92,7 +92,6 @@ module.exports = {
                                                                     sensorInstall: sensor.install,
                                                                     sensorParseValue: "hum",
                                                                     sensorKey: sensor._id+"_hum",
-                                                                    sensorNumber: 1,
                                                                     sensorName: sensor.name,
                                                                     sensorEquipment: sensor.equipment,
                                                                     posX1: x,
@@ -113,7 +112,6 @@ module.exports = {
                                                                     sensorInstall: sensor.install,
                                                                     sensorParseValue: "temp",
                                                                     sensorKey: sensor._id+"_temp",
-                                                                    sensorNumber: 1,
                                                                     sensorName: sensor.name,
                                                                     sensorEquipment: sensor.equipment,
                                                                     posX1: x,
@@ -135,13 +133,13 @@ module.exports = {
                                                                 jsonFull = jsonFull.concat(jsonSensor1);
                                                                 //jsonFull = jsonFull.concat(JSON.parse(jsonSensor2));
                                                             } else if(sensor.dataType == "relay"){
-                                                                var jsonSensor1 = Mustache.render(template, {sensorID: sensor._id,sensorTypeInput: "mqtt in", sensorType: "relay", sensorInstall: sensor.install,sensorParseValue: "relay", sensorKey: sensor._id+"_"+1, sensorNumber: 1, sensorName: sensor.name,sensorEquipment: sensor.equipment,posX1: x, posX2: x + 200, posX3: x + 400, posX4: x + 600, posY: y, switch: true,chartLine: false, chartGauge: false});
+                                                                var jsonSensor1 = Mustache.render(template, {sensorID: sensor._id,sensorTypeInput: "mqtt in", sensorType: "relay", sensorInstall: sensor.install,sensorParseValue: "relay", sensorKey: sensor._id+"_"+1, sensorName: sensor.name,sensorEquipment: sensor.equipment,posX1: x, posX2: x + 200, posX3: x + 400, posX4: x + 600, posY: y, switch: true,chartLine: false, chartGauge: false});
                                                                 y = y + 50;
-                                                                var jsonSensor2 = Mustache.render(template, {sensorID: sensor._id,sensorTypeInput: "mqtt in", sensorType: "relay", sensorInstall: sensor.install,sensorParseValue: "relay", sensorKey: sensor._id+"_"+2, sensorNumber: 2, sensorName: sensor.name,sensorEquipment: sensor.equipment,posX1: x, posX2: x + 200, posX3: x + 400, posX4: x + 600, posY: y, switch: true,chartLine: false, chartGauge: false});
+                                                                var jsonSensor2 = Mustache.render(template, {sensorID: sensor._id,sensorTypeInput: "mqtt in", sensorType: "relay", sensorInstall: sensor.install,sensorParseValue: "relay", sensorKey: sensor._id+"_"+2, sensorName: sensor.name,sensorEquipment: sensor.equipment,posX1: x, posX2: x + 200, posX3: x + 400, posX4: x + 600, posY: y, switch: true,chartLine: false, chartGauge: false});
                                                                 y = y + 50;
-                                                                var jsonSensor3 = Mustache.render(template, {sensorID: sensor._id,sensorTypeInput: "mqtt in", sensorType: "relay", sensorInstall: sensor.install,sensorParseValue: "relay", sensorKey: sensor._id+"_"+3, sensorNumber: 3, sensorName: sensor.name,sensorEquipment: sensor.equipment,posX1: x, posX2: x + 200, posX3: x + 400, posX4: x + 600, posY: y, switch: true,chartLine: false, chartGauge: false});
+                                                                var jsonSensor3 = Mustache.render(template, {sensorID: sensor._id,sensorTypeInput: "mqtt in", sensorType: "relay", sensorInstall: sensor.install,sensorParseValue: "relay", sensorKey: sensor._id+"_"+3, sensorName: sensor.name,sensorEquipment: sensor.equipment,posX1: x, posX2: x + 200, posX3: x + 400, posX4: x + 600, posY: y, switch: true,chartLine: false, chartGauge: false});
                                                                 y = y + 50;
-                                                                var jsonSensor4 = Mustache.render(template, {sensorID: sensor._id,sensorTypeInput: "mqtt in", sensorType: "relay", sensorInstall: sensor.install,sensorParseValue: "relay", sensorKey: sensor._id+"_"+4, sensorNumber: 4, sensorName: sensor.name,sensorEquipment: sensor.equipment,posX1: x, posX2: x + 200, posX3: x + 400, posX4: x + 600, posY: y, switch: true,chartLine: false, chartGauge: false});
+                                                                var jsonSensor4 = Mustache.render(template, {sensorID: sensor._id,sensorTypeInput: "mqtt in", sensorType: "relay", sensorInstall: sensor.install,sensorParseValue: "relay", sensorKey: sensor._id+"_"+4, sensorName: sensor.name,sensorEquipment: sensor.equipment,posX1: x, posX2: x + 200, posX3: x + 400, posX4: x + 600, posY: y, switch: true,chartLine: false, chartGauge: false});
 
 
                                                                 jsonSensor1 = JSON.parse(jsonSensor1);
@@ -166,7 +164,6 @@ module.exports = {
                                                                     sensorInstall: sensor.install,
                                                                     sensorParseValue: "analog",
                                                                     sensorKey: sensor._id,
-                                                                    sensorNumber: 1,
                                                                     sensorName: sensor.name,
                                                                     sensorEquipment: sensor.equipment,
                                                                     posX1: x,
@@ -188,7 +185,6 @@ module.exports = {
                                                                     sensorInstall: sensor.install,
                                                                     sensorParseValue: "analog",
                                                                     sensorKey: sensor._id,
-                                                                    sensorNumber: 1,
                                                                     sensorName: sensor.name,
                                                                     sensorEquipment: sensor.equipment,
                                                                     posX1: x,

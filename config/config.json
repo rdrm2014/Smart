@@ -1,6 +1,7 @@
 {
   "mongoose": {
     "uri": "mongodb://127.0.0.1:27017/smart",
+    "uriCOMMENT": "mongodb://192.168.160.11:27017/smart",
     "url": "127.0.0.1",
     "port": 27017,
     "db": "smart"
@@ -17,10 +18,15 @@
     "path": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/",
     "pathSettings": "/Users/ricardomendes/GitHub/Nodejs/Projecto_IEETA/node-red/settings/",
     "pathNodeRed": "/Users/ricardomendes/.node-red/",
-    "pathFlows": "/Users/ricardomendes/.node-red/flows/"
+    "pathFlows": "/Users/ricardomendes/.node-red/flows/",
+    "pathCOMENT": "/home/oneadmin/node-red/",
+    "pathSettingsCOMENT": "/home/oneadmin/node-red/settings/",
+    "pathNodeRedCOMENT": "/home/oneadmin/.node-red/",
+    "pathFlowsCOMENT": "/home/oneadmin/.node-red/flows/"
   },
   "broker": {
-    "ip": "192.168.160.11",
+    "ipCOMENT": "192.168.160.11",
+    "ip": "ieeta-iot.web.ua.pt",
     "port": 1883
   },
   "configAuth": {

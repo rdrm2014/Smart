@@ -39,6 +39,7 @@ router.get('/logout', function (req, res) {
 router.get('/login', function (req, res) {
     var callbackLink = req.query["callbackLink"];
     console.log(callbackLink);
+
     res.render('login', {callbackLink: callbackLink, message: req.flash('message'), title: 'Smart*'});
 });
 
@@ -53,12 +54,17 @@ router.post('/login', passport.authenticate('local-login', {
             const token = jwt.sign(req.user.toJSON(), config.get('default:api:secretOrKey'), {
                 expiresIn: 10080 // in seconds
             });
-            /**/
-            //res.render('loginremote', {callbackLink: callbackLink, token: 'JWT  '+ token, success:true});
-            /**/
-            /*****/
-            res.redirect(callbackLink+'?token=JWT '+ token);
-            /*****/
+
+            var user = req.user;
+            user.ipRequestToken = req.ip;
+            user.save(function (err) {
+                /**/
+                //res.render('loginremote', {callbackLink: callbackLink, token: 'JWT  '+ token, success:true});
+                /**/
+                /*****/
+                res.redirect(callbackLink+'?token=JWT '+ token);
+                /*****/
+            });
         } else {
             res.redirect("/home");
         }
@@ -71,7 +77,13 @@ router.post('/authenticate', passport.authenticate('local-login', {}),
         const token = jwt.sign(req.user.toJSON(), config.get('default:api:secretOrKey'), {
             expiresIn: 10080 // in seconds
         });
-        res.status(200).json({success: true, token: 'JWT ' + token});
+        var user = req.user;
+        user.ipRequestToken = req.ip;
+        console.log("user.ipRequestToken");
+        console.log(user.ipRequestToken);
+        user.save(function (err) {
+            res.status(200).json({success: true, token: 'JWT ' + token});
+        });
     });
 
 
@@ -80,11 +92,15 @@ router.get('/test_jwt', passport.authenticate('jwt'), function (req, res) {
     var jwtToken = req.headers.authorization;
     var token = jwtToken.slice(4);
 
+    var user = req.user;
+
     jwt.verify(token, config.get('default:api:secretOrKey'), function(err, decoded) {
-        if (err) {
+        if (err || user.ipRequestToken != req.ip) {
             res.json({success: false});
         }
-        res.json({success: true});
+        else {
+            res.json({success: true});
+        }
     });
 
 
@@ -94,8 +110,13 @@ router.get('/revoke', passport.authenticate('jwt'), function (req, res) {
     var jwtToken = req.headers.authorization;
     var token = jwtToken.slice(4);
 
+    var user = req.user;
+    user.ipRequestToken = "";
+    
     if(jwt.blacklist(token)){
-        res.status(200).json({success: true});
+        user.save(function (err) {
+            res.status(200).json({success: true});
+        });
     } else{
         res.status(200).json({success: false});
     }
@@ -125,7 +146,12 @@ router.post('/signup', passport.authenticate('local-signup', {
             const token = jwt.sign(req.user.toJSON(), config.get('default:api:secretOrKey'), {
                 expiresIn: 10080 // in seconds
             });
-            res.status(200).json({success: true, token: 'JWT ' + token});
+
+            var user = req.user;
+            user.ipRequestToken = req.ip;
+            user.save(function (err) {
+                res.status(200).json({success: true, token: 'JWT ' + token});
+            });
         } else {
             res.redirect("/home");
         }
@@ -146,7 +172,12 @@ router.get('/auth/facebook/callback', passport.authenticate('facebook', {
         const token = jwt.sign(req.user.toJSON(), config.get('default:api:secretOrKey'), {
             expiresIn: 10080 // in seconds
         });
-        res.status(200).json({success: true, token: 'JWT ' + token});
+        var user = req.user;
+        user.ipRequestToken = req.ip;
+        user.save(function (err) {
+            res.status(200).json({success: true, token: 'JWT ' + token});
+        });
+
     } else {
         res.redirect("/home");
     }
@@ -166,7 +197,13 @@ router.get('/auth/twitter/callback', passport.authenticate('twitter', {
         const token = jwt.sign(req.user.toJSON(), config.get('default:api:secretOrKey'), {
             expiresIn: 10080 // in seconds
         });
-        res.status(200).json({success: true, token: 'JWT ' + token});
+
+        var user = req.user;
+        user.ipRequestToken = req.ip;
+        user.save(function (err) {
+            res.status(200).json({success: true, token: 'JWT ' + token});
+        });
+
     } else {
         res.redirect("/home");
     }
@@ -186,7 +223,11 @@ router.get('/auth/google/callback', passport.authenticate('google', {
         const token = jwt.sign(req.user.toJSON(), config.get('default:api:secretOrKey'), {
             expiresIn: 10080 // in seconds
         });
-        res.status(200).json({success: true, token: 'JWT ' + token});
+        var user = req.user;
+        user.ipRequestToken = req.ip;
+        user.save(function (err) {
+            res.status(200).json({success: true, token: 'JWT ' + token});
+        });
     } else {
         res.redirect("/home");
     }
@@ -323,7 +364,10 @@ router.get('/unlink/nodered', function (req, res) {
 });
 
 // updateFlow---------------------------------
-router.post('/updateFlow', isLoggedIn, function (req, res) {
+router.get('/updateFlow', isLoggedIn, function (req, res) {
+
+    console.log("DENTRO!");
+
     // Update Flow
     var locationSettingsFile = config.get('nodeRed:pathSettings') + "settings_" + req.user._id + ".js";
     var locationFlowFile = config.get('nodeRed:pathFlows') + "flow_" + req.user._id + ".json";
@@ -370,8 +414,10 @@ module.exports = router;
 
 // route middleware to ensure user is logged in
 function isLoggedIn(req, res, next) {
-    if (req.isAuthenticated())
+    var user = req.user;
+    //if (req.isAuthenticated() && user.ipRequestToken == req.ip) {
+    if (req.isAuthenticated()) {
         return next();
-
+    }
     res.redirect('/');
 }
